@@ -15,7 +15,7 @@ public class EwfEntityGeneric implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final EwfEntityMetaData metaData;
-    private final Map<String, Object> mapAttAndValue;*//to list
+    private final Map<String, Object> mapAttAndValue;//TODO to list
 
     public EwfEntityGeneric(EwfEntityMetaData metaData, Map<String, Object> mapAttAndValue) throws EpeAppException {
         EpeAppUtils.checkNull("metaData", metaData);
@@ -68,7 +68,7 @@ public class EwfEntityGeneric implements Serializable {
 
     public String retrieveDescriptionShort() throws EpeAppException {
         // TODO take the pattern
-        String descriptionShort = this.getString(EwfEntityColumns);
+        String descriptionShort = null;//TODO this.getString(EwfEntityColumns);
 
         if (descriptionShort == null) {
             return this.getString(EwfEntityColumns.NAME);
@@ -91,18 +91,19 @@ public class EwfEntityGeneric implements Serializable {
 
     public String retrieveDescription(String attribute) throws EpeAppException {
         EpeAppUtils.checkEmpty("attribute", attribute);
-        Object value = this.mapAttributeAndValue.get(attribute);
+        Object value = null;//TODO this.mapAttributeAndValue.get(attribute);
 
-        if (this.mapAttributeAndValue.containsKey(attribute.toUpperCase())) {
-            EpeAppUtils.checkNull("value", value);
-            return value + "";
-        } else if (attribute.equals("retrieveDescriptionShort()")) {
-            return this.retrieveDescriptionShort();
-        } else if (attribute.equals("retrieveDescriptionLong()")) {
-            return this.retrieveDescriptionLong();
-        } else {
-            throw new EpeAppException("Unknown attribute: " + attribute);
-        }
+//        if (this.mapAttributeAndValue.containsKey(attribute.toUpperCase())) {
+//            EpeAppUtils.checkNull("value", value);
+//            return value + "";
+//        } else if (attribute.equals("retrieveDescriptionShort()")) {
+//            return this.retrieveDescriptionShort();
+//        } else if (attribute.equals("retrieveDescriptionLong()")) {
+//            return this.retrieveDescriptionLong();
+//        } else {
+//            throw new EpeAppException("Unknown attribute: " + attribute);
+//        }
+        return null;
     }
 
     public EwfEntityGeneric retrieveClone() throws EpeAppException {
