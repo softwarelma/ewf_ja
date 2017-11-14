@@ -69,7 +69,7 @@ public class EwfPageLogin extends EwfPageAbstract {
                 String daoClassName = EwfDaoUser.class.getName();
                 List<EwfEntityAbstract> listEntity = this.getServer().readList(daoClassName, listAttNameAndValue);
 
-                if (listEntity.size() == 1) {
+                if (listEntity.size() == 0) {
                     EwfEntityUser user = (EwfEntityUser) listEntity.get(0);
                     this.getServer().setSessionAttribute(EwfEntityUser.class.getName(), user);
                     String pageName = admin ? EwfPageAdminHome.class.getName() : EwfPageFinalPage.class.getName();
