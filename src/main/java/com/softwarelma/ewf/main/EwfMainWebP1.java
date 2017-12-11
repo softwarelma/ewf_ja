@@ -22,27 +22,27 @@ import com.vaadin.ui.UI;
  * initialize non-component functionality.
  */
 @Theme("mytheme")
-public class EwfMainWeb extends UI {
+public class EwfMainWebP1 extends UI {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
 		try {
-			// VaadinService.getCurrentRequest().getWrappedSession().setAttribute(EwfMainWeb.class.getName(),
+			// VaadinService.getCurrentRequest().getWrappedSession().setAttribute(EwfMainWebP1.class.getName(),
 			// this);
 			VaadinService.getCurrentRequest().getWrappedSession().setAttribute("ewfUi", this);
 			EwfServer server = EwfServer.getInstance();
-			new EwfClientWeb(server, "home");
+			new EwfClientWeb(server, "p1");
 		} catch (EpeAppException e) {
 			// TODO goto login? just try once
 		}
 
 	}
 
-	@WebServlet(urlPatterns = "/home/*", name = "EwfMainWebServlet", asyncSupported = true)
-	@VaadinServletConfiguration(ui = EwfMainWeb.class, productionMode = false)
-	public static class EwfMainWebServlet extends VaadinServlet {
+	@WebServlet(urlPatterns = { "/p1/*", "/VAADIN/*" }, name = "EwfMainWebP1Servlet", asyncSupported = true)
+	@VaadinServletConfiguration(ui = EwfMainWebP1.class, productionMode = false)
+	public static class EwfMainWebP1Servlet extends VaadinServlet {
 		private static final long serialVersionUID = 1L;
 	}
 }
