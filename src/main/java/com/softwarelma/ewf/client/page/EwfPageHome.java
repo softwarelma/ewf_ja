@@ -2,6 +2,7 @@ package com.softwarelma.ewf.client.page;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.ewf.client.EwfClientWeb;
+import com.vaadin.server.Responsive;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -35,9 +36,21 @@ public class EwfPageHome extends EwfPageAbstract {
 
 		Label label = new Label("Home");
 
-		verticalLayout.addComponent(label);
-		verticalLayout.addComponent(bLogout);
-		return verticalLayout;
+		// Have some component with an appropriate style name
+		Label c = new Label("Here be text");
+		c.setSizeFull();
+		c.addStyleName("myresponsive");
+		// content.addComponent(c);
+
+		// Enable Responsive CSS selectors for the component
+		Responsive.makeResponsive(c);
+		
+		return c;
+
+//		verticalLayout.addComponent(label);
+//		verticalLayout.addComponent(bLogout);
+//		verticalLayout.addComponent(c);
+//		return verticalLayout;
 	}
 
 }
