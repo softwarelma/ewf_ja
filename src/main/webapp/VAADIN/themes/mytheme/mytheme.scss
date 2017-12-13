@@ -40,6 +40,8 @@
 		background-color:#ACACAC;
 	}
   
+	// HOME STYLE - BEGIN
+  
 	/* Basic settings for all sizes */
 	.myresponsive {
 	    padding: 5px;
@@ -47,21 +49,91 @@
 	}
 	
 	/* Small size */
-	.myresponsive[width-range~="0-300px"] {
+	.myresponsive[width-range~="0-400px"] {
 	    background: orange;
 	    font-size: 16pt;
 	}
 	
 	/* Medium size */
-	.myresponsive[width-range~="301px-600px"] {
+	.myresponsive[width-range~="401px-800px"] {
 	    background: azure;
 	    font-size: 24pt;
 	}
 	
 	/* Anything bigger */
-	.myresponsive[width-range~="601px-"] {
+	.myresponsive[width-range~="801px-"] {
 	    background: palegreen;
 	    font-size: 36pt;
 	}
+
+	// HOME STYLE - END
+
+	// P1 STYLE - BEGIN
+
+	/* Various general settings */
+	.flexwrap {
+	    background: black;
+	    color: white;
+	
+	    .title {
+	        font-weight: bold;
+	        font-size: 20px;
+	        line-height: 30px;
+	        padding: 5px;
+	    }
+	
+	    .itembox {
+	        white-space: normal;
+	        vertical-align: top;
+	    }
+	
+	    .itembox.v-label {padding: 5px}
+	}
+	
+	.flexwrap[width-range~="0-499px"] {
+	    .itembox {width: 100%}
+	}
+	
+	.flexwrap[width-range~="500px-"] {
+	    .itembox {width: 30%}
+	}	
+	
+	// P1 STYLE - END
+
+	// P2 STYLE - BEGIN
+
+	/* Common settings */
+	.toggledisplay {
+	    .enoughspace, .notenoughspace {
+	        color: white;
+	        padding: 5px;
+	    }
+	
+	    .notenoughspace { /* Really small */
+	        background: red;
+	        font-weight: normal;
+	        font-size: 10px;
+	        line-height: 15px;
+	    }
+	
+	    .enoughspace { /* Really big */
+	        background: darkgreen;
+	        font-weight: bold;
+	        font-size: 20px;
+	        line-height: 30px;
+	    }
+	}
+	
+	/* Quite little space */
+	.toggledisplay[width-range~="0-499px"] {
+	    .enoughspace    {display: none}
+	}
+	
+	/* Plenty of space */
+	.toggledisplay[width-range~="500px-"] {
+	    .notenoughspace {display: none}
+	}
+
+	// P2 STYLE - END
 
 }
