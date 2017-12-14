@@ -18,6 +18,7 @@ import com.softwarelma.ewf.client.page.EwfPageSite;
 import com.softwarelma.ewf.main.EwfMainWeb;
 import com.softwarelma.ewf.server.EwfServer;
 import com.vaadin.server.VaadinService;
+import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
@@ -56,8 +57,9 @@ public class EwfClientWeb implements Serializable {
 	}
 
 	public void navigate(String pageName) throws EpeAppException {
-		UI ewfUi = (UI) VaadinService.getCurrentRequest().getWrappedSession()
-				.getAttribute("ewfUi");
+		WrappedSession session = VaadinService.getCurrentRequest().getWrappedSession();
+		System.out.println("session id = " + session.getId());
+		UI ewfUi = (UI) session.getAttribute("ewfUi");
 		EpeAppUtils.checkNull("ewfUi", ewfUi);
 		ewfUi.setContent(this.getContent(pageName));
 	}

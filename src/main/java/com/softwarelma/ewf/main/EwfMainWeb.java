@@ -7,10 +7,15 @@ import com.softwarelma.ewf.client.EwfClientWeb;
 import com.softwarelma.ewf.server.EwfServer;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser
@@ -28,6 +33,38 @@ public class EwfMainWeb extends UI {
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
+		VerticalLayout mainLayout = new VerticalLayout();
+		setContent(mainLayout);
+
+		MenuBar mainMenuBar = new MenuBar();
+
+		mainMenuBar.addItem("P1", new MenuBar.Command() {
+			public void menuSelected(MenuBar.MenuItem selectedItem) {
+				getUI().getPage().setLocation("p1/");
+			}
+		});
+
+		mainMenuBar.addItem("P2", new MenuBar.Command() {
+			public void menuSelected(MenuBar.MenuItem selectedItem) {
+				getUI().getPage().setLocation("p2/");
+			}
+		});
+
+		mainLayout.addComponent(mainMenuBar);
+
+//		CssLayout content = new CssLayout();
+//		content.setSizeFull();
+//		mainLayout.addComponent(content);
+
+//		navigator = new Navigator(this, content);
+//		navigator.addView("services", ServiceView.class);
+//		navigator.addView("entities", EntityView.class);
+//		navigator.navigateTo("services");
+//		setNavigator(navigator);
+	}
+
+	
+	private void init2() {
 		try {
 			// VaadinService.getCurrentRequest().getWrappedSession().setAttribute(EwfMainWeb.class.getName(),
 			// this);
