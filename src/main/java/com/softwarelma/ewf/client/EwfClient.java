@@ -47,7 +47,7 @@ public class EwfClient {
         return VaadinService.getCurrentRequest().getWrappedSession();
     }
 
-    public void navigate(UI ui, String pageName) throws EpeAppException {
+    public void loadPage(UI ui, String pageName) throws EpeAppException {
         EpeAppUtils.checkNull("ui", ui);
         EpeAppUtils.checkEmpty("pageName", pageName);
         EwfPageInterface page = new EwfPageDefault(this, pageName);
@@ -125,11 +125,45 @@ public class EwfClient {
             contentBean.setName("benesserePsicofisico");
             listContentBean.add(contentBean);
         } else if ("trattamentiLayout".equals(compName)) {
+            contentBean = new EwfContentBean();
+            contentBean.setComp(true);
+            contentBean.setName("sportivo");
+            listContentBean.add(contentBean);
+
+            contentBean = new EwfContentBean();
+            contentBean.setComp(true);
+            contentBean.setName("svedese");
+            listContentBean.add(contentBean);
+
+            contentBean = new EwfContentBean();
+            contentBean.setComp(true);
+            contentBean.setName("custom");
+            listContentBean.add(contentBean);
         } else if ("saluteOlistica".equals(compName)) {
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("saluteOlisticaLabel");
+            listContentBean.add(contentBean);
         } else if ("benesserePsicofisico".equals(compName)) {
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("benesserePsicofisicoLabel");
+            listContentBean.add(contentBean);
         } else if ("sportivo".equals(compName)) {
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("sportivoLabel");
+            listContentBean.add(contentBean);
         } else if ("svedese".equals(compName)) {
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("svedeseLabel");
+            listContentBean.add(contentBean);
         } else if ("custom".equals(compName)) {
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("customLabel");
+            listContentBean.add(contentBean);
         } else {
             throw new EpeAppException("Invalid comp " + compName);
         }
@@ -138,11 +172,37 @@ public class EwfClient {
     }
 
     private String getClassNameComponentNotNullFake(String elemName) throws EpeAppException {
-        return null;// TODO
+        String elem = "com.vaadin.ui.Label";
+
+        if ("saluteOlisticaLabel".equals(elemName)) {
+            return elem;
+        } else if ("benesserePsicofisicoLabel".equals(elemName)) {
+            return elem;
+        } else if ("sportivoLabel".equals(elemName)) {
+            return elem;
+        } else if ("svedeseLabel".equals(elemName)) {
+            return elem;
+        } else if ("customLabel".equals(elemName)) {
+            return elem;
+        } else {
+            throw new EpeAppException("Invalid elem " + elemName);
+        }
     }
 
     private String getTextNotNullFake(String elemName) throws EpeAppException {
-        return null;// TODO
+        if ("saluteOlisticaLabel".equals(elemName)) {
+            return elemName + " text";
+        } else if ("benesserePsicofisicoLabel".equals(elemName)) {
+            return elemName + " text";
+        } else if ("sportivoLabel".equals(elemName)) {
+            return elemName + " text";
+        } else if ("svedeseLabel".equals(elemName)) {
+            return elemName + " text";
+        } else if ("customLabel".equals(elemName)) {
+            return elemName + " text";
+        } else {
+            throw new EpeAppException("Invalid elem " + elemName);
+        }
     }
 
 }

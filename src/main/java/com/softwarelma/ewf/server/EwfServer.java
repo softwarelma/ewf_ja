@@ -54,8 +54,8 @@ public class EwfServer implements Serializable {
         this.client.removeSessionAttribute(name);
     }
 
-    public void navigate(UI ui, String pageName) throws EpeAppException {
-        this.client.navigate(ui, pageName);
+    public void loadPage(UI ui, String pageName) throws EpeAppException {
+        this.client.loadPage(ui, pageName);
     }
 
 }

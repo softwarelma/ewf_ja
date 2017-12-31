@@ -15,7 +15,7 @@ import com.softwarelma.ewf.client.page.old.EwfPageHomeP1;
 import com.softwarelma.ewf.client.page.old.EwfPageHomeP2;
 import com.softwarelma.ewf.client.page.old.EwfPageLogin;
 import com.softwarelma.ewf.client.page.old.EwfPageSite;
-import com.softwarelma.ewf.main.old.EwfMainWeb;
+import com.softwarelma.ewf.main.old.EwfMainWeb2;
 import com.softwarelma.ewf.server.old.EwfServer;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
@@ -65,8 +65,8 @@ public class EwfClientWeb implements Serializable {
 	}
 
 	public void navigateOld(String pageName) throws EpeAppException {
-		EwfMainWeb mainWeb = (EwfMainWeb) VaadinService.getCurrentRequest().getWrappedSession()
-				.getAttribute(EwfMainWeb.class.getName());
+		EwfMainWeb2 mainWeb = (EwfMainWeb2) VaadinService.getCurrentRequest().getWrappedSession()
+				.getAttribute(EwfMainWeb2.class.getName());
 		EpeAppUtils.checkNull("mainWeb", mainWeb);
 		mainWeb.setContent(this.getContent(pageName));
 	}

@@ -12,7 +12,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
 @Theme("mytheme")
-public class EwfMainWeb extends UI {
+public class EwfMainHome extends UI {
 
     private static final long serialVersionUID = 1L;
     private static final String pageName = EwfCommonConstants.PAGE_NAME_HOME;
@@ -21,15 +21,18 @@ public class EwfMainWeb extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         try {
+            // FIXME
+            System.out.println("--- session id (" + pageName + "): " + this.getSession().getSession().getId());
+
             EwfServer server = EwfServer.getInstance();
-            server.navigate(this, pageName);
+            server.loadPage(this, pageName);
         } catch (EpeAppException e) {
         }
     }
 
-    @WebServlet(urlPatterns = { pageUrl, "/VAADIN/*" }, name = "EwfMainWebServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = EwfMainWeb.class, productionMode = false)
-    public static class EwfMainWebServlet extends VaadinServlet {
+    @WebServlet(urlPatterns = pageUrl, name = "EwfMainHomeServlet", asyncSupported = true)
+    @VaadinServletConfiguration(ui = EwfMainHome.class, productionMode = false)
+    public static class EwfMainHomeServlet extends VaadinServlet {
         private static final long serialVersionUID = 1L;
     }
 
