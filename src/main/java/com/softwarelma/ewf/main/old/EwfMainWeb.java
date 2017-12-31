@@ -52,7 +52,7 @@ public class EwfMainWeb extends UI {
 
 		mainLayout.addComponent(mainMenuBar);
 
-//		CssLayout content = new CssLayout();
+		CssLayout content = new CssLayout();
 //		content.setSizeFull();
 //		mainLayout.addComponent(content);
 
@@ -70,14 +70,14 @@ public class EwfMainWeb extends UI {
 			// this);
 			VaadinService.getCurrentRequest().getWrappedSession().setAttribute("ewfUi", this);
 			EwfServer server = EwfServer.getInstance();
-			new EwfClientWeb(server, "home");
+			new EwfClientWeb(server, "home2");
 		} catch (EpeAppException e) {
 			// TODO goto login? just try once
 		}
 
 	}
 
-	@WebServlet(urlPatterns = "/home/*", name = "EwfMainWebServlet", asyncSupported = true)
+	@WebServlet(urlPatterns = "/home2/*", name = "EwfMainWebServlet", asyncSupported = true)
 	@VaadinServletConfiguration(ui = EwfMainWeb.class, productionMode = false)
 	public static class EwfMainWebServlet extends VaadinServlet {
 		private static final long serialVersionUID = 1L;
