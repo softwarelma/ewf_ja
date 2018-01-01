@@ -21,9 +21,6 @@ public class EwfMainTrattamenti extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         try {
-            // FIXME
-            System.out.println("--- session id (" + pageName + "): " + this.getSession().getSession().getId());
-
             EwfServer server = EwfServer.getInstance();
             server.loadPage(this, pageName);
         } catch (EpeAppException e) {

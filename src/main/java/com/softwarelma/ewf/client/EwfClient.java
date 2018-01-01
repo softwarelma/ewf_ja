@@ -7,6 +7,7 @@ import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppLogger;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.cont.EwfContentBean;
+import com.softwarelma.ewf.client.elem.EwfElemBean;
 import com.softwarelma.ewf.client.page.EwfPageDefault;
 import com.softwarelma.ewf.client.page.EwfPageInterface;
 import com.vaadin.server.VaadinService;
@@ -67,12 +68,8 @@ public class EwfClient {
         return this.getListContentBeanNotNullFake(compName);
     }
 
-    public String getClassNameComponentNotNull(String elemName) throws EpeAppException {
-        return this.getClassNameComponentNotNullFake(elemName);
-    }
-
-    public String getTextNotNull(String elemName) throws EpeAppException {
-        return this.getTextNotNullFake(elemName);
+    public EwfElemBean getElemBeanNotNull(String elemName) throws EpeAppException {
+        return this.getElemBeanNotNullFake(elemName);
     }
 
     ////////////////////////////////////////////////////////////
@@ -142,7 +139,22 @@ public class EwfClient {
         } else if ("saluteOlistica".equals(compName)) {
             contentBean = new EwfContentBean();
             contentBean.setComp(false);
-            contentBean.setName("saluteOlisticaLabel");
+            contentBean.setName("saluteOlisticaLabel1");
+            listContentBean.add(contentBean);
+
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("saluteOlisticaLabel2");
+            listContentBean.add(contentBean);
+
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("saluteOlisticaLabel3");
+            listContentBean.add(contentBean);
+
+            contentBean = new EwfContentBean();
+            contentBean.setComp(false);
+            contentBean.setName("saluteOlisticaLabel4");
             listContentBean.add(contentBean);
         } else if ("benesserePsicofisico".equals(compName)) {
             contentBean = new EwfContentBean();
@@ -171,38 +183,39 @@ public class EwfClient {
         return listContentBean;
     }
 
-    private String getClassNameComponentNotNullFake(String elemName) throws EpeAppException {
-        String elem = "com.vaadin.ui.Label";
+    public EwfElemBean getElemBeanNotNullFake(String elemName) throws EpeAppException {
+        EwfElemBean elemBean = new EwfElemBean();
+        String classNameComponent = "com.vaadin.ui.Label";
 
-        if ("saluteOlisticaLabel".equals(elemName)) {
-            return elem;
+        if ("saluteOlisticaLabel1".equals(elemName)) {
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
+        } else if ("saluteOlisticaLabel2".equals(elemName)) {
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
+        } else if ("saluteOlisticaLabel3".equals(elemName)) {
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
+        } else if ("saluteOlisticaLabel4".equals(elemName)) {
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
         } else if ("benesserePsicofisicoLabel".equals(elemName)) {
-            return elem;
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
         } else if ("sportivoLabel".equals(elemName)) {
-            return elem;
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
         } else if ("svedeseLabel".equals(elemName)) {
-            return elem;
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
         } else if ("customLabel".equals(elemName)) {
-            return elem;
+            elemBean.setComponentClassName(classNameComponent);
+            elemBean.setText(elemName + " text");
         } else {
             throw new EpeAppException("Invalid elem " + elemName);
         }
-    }
 
-    private String getTextNotNullFake(String elemName) throws EpeAppException {
-        if ("saluteOlisticaLabel".equals(elemName)) {
-            return elemName + " text";
-        } else if ("benesserePsicofisicoLabel".equals(elemName)) {
-            return elemName + " text";
-        } else if ("sportivoLabel".equals(elemName)) {
-            return elemName + " text";
-        } else if ("svedeseLabel".equals(elemName)) {
-            return elemName + " text";
-        } else if ("customLabel".equals(elemName)) {
-            return elemName + " text";
-        } else {
-            throw new EpeAppException("Invalid elem " + elemName);
-        }
+        return elemBean;
     }
 
 }

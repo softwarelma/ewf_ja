@@ -7,8 +7,8 @@ public class EwfElemDefault extends EwfElemAbstract {
 
     private static final long serialVersionUID = 1L;
 
-    public EwfElemDefault(EwfClient client, String name) throws EpeAppException {
-        super(client, name);
+    public EwfElemDefault(EwfClient client, String name, EwfElemBean elemBean) throws EpeAppException {
+        super(client, name, elemBean);
     }
 
 }

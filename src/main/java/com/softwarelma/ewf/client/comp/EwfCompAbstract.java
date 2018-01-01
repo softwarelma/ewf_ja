@@ -18,7 +18,7 @@ public abstract class EwfCompAbstract extends EwfContentAbstract implements EwfC
     private final List<EwfContentInterface> listContent;
 
     protected EwfCompAbstract(EwfClient client, String name) throws EpeAppException {
-        super(client, name);
+        super(client, name, null);
         this.listContent = new ArrayList<>();
         this.init();
     }
@@ -30,7 +30,8 @@ public abstract class EwfCompAbstract extends EwfContentAbstract implements EwfC
             EpeAppUtils.checkNull("contentBean", contentBean);
             EwfContentInterface content = contentBean.isComp()
                     ? new EwfCompDefault(this.getClient(), contentBean.getName())
-                    : new EwfElemDefault(this.getClient(), contentBean.getName());
+                    : new EwfElemDefault(this.getClient(), contentBean.getName(),
+                            this.getClient().getElemBeanNotNull(contentBean.getName()));
             this.listContent.add(content);
             this.getLayout().addComponent(content.getComponent());
         }

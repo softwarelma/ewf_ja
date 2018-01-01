@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
+import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.cont.EwfContentAbstract;
 
@@ -11,15 +12,15 @@ public abstract class EwfElemAbstract extends EwfContentAbstract implements EwfE
 
     private static final long serialVersionUID = 1L;
 
-    protected EwfElemAbstract(EwfClient client, String name) throws EpeAppException {
-        super(client, name);
-        this.init();
+    protected EwfElemAbstract(EwfClient client, String name, EwfElemBean elemBean) throws EpeAppException {
+        super(client, name, elemBean.getComponentClassName());
+        EpeAppUtils.checkNull("elemBean", elemBean);
+        this.init(elemBean.getText());
     }
 
-    private void init() throws EpeAppException {
-        String text = this.getClient().getTextNotNull(this.getName());
-
+    private void init(String text) throws EpeAppException {
         try {
+            // text could be null
             Method method = this.getComponent().getClass().getMethod("setValue", String.class);
             method.invoke(this.getComponent(), text);
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
