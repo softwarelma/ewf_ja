@@ -3,21 +3,24 @@ package com.softwarelma.ewf.client.cont;
 import java.io.Serializable;
 
 import com.softwarelma.ewf.client.EwfClient;
+import com.vaadin.ui.UI;
 
 public interface EwfContInterface extends Serializable {
 
-    public EwfClient getClient();
+	public EwfClient getClient();
 
-    public String getName();
+	public UI getUi();
 
-    public boolean isContainer();
+	public String getName();
 
-    public boolean isContent();
+	public boolean isContainer();
 
-    public boolean isPage();
+	public boolean isContent();
 
-    public boolean isComp();
+	public boolean isPage();
 
-    public boolean isElem();
+	public boolean isComp();
+
+	public boolean isElem();
 
 }

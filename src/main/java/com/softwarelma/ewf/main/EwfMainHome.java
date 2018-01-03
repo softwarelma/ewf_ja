@@ -14,23 +14,27 @@ import com.vaadin.ui.UI;
 @Theme("mytheme")
 public class EwfMainHome extends UI {
 
-    private static final long serialVersionUID = 1L;
-    private static final String pageName = EwfCommonConstants.PAGE_NAME_HOME;
-    private static final String pageUrl = "/" + pageName + "/*";
+	private static final long serialVersionUID = 1L;
+	private static final String pageName = EwfCommonConstants.PAGE_NAME_HOME;
+	private static final String pageUrl = "/" + pageName + "/*";
 
-    @Override
-    protected void init(VaadinRequest vaadinRequest) {
-        try {
-            EwfServer server = EwfServer.getInstance();
-            server.loadPage(this, pageName);
-        } catch (EpeAppException e) {
-        }
-    }
+	public EwfMainHome() {
+		System.out.println("----- main home");// FIXME remove
+	}
 
-    @WebServlet(urlPatterns = pageUrl, name = "EwfMainHomeServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = EwfMainHome.class, productionMode = false)
-    public static class EwfMainHomeServlet extends VaadinServlet {
-        private static final long serialVersionUID = 1L;
-    }
+	@Override
+	protected void init(VaadinRequest vaadinRequest) {
+		try {
+			EwfServer server = EwfServer.getInstance();
+			server.loadPage(this, pageName);
+		} catch (EpeAppException e) {
+		}
+	}
+
+	@WebServlet(urlPatterns = pageUrl, name = "EwfMainHomeServlet", asyncSupported = true)
+	@VaadinServletConfiguration(ui = EwfMainHome.class, productionMode = false)
+	public static class EwfMainHomeServlet extends VaadinServlet {
+		private static final long serialVersionUID = 1L;
+	}
 
 }
