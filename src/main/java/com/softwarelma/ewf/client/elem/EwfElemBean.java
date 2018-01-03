@@ -1,13 +1,21 @@
 package com.softwarelma.ewf.client.elem;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class EwfElemBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	// DEFAULT
+
 	private String componentClassName;// vaadin
 	private String text;
+
+	// CUSTOM
+
 	private String elemCustomClassName;// ewf
+	public Map<String, String> mapPageAndDescription;
 
 	public String getComponentClassName() {
 		return componentClassName;
@@ -31,6 +39,14 @@ public class EwfElemBean implements Serializable {
 
 	public void setElemCustomClassName(String elemCustomClassName) {
 		this.elemCustomClassName = elemCustomClassName;
+	}
+
+	public Map<String, String> getMapPageAndDescription() {
+		return mapPageAndDescription;
+	}
+
+	public void setMapPageAndDescription(Map<String, String> mapPageAndDescription) {
+		this.mapPageAndDescription = mapPageAndDescription;
 	}
 
 }

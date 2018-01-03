@@ -10,6 +10,7 @@ import com.softwarelma.ewf.client.cont.EwfContentBean;
 import com.softwarelma.ewf.client.elem.EwfElemBean;
 import com.softwarelma.ewf.client.page.EwfPageDefault;
 import com.softwarelma.ewf.client.page.EwfPageInterface;
+import com.softwarelma.ewf.common.EwfCommonConstants;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Component;
@@ -75,24 +76,24 @@ public class EwfClient {
 	////////////////////////////////////////////////////////////
 
 	private String getCompNameNotNullFake(String pageName) throws EpeAppException {
-		if ("home".equals(pageName)) {
-			return "homeLayout";
-		} else if ("trattamenti".equals(pageName)) {
-			return "trattamentiLayout";
+		if (EwfCommonConstants.mapPageAndDescription.containsKey(pageName)) {
+			return pageName + "Layout";
 		} else {
 			throw new EpeAppException("Invalid page " + pageName);
 		}
 	}
 
 	private String getClassNameLayoutNotNullFake(String compName) throws EpeAppException {
+		EpeAppUtils.checkEmpty("compName", compName);
 		String lay1 = "com.vaadin.ui.CssLayout";
 		String lay2 = "com.vaadin.ui.VerticalLayout";
 
-		if ("homeLayout".equals(compName)) {
+		if (compName.endsWith("Layout")
+				&& EwfCommonConstants.mapPageAndDescription.containsKey(compName.substring(0, compName.length() - 6))) {
 			return lay2;
-		} else if ("trattamentiLayout".equals(compName)) {
-			return lay2;
-		} else if ("saluteOlistica".equals(compName)) {
+		}
+
+		if ("saluteOlistica".equals(compName)) {
 			return lay2;
 		} else if ("benesserePsicofisico".equals(compName)) {
 			return lay2;
@@ -107,15 +108,19 @@ public class EwfClient {
 		}
 	}
 
+	private EwfContentBean getMenu() {
+		EwfContentBean contentBean = new EwfContentBean();
+		contentBean.setComp(false);
+		contentBean.setName(EwfCommonConstants.MENU_CLASS_NAME);
+		return contentBean;
+	}
+
 	private List<EwfContentBean> getListContentBeanNotNullFake(String compName) throws EpeAppException {
 		List<EwfContentBean> listContentBean = new ArrayList<>();
 		EwfContentBean contentBean;
 
 		if ("homeLayout".equals(compName)) {
-			contentBean = new EwfContentBean();
-			contentBean.setComp(false);
-			contentBean.setName("com.softwarelma.ewf.client.elem.EwfElemCustomMenu");
-			listContentBean.add(contentBean);
+			listContentBean.add(this.getMenu());
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
@@ -127,10 +132,7 @@ public class EwfClient {
 			contentBean.setName("benesserePsicofisico");
 			listContentBean.add(contentBean);
 		} else if ("trattamentiLayout".equals(compName)) {
-			contentBean = new EwfContentBean();
-			contentBean.setComp(false);
-			contentBean.setName("com.softwarelma.ewf.client.elem.EwfElemCustomMenu");
-			listContentBean.add(contentBean);
+			listContentBean.add(this.getMenu());
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
@@ -145,6 +147,34 @@ public class EwfClient {
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
 			contentBean.setName("custom");
+			listContentBean.add(contentBean);
+		} else if ("chisonoLayout".equals(compName)) {
+			listContentBean.add(this.getMenu());
+
+			contentBean = new EwfContentBean();
+			contentBean.setComp(false);
+			contentBean.setName("chisonoLabel");
+			listContentBean.add(contentBean);
+		} else if ("blogLayout".equals(compName)) {
+			listContentBean.add(this.getMenu());
+
+			contentBean = new EwfContentBean();
+			contentBean.setComp(false);
+			contentBean.setName("blogLabel");
+			listContentBean.add(contentBean);
+		} else if ("contattiLayout".equals(compName)) {
+			listContentBean.add(this.getMenu());
+
+			contentBean = new EwfContentBean();
+			contentBean.setComp(false);
+			contentBean.setName("contattiLabel");
+			listContentBean.add(contentBean);
+		} else if ("mappaLayout".equals(compName)) {
+			listContentBean.add(this.getMenu());
+
+			contentBean = new EwfContentBean();
+			contentBean.setComp(false);
+			contentBean.setName("mappaLabel");
 			listContentBean.add(contentBean);
 		} else if ("saluteOlistica".equals(compName)) {
 			contentBean = new EwfContentBean();
@@ -200,32 +230,13 @@ public class EwfClient {
 
 		if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustom")) {
 			elemBean.setElemCustomClassName(elemName);
-		} else if ("saluteOlisticaLabel1".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
-		} else if ("saluteOlisticaLabel2".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
-		} else if ("saluteOlisticaLabel3".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
-		} else if ("saluteOlisticaLabel4".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
-		} else if ("benesserePsicofisicoLabel".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
-		} else if ("sportivoLabel".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
-		} else if ("svedeseLabel".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
-		} else if ("customLabel".equals(elemName)) {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
+
+			if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
+				elemBean.setMapPageAndDescription(EwfCommonConstants.mapPageAndDescription);
+			}
 		} else {
-			throw new EpeAppException("Invalid elem " + elemName);
+			elemBean.setComponentClassName(classNameComponent);
+			elemBean.setText(elemName + " text");
 		}
 
 		return elemBean;

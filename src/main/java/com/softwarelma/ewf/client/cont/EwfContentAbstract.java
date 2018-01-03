@@ -1,5 +1,7 @@
 package com.softwarelma.ewf.client.cont;
 
+import java.util.Map;
+
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.EwfClient;
@@ -13,9 +15,11 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 
 	private static final long serialVersionUID = 1L;
 	private final Component component;// for a comp it is an AbstractLayout
+	private final Map<String, String> mapPageAndDescription;// could be null
 
 	protected EwfContentAbstract(EwfClient client, UI ui, String name, EwfElemBean elemBean) throws EpeAppException {
 		super(client, ui, name);
+		this.mapPageAndDescription = elemBean == null ? null : elemBean.getMapPageAndDescription();
 		String compElem = null;
 		String className = null;
 
@@ -51,7 +55,7 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 	}
 
 	@Override
-	public Component getComponent() {
+	public Component getComponent() throws EpeAppException {
 		return component;
 	}
 
@@ -63,6 +67,10 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 	@Override
 	public boolean isContent() {
 		return true;
+	}
+
+	protected Map<String, String> getMapPageAndDescription() {
+		return mapPageAndDescription;
 	}
 
 }

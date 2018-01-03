@@ -7,21 +7,18 @@ public class EwfCommonConstants {
 
 	public static final String APPLICATION_NAME = "ewf";
 
-	public static final String PAGE_NAME_HOME = "home";
-	public static final String PAGE_NAME_TRATTAMENTI = "trattamenti";
-	public static final String PAGE_NAME_CHI_SONO = "chisono";
-	public static final String PAGE_NAME_BLOG = "blog";
-	public static final String PAGE_NAME_CONTATTI = "contatti";
-	public static final String PAGE_NAME_MAPPA = "mappa";
-
 	public static final Map<String, String> mapPageAndDescription = new LinkedHashMap<>();
 	static {
-		mapPageAndDescription.put(PAGE_NAME_HOME, "Home");
-		mapPageAndDescription.put(PAGE_NAME_TRATTAMENTI, "Trattamenti");
-		mapPageAndDescription.put(PAGE_NAME_CHI_SONO, "Chi Sono");
-		mapPageAndDescription.put(PAGE_NAME_BLOG, "Blog");
-		mapPageAndDescription.put(PAGE_NAME_CONTATTI, "Contatti");
-		mapPageAndDescription.put(PAGE_NAME_MAPPA, "Mappa");
+		mapPageAndDescription.put("home", "Home");
+		mapPageAndDescription.put("trattamenti", "Trattamenti");
+		mapPageAndDescription.put("chisono", "Chi Sono");
+		mapPageAndDescription.put("blog", "Blog");
+		mapPageAndDescription.put("contatti", "Contatti");
+		mapPageAndDescription.put("mappa", "Mappa");
 	}
+
+	// public static String MENU_CLASS_NAME =
+	// "com.softwarelma.ewf.client.elem.EwfElemCustomMenu";
+	public static String MENU_CLASS_NAME = "com.softwarelma.ewf.client.elem.EwfElemCustomMenuResponsive";
 
 }

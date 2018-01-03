@@ -61,7 +61,7 @@ public abstract class EwfCompAbstract extends EwfContentAbstract implements EwfC
 	}
 
 	@Override
-	public AbstractLayout getLayout() {
+	public AbstractLayout getLayout() throws EpeAppException {
 		return (AbstractLayout) this.getComponent();
 	}
 
