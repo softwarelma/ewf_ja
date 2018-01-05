@@ -6,14 +6,16 @@ import java.lang.reflect.Method;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.cont.EwfContentAbstract;
+import com.softwarelma.ewf.client.cont.EwfContentBean;
 import com.vaadin.ui.UI;
 
 public abstract class EwfElemAbstract extends EwfContentAbstract implements EwfElemInterface {
 
 	private static final long serialVersionUID = 1L;
 
-	protected EwfElemAbstract(EwfClient client, UI ui, String name, EwfElemBean elemBean) throws EpeAppException {
-		super(client, ui, name, elemBean);
+	protected EwfElemAbstract(EwfClient client, UI ui, EwfElemBean elemBean, EwfContentBean contentBean)
+			throws EpeAppException {
+		super(client, ui, elemBean, contentBean);
 		this.init(elemBean == null ? null : elemBean.getText());
 	}
 

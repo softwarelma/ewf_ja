@@ -5,6 +5,7 @@ import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.comp.EwfCompDefault;
 import com.softwarelma.ewf.client.comp.EwfCompInterface;
 import com.softwarelma.ewf.client.cont.EwfContainerAbstract;
+import com.softwarelma.ewf.client.cont.EwfContentBean;
 import com.vaadin.ui.UI;
 
 public abstract class EwfPageAbstract extends EwfContainerAbstract implements EwfPageInterface {
@@ -15,7 +16,11 @@ public abstract class EwfPageAbstract extends EwfContainerAbstract implements Ew
 	protected EwfPageAbstract(EwfClient client, UI ui, String name) throws EpeAppException {
 		super(client, ui, name);
 		String compName = client.getCompNameNotNull(name);
-		this.comp = new EwfCompDefault(client, ui, compName);
+		EwfContentBean contentBean = new EwfContentBean();
+		contentBean.setComp(true);
+		contentBean.setName(compName);
+		contentBean.setStyleName("backColorGrey");
+		this.comp = new EwfCompDefault(client, ui, compName, contentBean);
 	}
 
 	@Override

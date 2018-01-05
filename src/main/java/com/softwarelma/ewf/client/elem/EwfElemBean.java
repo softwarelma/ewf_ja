@@ -11,6 +11,7 @@ public class EwfElemBean implements Serializable {
 
 	private String componentClassName;// vaadin
 	private String text;
+	private String fileName;
 
 	// CUSTOM
 
@@ -47,6 +48,14 @@ public class EwfElemBean implements Serializable {
 
 	public void setMapPageAndDescription(Map<String, String> mapPageAndDescription) {
 		this.mapPageAndDescription = mapPageAndDescription;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

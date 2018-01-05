@@ -3,6 +3,7 @@ package com.softwarelma.ewf.client.elem;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.EwfClient;
+import com.softwarelma.ewf.client.cont.EwfContentBean;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.UI;
@@ -11,8 +12,9 @@ public class EwfElemCustomMenu extends EwfElemAbstract {
 
 	private static final long serialVersionUID = 1L;
 
-	public EwfElemCustomMenu(EwfClient client, UI ui, String name, EwfElemBean elemBean) throws EpeAppException {
-		super(client, ui, name, elemBean);
+	public EwfElemCustomMenu(EwfClient client, UI ui, EwfElemBean elemBean, EwfContentBean contentBean)
+			throws EpeAppException {
+		super(client, ui, elemBean, contentBean);
 	}
 
 	@Override

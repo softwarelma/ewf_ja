@@ -3,7 +3,7 @@ package com.softwarelma.ewf.client.elem;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.EwfClient;
-import com.vaadin.ui.Alignment;
+import com.softwarelma.ewf.client.cont.EwfContentBean;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
@@ -13,9 +13,9 @@ public class EwfElemCustomMenuResponsive extends EwfElemAbstract {
 
 	private static final long serialVersionUID = 1L;
 
-	public EwfElemCustomMenuResponsive(EwfClient client, UI ui, String name, EwfElemBean elemBean)
+	public EwfElemCustomMenuResponsive(EwfClient client, UI ui, EwfElemBean elemBean, EwfContentBean contentBean)
 			throws EpeAppException {
-		super(client, ui, name, elemBean);
+		super(client, ui, elemBean, contentBean);
 	}
 
 	@Override

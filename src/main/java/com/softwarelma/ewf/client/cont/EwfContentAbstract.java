@@ -8,6 +8,8 @@ import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.elem.EwfElemBean;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractLayout;
+import com.vaadin.ui.AbstractOrderedLayout;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
@@ -16,18 +18,26 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 	private static final long serialVersionUID = 1L;
 	private final Component component;// for a comp it is an AbstractLayout
 	private final Map<String, String> mapPageAndDescription;// could be null
+	private final String fileName;// could be null
 
-	protected EwfContentAbstract(EwfClient client, UI ui, String name, EwfElemBean elemBean) throws EpeAppException {
-		super(client, ui, name);
+	protected EwfContentAbstract(EwfClient client, UI ui, EwfElemBean elemBean, EwfContentBean contentBean)
+			throws EpeAppException {
+		super(client, ui, contentBean == null ? null : contentBean.getName());
+		EpeAppUtils.checkNull("contentBean", contentBean);
 		this.mapPageAndDescription = elemBean == null ? null : elemBean.getMapPageAndDescription();
+		this.fileName = elemBean == null ? null : elemBean.getFileName();
 		String compElem = null;
 		String className = null;
 
 		try {
 			if (this.isComp()) {
 				compElem = "layout";
-				className = client.getClassNameLayoutNotNull(name);
+				className = client.getClassNameLayoutNotNull(this.getName());
 				this.component = (AbstractLayout) Class.forName(className).newInstance();
+
+				if (this.component instanceof AbstractOrderedLayout) {
+					((AbstractOrderedLayout) this.component).setDefaultComponentAlignment(Alignment.TOP_CENTER);
+				}
 			} else if (this.isElem()) {
 				EpeAppUtils.checkNull("elemBean", elemBean);
 
@@ -49,8 +59,13 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 				throw new EpeAppException("A content should be either a comp or an elem.");
 			}
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			throw new EpeAppException(
-					"Invalid " + compElem + " class name \"" + className + "\" for comp name \"" + name + "\".", e);
+			throw new EpeAppException("Invalid " + compElem + " class name \"" + className + "\" for comp name \""
+					+ this.getName() + "\".", e);
+		}
+
+		EpeAppUtils.checkNull("component", this.component);
+		if (contentBean.getStyleName() != null) {
+			this.component.addStyleName(contentBean.getStyleName());
 		}
 	}
 
@@ -71,6 +86,10 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 
 	protected Map<String, String> getMapPageAndDescription() {
 		return mapPageAndDescription;
+	}
+
+	protected String getFileName() {
+		return fileName;
 	}
 
 }

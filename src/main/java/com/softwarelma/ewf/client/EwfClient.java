@@ -124,11 +124,13 @@ public class EwfClient {
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
+			contentBean.setStyleName("backColorGreen");
 			contentBean.setName("saluteOlistica");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
+			contentBean.setStyleName("backColorGreen");
 			contentBean.setName("benesserePsicofisico");
 			listContentBean.add(contentBean);
 		} else if ("trattamentiLayout".equals(compName)) {
@@ -136,16 +138,19 @@ public class EwfClient {
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
+			contentBean.setStyleName("backColorGreen");
 			contentBean.setName("sportivo");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
+			contentBean.setStyleName("backColorGreen");
 			contentBean.setName("svedese");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
+			contentBean.setStyleName("backColorGreen");
 			contentBean.setName("custom");
 			listContentBean.add(contentBean);
 		} else if ("chisonoLayout".equals(compName)) {
@@ -194,7 +199,7 @@ public class EwfClient {
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(false);
-			contentBean.setName("saluteOlisticaLabel4");
+			contentBean.setName("com.softwarelma.ewf.client.elem.EwfElemCustomImage");
 			listContentBean.add(contentBean);
 		} else if ("benesserePsicofisico".equals(compName)) {
 			contentBean = new EwfContentBean();
@@ -233,10 +238,26 @@ public class EwfClient {
 
 			if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
 				elemBean.setMapPageAndDescription(EwfCommonConstants.mapPageAndDescription);
+			} else if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomImage")) {
+				elemBean.setFileName("culo.jpeg");
 			}
 		} else {
-			elemBean.setComponentClassName(classNameComponent);
-			elemBean.setText(elemName + " text");
+			if (elemName.startsWith("saluteOlisticaLabel1")) {
+				elemBean.setComponentClassName(classNameComponent);
+				elemBean.setText("Titolo ksad lskjfownvo slnfow");
+			} else if (elemName.startsWith("saluteOlisticaLabel2")) {
+				elemBean.setComponentClassName(classNameComponent);
+				elemBean.setText("Sottotitolo slkfjslfjowinvom fiwjf wo fwif aljfoffn af owifhwoi");
+			} else if (elemName.startsWith("saluteOlisticaLabel3")) {
+				elemBean.setComponentClassName(classNameComponent);
+				elemBean.setText(
+						"Intro slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj. "
+								+ "Svil  slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj. "
+								+ "Fine  slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj.");
+			} else {
+				elemBean.setComponentClassName(classNameComponent);
+				elemBean.setText(elemName + " text");
+			}
 		}
 
 		return elemBean;

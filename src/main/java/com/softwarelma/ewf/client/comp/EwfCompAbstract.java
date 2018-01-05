@@ -22,8 +22,8 @@ public abstract class EwfCompAbstract extends EwfContentAbstract implements EwfC
 	private static final long serialVersionUID = 1L;
 	private final List<EwfContentInterface> listContent;
 
-	protected EwfCompAbstract(EwfClient client, UI ui, String name) throws EpeAppException {
-		super(client, ui, name, null);
+	protected EwfCompAbstract(EwfClient client, UI ui, String name, EwfContentBean contentBean) throws EpeAppException {
+		super(client, ui, null, contentBean);
 		this.listContent = new ArrayList<>();
 		this.init();
 	}
@@ -36,22 +36,22 @@ public abstract class EwfCompAbstract extends EwfContentAbstract implements EwfC
 			EwfContentInterface content;
 
 			if (contentBean.isComp()) {
-				content = new EwfCompDefault(this.getClient(), this.getUi(), contentBean.getName());
+				content = new EwfCompDefault(this.getClient(), this.getUi(), contentBean.getName(), contentBean);
 			} else {
 				if (contentBean.getName().startsWith("com.softwarelma.ewf.client.elem.EwfElemCustom")) {
 					try {
 						Constructor<?> constructor = Class.forName(contentBean.getName())
-								.getConstructor(EwfClient.class, UI.class, String.class, EwfElemBean.class);
+								.getConstructor(EwfClient.class, UI.class, EwfElemBean.class, EwfContentBean.class);
 						content = (EwfElemAbstract) constructor.newInstance(this.getClient(), this.getUi(),
-								contentBean.getName(), this.getClient().getElemBeanNotNull(contentBean.getName()));
+								this.getClient().getElemBeanNotNull(contentBean.getName()), contentBean);
 					} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 							| NoSuchMethodException | SecurityException | IllegalArgumentException
 							| InvocationTargetException e) {
 						throw new EpeAppException("Invalid content name: " + contentBean.getName(), e);
 					}
 				} else {
-					content = new EwfElemDefault(this.getClient(), this.getUi(), contentBean.getName(),
-							this.getClient().getElemBeanNotNull(contentBean.getName()));
+					content = new EwfElemDefault(this.getClient(), this.getUi(),
+							this.getClient().getElemBeanNotNull(contentBean.getName()), contentBean);
 				}
 			}
 
