@@ -94,7 +94,7 @@ public class EwfClient {
 		}
 
 		if ("saluteOlistica".equals(compName)) {
-			return lay2;
+			return lay1;
 		} else if ("benesserePsicofisico".equals(compName)) {
 			return lay2;
 		} else if ("sportivo".equals(compName)) {
@@ -118,19 +118,22 @@ public class EwfClient {
 	private List<EwfContentBean> getListContentBeanNotNullFake(String compName) throws EpeAppException {
 		List<EwfContentBean> listContentBean = new ArrayList<>();
 		EwfContentBean contentBean;
+		List<String> listStyleName = new ArrayList<>();
 
 		if ("homeLayout".equals(compName)) {
 			listContentBean.add(this.getMenu());
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
-			contentBean.setStyleName("backColorGreen");
+			listStyleName.add("backColorGreen");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("saluteOlistica");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
-			contentBean.setStyleName("backColorGreen");
+			listStyleName.add("backColorGreen");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("benesserePsicofisico");
 			listContentBean.add(contentBean);
 		} else if ("trattamentiLayout".equals(compName)) {
@@ -138,19 +141,22 @@ public class EwfClient {
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
-			contentBean.setStyleName("backColorGreen");
+			listStyleName.add("backColorGreen");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("sportivo");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
-			contentBean.setStyleName("backColorGreen");
+			listStyleName.add("backColorGreen");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("svedese");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
-			contentBean.setStyleName("backColorGreen");
+			listStyleName.add("backColorGreen");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("custom");
 			listContentBean.add(contentBean);
 		} else if ("chisonoLayout".equals(compName)) {
@@ -184,21 +190,31 @@ public class EwfClient {
 		} else if ("saluteOlistica".equals(compName)) {
 			contentBean = new EwfContentBean();
 			contentBean.setComp(false);
+			listStyleName.add("fontTitle");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("saluteOlisticaLabel1");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(false);
+			listStyleName.add("fontSubtitle");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("saluteOlisticaLabel2");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(false);
+			listStyleName.add("fontText");
+			listStyleName.add("ewfItembox");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("saluteOlisticaLabel3");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(false);
+			// listStyleName.add("backColorGreen");
+			listStyleName.add("ewfItembox");
+			contentBean.setListStyleName(listStyleName);
 			contentBean.setName("com.softwarelma.ewf.client.elem.EwfElemCustomImage");
 			listContentBean.add(contentBean);
 		} else if ("benesserePsicofisico".equals(compName)) {
@@ -251,9 +267,9 @@ public class EwfClient {
 			} else if (elemName.startsWith("saluteOlisticaLabel3")) {
 				elemBean.setComponentClassName(classNameComponent);
 				elemBean.setText(
-						"Intro slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj. "
-								+ "Svil  slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj. "
-								+ "Fine  slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj.");
+						"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Intro slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj. <br>"
+								+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Svil  slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj. <br>"
+								+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fine  slf slfj slfjslk  jlsjwonlsoiw  lsj flsaj fsljf lsj fsljf lska jfsljf as jfñasljpfoiqjhp9hgpqpuiga hFH AH A HFOAIF JHUIQPHPFA  ñafjasñoifjw lksj fslkfj op jalfj alfj alfj afioqjfoiwjhfowi flf alj.");
 			} else {
 				elemBean.setComponentClassName(classNameComponent);
 				elemBean.setText(elemName + " text");

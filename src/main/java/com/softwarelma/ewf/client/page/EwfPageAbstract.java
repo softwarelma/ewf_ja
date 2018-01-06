@@ -1,5 +1,8 @@
 package com.softwarelma.ewf.client.page;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.comp.EwfCompDefault;
@@ -19,7 +22,9 @@ public abstract class EwfPageAbstract extends EwfContainerAbstract implements Ew
 		EwfContentBean contentBean = new EwfContentBean();
 		contentBean.setComp(true);
 		contentBean.setName(compName);
-		contentBean.setStyleName("backColorGrey");
+		List<String> listStyleName = new ArrayList<>();
+		listStyleName.add("backColorGrey");
+		contentBean.setListStyleName(listStyleName);
 		this.comp = new EwfCompDefault(client, ui, compName, contentBean);
 	}
 

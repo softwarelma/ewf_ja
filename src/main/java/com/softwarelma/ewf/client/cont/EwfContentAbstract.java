@@ -6,11 +6,14 @@ import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.elem.EwfElemBean;
+import com.vaadin.server.Responsive;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 
 public abstract class EwfContentAbstract extends EwfContAbstract implements EwfContentInterface {
@@ -34,10 +37,18 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 				compElem = "layout";
 				className = client.getClassNameLayoutNotNull(this.getName());
 				this.component = (AbstractLayout) Class.forName(className).newInstance();
+				AbstractLayout layout = (AbstractLayout) this.component;
 
-				if (this.component instanceof AbstractOrderedLayout) {
-					((AbstractOrderedLayout) this.component).setDefaultComponentAlignment(Alignment.TOP_CENTER);
+				if (layout instanceof AbstractOrderedLayout) {
+					((AbstractOrderedLayout) layout).setDefaultComponentAlignment(Alignment.TOP_CENTER);
 				}
+
+				layout.setWidth("100%");
+				layout.addStyleName("ewfFlexWrap");
+				// content.addComponent(layout);
+
+				// Enable Responsive CSS selectors for the layout
+				Responsive.makeResponsive(layout);
 			} else if (this.isElem()) {
 				EpeAppUtils.checkNull("elemBean", elemBean);
 
@@ -47,6 +58,10 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 					className = elemBean.getComponentClassName();
 					EpeAppUtils.checkEmpty("componentClassName", className);
 					this.component = (AbstractComponent) Class.forName(className).newInstance();
+
+					if (this.component instanceof Label) {
+						((Label) this.component).setContentMode(ContentMode.HTML);
+					}
 				} else {
 					// custom elem
 					compElem = "custom Vaadin component";
@@ -64,8 +79,10 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 		}
 
 		EpeAppUtils.checkNull("component", this.component);
-		if (contentBean.getStyleName() != null) {
-			this.component.addStyleName(contentBean.getStyleName());
+		if (contentBean.getListStyleName() != null) {
+			for (String styleName : contentBean.getListStyleName()) {
+				this.component.addStyleName(styleName);
+			}
 		}
 	}
 

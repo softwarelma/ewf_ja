@@ -1,13 +1,14 @@
 package com.softwarelma.ewf.client.cont;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class EwfContentBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private boolean comp;// or element
-	private String styleName;
+	private List<String> listStyleName;
 
 	public String getName() {
 		return name;
@@ -29,12 +30,12 @@ public class EwfContentBean implements Serializable {
 		return !this.comp;
 	}
 
-	public String getStyleName() {
-		return styleName;
+	public List<String> getListStyleName() {
+		return listStyleName;
 	}
 
-	public void setStyleName(String styleName) {
-		this.styleName = styleName;
+	public void setListStyleName(List<String> listStyleName) {
+		this.listStyleName = listStyleName;
 	}
 
 }

@@ -36,16 +36,50 @@
 
   // Insert your own theme rules here
 
-	.backColorGrey{
-		background-color:#ACACAC;
+	.ewfFlexWrap {
+		.backColorGrey{
+			background-color:#ACACAC;
+		}
+	  
+		.backColorGreen{
+			background-color:#8AAC68;
+		}
+	
+		.fontTitle{
+			font-size: 40px;
+			font-weight: 700;
+			font-family: "Times New Roman", Georgia, Serif;
+			text-align: center;
+			width: 100%;
+		}
+	
+		.fontSubtitle{
+			font-size: 22px;
+			font-weight: 500;
+			font-family: "Courier New", Courier, monospace;
+			text-align: center;
+			width: 100%;
+		}
+	
+		.fontText{
+			font-size: 16px;
+			font-weight: 300;
+			font-family: "Open Sans", sans-serif;
+			text-align: left;
+			width: 100%;
+		}
 	}
-  
-	.backColorGreen{
-		background-color:#8AAC8A;
+	
+	.ewfFlexWrap[width-range~="0-499px"] {
+	    .ewfItembox {width: 100%}
 	}
-  
+
+	.ewfFlexWrap[width-range~="500px-"] {
+	    .ewfItembox {width: 50%}
+	}	
+
 	// HOME STYLE - BEGIN
-  
+
 	/* Basic settings for all sizes */
 	.myresponsive {
 	    padding: 5px;

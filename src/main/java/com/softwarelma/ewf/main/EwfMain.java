@@ -46,7 +46,7 @@ public class EwfMain extends UI {
 			// Do initialization which takes some time.
 			// Here represented by a 1s sleep
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
 
