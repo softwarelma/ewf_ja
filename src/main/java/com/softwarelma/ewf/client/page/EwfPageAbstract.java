@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
+import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.comp.EwfCompDefault;
 import com.softwarelma.ewf.client.comp.EwfCompInterface;
@@ -18,7 +19,10 @@ public abstract class EwfPageAbstract extends EwfContainerAbstract implements Ew
 
 	protected EwfPageAbstract(EwfClient client, UI ui, String name) throws EpeAppException {
 		super(client, ui, name);
-		String compName = client.getCompNameNotNull(name);
+		EwfPageBean pageBean = client.getPageBeanNotNull(name);
+		EpeAppUtils.checkNull("pageBean", pageBean);
+		String compName = pageBean.getCompName();
+		EpeAppUtils.checkNull("compName", compName);
 		EwfContentBean contentBean = new EwfContentBean();
 		contentBean.setComp(true);
 		contentBean.setName(compName);

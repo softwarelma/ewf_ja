@@ -1,10 +1,12 @@
 package com.softwarelma.ewf.client.cont;
 
+import java.util.List;
 import java.util.Map;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.EwfClient;
+import com.softwarelma.ewf.client.comp.EwfCompBean;
 import com.softwarelma.ewf.client.elem.EwfElemBean;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.ContentMode;
@@ -22,6 +24,7 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 	private final Component component;// for a comp it is an AbstractLayout
 	private final Map<String, String> mapPageAndDescription;// could be null
 	private final String fileName;// could be null
+	private final List<EwfContentBean> listContentBean;// could be null
 
 	protected EwfContentAbstract(EwfClient client, UI ui, EwfElemBean elemBean, EwfContentBean contentBean)
 			throws EpeAppException {
@@ -35,7 +38,11 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 		try {
 			if (this.isComp()) {
 				compElem = "layout";
-				className = client.getClassNameLayoutNotNull(this.getName());
+				EwfCompBean compBean = client.getCompBeanNotNull(this.getName());
+				EpeAppUtils.checkNull("compBean", compBean);
+				this.listContentBean = compBean.getListContentBean();
+				className = compBean.getClassNameLayout();
+				EpeAppUtils.checkNull("className", className);
 				this.component = (AbstractLayout) Class.forName(className).newInstance();
 				AbstractLayout layout = (AbstractLayout) this.component;
 
@@ -51,6 +58,7 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 				Responsive.makeResponsive(layout);
 			} else if (this.isElem()) {
 				EpeAppUtils.checkNull("elemBean", elemBean);
+				this.listContentBean = null;
 
 				if (elemBean.getElemCustomClassName() == null) {
 					// default elem
@@ -107,6 +115,10 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 
 	protected String getFileName() {
 		return fileName;
+	}
+
+	protected List<EwfContentBean> getListContentBean() {
+		return listContentBean;
 	}
 
 }

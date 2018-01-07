@@ -29,9 +29,7 @@ public abstract class EwfCompAbstract extends EwfContentAbstract implements EwfC
 	}
 
 	private void init() throws EpeAppException {
-		List<EwfContentBean> listContentBean = this.getClient().getListContentBeanNotNull(this.getName());
-
-		for (EwfContentBean contentBean : listContentBean) {
+		for (EwfContentBean contentBean : this.getListContentBean()) {
 			EpeAppUtils.checkNull("contentBean", contentBean);
 			EwfContentInterface content;
 
