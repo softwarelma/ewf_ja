@@ -31,7 +31,7 @@ public class EwfPageHomeP1 extends EwfPageAbstract {
 
 		Label title = new Label("Space is big, really big");
 		title.addStyleName("title");
-		layout.addComponent(title);
+//		layout.addComponent(title);
 
 		Label description = new Label("This is a " + "long description of the image shown "
 				+ "on the right or below, depending on the " + "screen width. The text here could continue long.");
@@ -39,7 +39,7 @@ public class EwfPageHomeP1 extends EwfPageAbstract {
 		description.setSizeUndefined();
 		layout.addComponent(description);
 
-		Image image = new Image(null, new ThemeResource("img/culo.jpeg"));
+		Image image = new Image(null, new ThemeResource("img/robot.jpeg"));
 		image.addStyleName("itembox");
 		layout.addComponent(image);
 		return layout;

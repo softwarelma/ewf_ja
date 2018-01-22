@@ -97,7 +97,7 @@ public class EwfClient {
 		} else if ("saluteOlistica".equals(compName)) {
 			compBean.setClassNameLayout(lay2);
 		} else if ("saluteOlisticaInterno".equals(compName)) {
-			compBean.setClassNameLayout(lay3);
+			compBean.setClassNameLayout(lay1);
 		} else if ("benesserePsicofisico".equals(compName)) {
 			compBean.setClassNameLayout(lay2);
 		} else if ("sportivo".equals(compName)) {
@@ -239,19 +239,20 @@ public class EwfClient {
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(true);
+			contentBean.setListStyleName(Arrays.asList("flexwrap"));//"ewfFlexWrap"));
 			contentBean.setName("saluteOlisticaInterno");
 			listContentBean.add(contentBean);
 		} else if ("saluteOlisticaInterno".equals(compName)) {
 			contentBean = new EwfContentBean();
 			contentBean.setComp(false);
-			contentBean.setListStyleName(Arrays.asList("fontText", "ewfItembox"));
+			contentBean.setListStyleName(Arrays.asList("itembox"));//"fontTextWrap", "ewfItembox"));
 			contentBean.setName("saluteOlisticaLabel3");
 			listContentBean.add(contentBean);
 
 			contentBean = new EwfContentBean();
 			contentBean.setComp(false);
 			// listStyleName.add("backColorGreen");
-			contentBean.setListStyleName(Arrays.asList("ewfItembox"));
+			contentBean.setListStyleName(Arrays.asList("itembox"));//"ewfItembox"));
 			contentBean.setName("com.softwarelma.ewf.client.elem.EwfElemCustomImage");
 			listContentBean.add(contentBean);
 		} else if ("benesserePsicofisico".equals(compName)) {

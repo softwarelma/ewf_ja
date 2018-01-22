@@ -51,11 +51,13 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 				}
 
 				layout.setWidth("100%");
-//				layout.addStyleName("ewfFlexWrap");//FIXME
+				// layout.addStyleName("ewfFlexWrap");//FIXME
 				// content.addComponent(layout);
 
 				// Enable Responsive CSS selectors for the layout
-				Responsive.makeResponsive(layout);
+				if (layout.getClass().getName().endsWith("CssLayout")) {
+					Responsive.makeResponsive(layout);
+				}
 			} else if (this.isElem()) {
 				EpeAppUtils.checkNull("elemBean", elemBean);
 				this.listContentBean = null;

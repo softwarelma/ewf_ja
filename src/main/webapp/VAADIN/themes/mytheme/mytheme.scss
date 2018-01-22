@@ -36,39 +36,54 @@
 
   // Insert your own theme rules here
 
-		.backColorGrey{
-			background-color:#ACACAC;
-		}
-	  
-		.backColorGreen{
-			background-color:#8AAC68;
-		}
-	
-		.fontTitle{
-			font-size: 40px;
-			font-weight: 700;
-			font-family: "Times New Roman", Georgia, Serif;
-			text-align: center;
-			width: 100%;
-		}
-	
-		.fontSubtitle{
-			font-size: 22px;
-			font-weight: 500;
-			font-family: "Courier New", Courier, monospace;
-			text-align: center;
-			width: 100%;
-		}
-	
-		.fontText{
+	.backColorGrey{
+		background-color:#ACACAC;
+	}
+  
+	.backColorGreen{
+		background-color:#8AAC68;
+	}
+
+	.fontTitle{
+		font-size: 40px;
+		font-weight: 700;
+		font-family: "Times New Roman", Georgia, Serif;
+		text-align: center;
+		width: 100%;
+	}
+
+	.fontSubtitle{
+		font-size: 22px;
+		font-weight: 500;
+		font-family: "Courier New", Courier, monospace;
+		text-align: center;
+		width: 100%;
+	}
+
+	.fontText{
+		font-size: 16px;
+		font-weight: 300;
+		font-family: "Open Sans", sans-serif;
+		text-align: left;
+		width: 100%;
+	}
+
+	.ewfFlexWrap {
+	    .fontTextWrap {
 			font-size: 16px;
 			font-weight: 300;
 			font-family: "Open Sans", sans-serif;
 			text-align: left;
-			width: 100%;
-		}
-
-	.ewfFlexWrap {
+	        padding: 5px;
+			//width: 100%;
+	    }
+	
+	    .itembox {
+	        white-space: normal;
+	        vertical-align: top;
+	    }
+	
+	    .itembox.v-label {padding: 5px}
 	}
 	
 	.ewfFlexWrap[width-range~="0-499px"] {
@@ -134,7 +149,7 @@
 	}
 	
 	.flexwrap[width-range~="500px-"] {
-	    .itembox {width: 30%}
+	    .itembox {width: 50%}
 	}	
 	
 	// P1 STYLE - END

@@ -22,6 +22,7 @@ public class EwfElemCustomImage extends EwfElemAbstract {
 	public Component getComponent() throws EpeAppException {
 		EpeAppUtils.checkEmpty("fileName", this.getFileName());
 		Image image = new Image(null, new ThemeResource("img/" + this.getFileName()));
+//		image.addStyleName("itembox");//FIXME din
 		return image;
 	}
 
