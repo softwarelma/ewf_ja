@@ -51,7 +51,7 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 				}
 
 				layout.setWidth("100%");
-				layout.addStyleName("ewfFlexWrap");
+//				layout.addStyleName("ewfFlexWrap");//FIXME
 				// content.addComponent(layout);
 
 				// Enable Responsive CSS selectors for the layout

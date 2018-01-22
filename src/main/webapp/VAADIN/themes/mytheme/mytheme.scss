@@ -36,7 +36,6 @@
 
   // Insert your own theme rules here
 
-	.ewfFlexWrap {
 		.backColorGrey{
 			background-color:#ACACAC;
 		}
@@ -68,6 +67,8 @@
 			text-align: left;
 			width: 100%;
 		}
+
+	.ewfFlexWrap {
 	}
 	
 	.ewfFlexWrap[width-range~="0-499px"] {
