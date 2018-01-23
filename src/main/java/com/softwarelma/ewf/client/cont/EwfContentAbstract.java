@@ -71,6 +71,7 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 
 					if (this.component instanceof Label) {
 						((Label) this.component).setContentMode(ContentMode.HTML);
+						Responsive.makeResponsive(this.component);//TODO din
 					}
 				} else {
 					// custom elem

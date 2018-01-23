@@ -36,40 +36,131 @@
 
   // Insert your own theme rules here
 
-	.backColorGrey{
+
+
+
+
+
+
+	// EWF STYLES - BEGIN
+
+	//// EWF CLASSIC - BEGIN
+
+	.ewfResponsiveTitle {
+	    padding: 0px;
+	    line-height: 22px;
+	}
+	
+	/* Small size */
+	.ewfResponsiveTitle[width-range~="0-400px"] {
+		line-height: 24px;
+		font-size: 26px;
+		font-weight: 600;
+		font-family: "Times New Roman", Georgia, Serif;
+		text-align: center;
+		//padding: 5px;
+		//width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
+	}
+	
+	/* Medium size */
+	.ewfResponsiveTitle[width-range~="401px-800px"] {
+		line-height: 28px;
+		font-size: 34px;
+		font-weight: 800;
+		font-family: "Times New Roman", Georgia, Serif;
+		text-align: center;
+		//padding: 5px;
+		//width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
+	}
+	
+	/* Anything bigger */
+	.ewfResponsiveTitle[width-range~="801px-"] {
+		line-height: 36px;
+		font-size: 50px;
+		font-weight: 900;
+		font-family: "Times New Roman", Georgia, Serif;
+		text-align: center;
+		//padding: 5px;
+		//width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
+	}
+
+	/* Small size */
+	.ewfResponsiveSubtitle[width-range~="0-400px"] {
+		line-height: 22px;
+		font-size: 22px;
+		font-weight: 200;
+		font-family: "Times New Roman", Georgia, Serif;
+		font-style: italic;
+		text-align: center;
+		//padding: 5px;
+		//width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
+	}
+	
+	/* Medium size */
+	.ewfResponsiveSubtitle[width-range~="401px-800px"] {
+		line-height: 26px;
+		font-size: 30px;
+		font-weight: 400;
+		font-family: "Times New Roman", Georgia, Serif;
+		font-style: italic;
+		text-align: center;
+		//padding: 5px;
+		//width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
+	}
+	
+	/* Anything bigger */
+	.ewfResponsiveSubtitle[width-range~="801px-"] {
+		line-height: 34px;
+		font-size: 46px;
+		font-weight: 400;
+		font-family: "Times New Roman", Georgia, Serif;
+		font-style: italic;
+		text-align: center;
+		//padding: 5px;
+		//width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
+	}
+
+	//// EWF CLASSIC - BEGIN
+
+	//// EWF FLEX WRAP - BEGIN
+
+	.ewfBackColorGrey{
 		background-color:#ACACAC;
 	}
   
-	.backColorGreen{
+	.ewfBackColorGreen{
 		background-color:#8AAC68;
 	}
 
-	.fontTitle{
-		font-size: 40px;
-		font-weight: 700;
-		font-family: "Times New Roman", Georgia, Serif;
+	.ewfFontTitle{
 		text-align: center;
-		width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
 	}
 
-	.fontSubtitle{
-		font-size: 22px;
-		font-weight: 500;
-		font-family: "Courier New", Courier, monospace;
+	.ewfFontSubtitle{
 		text-align: center;
-		width: 100%;
-	}
-
-	.fontText{
-		font-size: 16px;
-		font-weight: 300;
-		font-family: "Open Sans", sans-serif;
-		text-align: left;
-		width: 100%;
+		word-wrap: break-word; /* IE  */
+		white-space: pre-wrap; /* Firefox */
 	}
 
 	.ewfFlexWrap {
-	    .fontTextWrap {
+	    background: black;
+	    color: white;
+	
+	    .ewfFontTextWrap {
 			font-size: 16px;
 			font-weight: 300;
 			font-family: "Open Sans", sans-serif;
@@ -78,21 +169,33 @@
 			//width: 100%;
 	    }
 	
-	    .itembox {
+	    .ewfItembox {
 	        white-space: normal;
 	        vertical-align: top;
 	    }
 	
-	    .itembox.v-label {padding: 5px}
+	    .ewfItembox.v-label {padding: 5px}
 	}
 	
 	.ewfFlexWrap[width-range~="0-499px"] {
 	    .ewfItembox {width: 100%}
 	}
-
+	
 	.ewfFlexWrap[width-range~="500px-"] {
 	    .ewfItembox {width: 50%}
 	}	
+
+	//// EWF FLEX WRAP - END
+
+	// EWF STYLES - BEGIN
+
+
+
+
+
+
+
+
 
 	// HOME STYLE - BEGIN
 
