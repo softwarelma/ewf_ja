@@ -19,6 +19,10 @@ public class EwfElemCustomMenu extends EwfElemAbstract {
 
 	@Override
 	public Component getComponent() throws EpeAppException {
+        if (super.getComponent() != null) {
+            return super.getComponent();
+        }
+
 		EpeAppUtils.checkNull("mapPageAndDescription", getMapPageAndDescription());
 		MenuBar menuBar = new MenuBar();
 

@@ -20,6 +20,10 @@ public class EwfElemCustomMenuResponsive extends EwfElemAbstract {
 
 	@Override
 	public Component getComponent() throws EpeAppException {
+        if (super.getComponent() != null) {
+            return super.getComponent();
+        }
+
 		EpeAppUtils.checkNull("mapPageAndDescription", getMapPageAndDescription());
 		HorizontalLayout layout = new HorizontalLayout();
 		// layout.setWidth("100%");
