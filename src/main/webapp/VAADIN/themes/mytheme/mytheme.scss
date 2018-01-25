@@ -44,6 +44,22 @@
 
 	// EWF STYLES - BEGIN
 
+	.v-margin-left {
+		padding-left: 5px;
+	}
+
+	.v-margin-right {
+		padding-right: 5px;
+	}
+
+	.v-margin-bottom {
+		padding-bottom: 5px;
+	}
+
+	.v-margin-top {
+		padding-top: 5px;
+	}
+
 	//// EWF CLASSIC - BEGIN
 
 	.ewfResponsiveTitle {
@@ -187,6 +203,29 @@
 
 	//// EWF FLEX WRAP - END
 
+	//// EWF TOGGLE DISPLAY - BEGIN
+
+	.ewfToggleDisplay {
+	    .ewfToggleDisplayBig, .ewfToggleDisplaySmall {
+	    }
+	
+	    .ewfToggleDisplaySmall {
+	    }
+	
+	    .ewfToggleDisplayBig {
+	    }
+	}
+
+	.ewfToggleDisplay[width-range~="0-599px"] {
+	    .ewfToggleDisplayBig    {display: none}
+	}
+
+	.ewfToggleDisplay[width-range~="600px-"] {
+	    .ewfToggleDisplaySmall {display: none}
+	}
+
+	//// EWF TOGGLE DISPLAY - END
+
 	// EWF STYLES - BEGIN
 
 
@@ -282,12 +321,12 @@
 	}
 	
 	/* Quite little space */
-	.toggledisplay[width-range~="0-499px"] {
+	.toggledisplay[width-range~="0-599px"] {
 	    .enoughspace    {display: none}
 	}
 	
 	/* Plenty of space */
-	.toggledisplay[width-range~="500px-"] {
+	.toggledisplay[width-range~="600px-"] {
 	    .notenoughspace {display: none}
 	}
 
