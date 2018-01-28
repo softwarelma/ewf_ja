@@ -14,12 +14,19 @@ import com.softwarelma.ewf.client.page.EwfPageBean;
 import com.softwarelma.ewf.client.page.EwfPageDefault;
 import com.softwarelma.ewf.client.page.EwfPageInterface;
 import com.softwarelma.ewf.common.EwfCommonConstants;
+import com.softwarelma.ewf.server.EwfServer;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
 public class EwfClient {
+
+    private final EwfServer server;
+
+    public EwfClient(EwfServer server) {
+        this.server = server;
+    }
 
     public void setSessionAttributeNotNull(String name, Object value) throws EpeAppException {
         EpeAppUtils.checkNull("value", value);
@@ -61,7 +68,9 @@ public class EwfClient {
     }
 
     public EwfPageBean getPageBeanNotNull(String pageName) throws EpeAppException {
-        return this.getPageBeanNotNullFake(pageName);
+        // TODO
+        return this.server.getPageBeanNotNull(pageName);
+        // return this.getPageBeanNotNullFake(pageName);
     }
 
     public EwfCompBean getCompBeanNotNull(String compName) throws EpeAppException {

@@ -5,14 +5,16 @@ import java.io.Serializable;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.ewf.backend.EwfBackend;
 import com.softwarelma.ewf.client.EwfClient;
+import com.softwarelma.ewf.client.page.EwfPageBean;
 import com.vaadin.ui.UI;
 
 public class EwfServer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static EwfServer server;
-    private final EwfClient client = new EwfClient();
+    private final EwfClient client = new EwfClient(this);
     private final EwfBackend backend = new EwfBackend();
+    private final EwfServerPage serverPage = new EwfServerPage(this.backend);
 
     public static EwfServer getInstance() throws EpeAppException {
         if (EwfServer.server != null) {
@@ -56,6 +58,10 @@ public class EwfServer implements Serializable {
 
     public void loadPage(UI ui, String pageName) throws EpeAppException {
         this.client.loadPage(ui, pageName);
+    }
+
+    public EwfPageBean getPageBeanNotNull(String pageName) throws EpeAppException {
+        return this.serverPage.getPageBeanNotNull(pageName);
     }
 
 }
