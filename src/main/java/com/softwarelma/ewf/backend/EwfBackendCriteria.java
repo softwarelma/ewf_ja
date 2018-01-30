@@ -36,19 +36,38 @@ public class EwfBackendCriteria {
     }
 
     private String retrieveSelect() throws EpeAppException {
-//        EpeDiskFinalFread.fReadAsString(doLog, filenameStr, encodingStr);
-//         Map<String, List<String>> retrieveMapTableAndListColumn
-//         =EpeDbFinalDb_select.retrieveMapTableAndListColumn(arg0, arg1)
+        // EpeDiskFinalFread.fReadAsString(doLog, filenameStr, encodingStr);
+        // Map<String, List<String>> retrieveMapTableAndListColumn
+        // =EpeDbFinalDb_select.retrieveMapTableAndListColumn(arg0, arg1)
         // TODO
         return null;
     }
 
     private String retrieveFrom() throws EpeAppException {
+        this.orderFrom();
+        StringBuilder sb = new StringBuilder();
+        String sep = "";
+
+        for (String from : this.listFrom) {
+            sb.append(sep);
+            sep = ", ";
+            sb.append(this.normFrom(from));
+        }
+
         // TODO
         return null;
     }
 
     private String retrieveWhere() throws EpeAppException {
+        // TODO
+        return null;
+    }
+
+    private void orderFrom() {
+        // TODO
+    }
+
+    private String normFrom(String from) {
         // TODO
         return null;
     }
