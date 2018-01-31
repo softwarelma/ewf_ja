@@ -1,6 +1,7 @@
 package com.softwarelma.ewf.backend;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class EwfBackendCriteria {
     private final List<String> listSelect = new LinkedList<>();
     private final List<String> listFrom = new LinkedList<>();
     private final List<String> listWhere = new LinkedList<>();
+    private final Map<String, List<String>> mapTableAndListColumn = new HashMap<>();
 
     // TODO sql-injection
     public EwfBackendCriteria select(String... selectExpression) throws EpeAppException {
@@ -45,17 +47,15 @@ public class EwfBackendCriteria {
 
     private String retrieveFrom() throws EpeAppException {
         this.orderFrom();
+        this.normListFromAlias();
+        this.normListFromJoin();
         StringBuilder sb = new StringBuilder();
-        String sep = "";
 
         for (String from : this.listFrom) {
-            sb.append(sep);
-            sep = ", ";
-            sb.append(this.normFrom(from));
+            sb.append(from);
         }
 
-        // TODO
-        return null;
+        return sb.toString();
     }
 
     private String retrieveWhere() throws EpeAppException {
@@ -67,7 +67,38 @@ public class EwfBackendCriteria {
         // TODO
     }
 
-    private String normFrom(String from) {
+    private void normListFromJoin() throws EpeAppException {
+        // TODO
+    }
+
+    private void normListFromAlias() throws EpeAppException {
+        List<String> listFrom = new LinkedList<>();
+
+        for (String from : this.listFrom) {
+            listFrom.add(this.normFrom(from));
+        }
+
+        this.listFrom.clear();
+        this.listFrom.addAll(listFrom);
+    }
+
+    private String normFrom(String fromAndAlias) throws EpeAppException {
+        EpeAppUtils.checkEmpty("fromAndAlias", fromAndAlias);
+        String table;
+
+        if (fromAndAlias.contains("__")) {
+            table = fromAndAlias.split("__")[0];
+        } else {
+            table = fromAndAlias;
+        }
+
+        // TODO add connection
+        this.mapTableAndListColumn.putAll(EpeDbFinalDb_select.retrieveMapTableAndListColumn(null, table));
+
+        return table + " " + fromAndAlias;
+    }
+
+    private List<EpeDbEntity> execute(String query) throws EpeAppException {
         // TODO
         return null;
     }
@@ -76,8 +107,7 @@ public class EwfBackendCriteria {
         StringBuilder sb = new StringBuilder(this.retrieveSelect());
         sb.append(this.retrieveFrom());
         sb.append(this.retrieveWhere());
-        // TODO exec
-        return null;
+        return this.execute(sb.toString());
     }
 
     public EpeDbEntity retrieveUnique() throws EpeAppException {
