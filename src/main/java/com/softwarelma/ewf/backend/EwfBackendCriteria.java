@@ -19,21 +19,48 @@ public class EwfBackendCriteria {
     private final List<String> listWhere = new LinkedList<>();
     private final Map<String, List<String>> mapTableAndListColumn = new HashMap<>();
 
+    enum EXP_TYPE {
+        COL, TEXT, NUM
+    }
+
+    private EXP_TYPE getExpType(String selectExpression) throws EpeAppException {
+        // TODO
+        // TODO validate
+        return null;
+    }
+
     // TODO sql-injection
-    public EwfBackendCriteria select(String... selectExpression) throws EpeAppException {
-        this.listSelect.addAll(Arrays.asList(selectExpression));
+    public EwfBackendCriteria select(String... arraySelectExpression) throws EpeAppException {
+        EXP_TYPE expType;
+
+        for (String selectExpression : arraySelectExpression) {
+            expType = this.getExpType(selectExpression);
+            this.listSelect.add(selectExpression);
+        }
+
+        // TODO add from
         return this;
     }
 
     // TODO sql-injection
-    public EwfBackendCriteria from(String... fromExpression) throws EpeAppException {
-        this.listFrom.addAll(Arrays.asList(fromExpression));
+    public EwfBackendCriteria selectAlias(String selectExpression, String alias) throws EpeAppException {
+        EXP_TYPE expType = this.getExpType(selectExpression);
+        this.listSelect.add(selectExpression + " " + alias);
+        // TODO add from
         return this;
     }
 
     // TODO sql-injection
-    public EwfBackendCriteria where(String... whereExpression) throws EpeAppException {
-        this.listWhere.addAll(Arrays.asList(whereExpression));
+    public EwfBackendCriteria from(String... arrayFromExpression) throws EpeAppException {
+        this.listFrom.addAll(Arrays.asList(arrayFromExpression));
+        return this;
+    }
+
+    // TODO sql-injection
+    // only left or right
+    public EwfBackendCriteria where(String... arrayWhereExpression) throws EpeAppException {
+        this.listWhere.addAll(Arrays.asList(arrayWhereExpression));
+        // TODO add from
         return this;
     }
 
