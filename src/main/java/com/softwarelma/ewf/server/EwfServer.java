@@ -1,6 +1,7 @@
 package com.softwarelma.ewf.server;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.ewf.backend.EwfBackend;
@@ -12,9 +13,9 @@ public class EwfServer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static EwfServer server;
-    private final EwfClient client = new EwfClient(this);
     private final EwfBackend backend = new EwfBackend();
     private final EwfServerPage serverPage = new EwfServerPage(this.backend);
+    private final EwfClient client = new EwfClient(this);
 
     public static EwfServer getInstance() throws EpeAppException {
         if (EwfServer.server != null) {
@@ -60,8 +61,8 @@ public class EwfServer implements Serializable {
         this.client.loadPage(ui, pageName);
     }
 
-    public EwfPageBean getPageBeanNotNull(String pageName) throws EpeAppException {
-        return this.serverPage.getPageBeanNotNull(pageName);
+    public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
+        return this.serverPage.retrieveMapPageNameAndPageBean();
     }
 
 }

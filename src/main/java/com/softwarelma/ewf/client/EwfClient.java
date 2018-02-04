@@ -2,7 +2,9 @@ package com.softwarelma.ewf.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppLogger;
@@ -22,10 +24,17 @@ import com.vaadin.ui.UI;
 
 public class EwfClient {
 
+    private static Map<String, EwfPageBean> mapPageNameAndPageBean;
     private final EwfServer server;
 
-    public EwfClient(EwfServer server) {
+    public EwfClient(EwfServer server) throws EpeAppException {
         this.server = server;
+        this.init();
+    }
+
+    private void init() throws EpeAppException {
+        this.mapPageNameAndPageBean = this.server.retrieveMapPageNameAndPageBean();
+        System.out.println("................");
     }
 
     public void setSessionAttributeNotNull(String name, Object value) throws EpeAppException {
@@ -67,10 +76,15 @@ public class EwfClient {
         ui.setContent(content);
     }
 
+    ////////////////////////////////////////////////////////////
+    ///////////// 3 LEVELS
+    ////////////////////////////////////////////////////////////
+
     public EwfPageBean getPageBeanNotNull(String pageName) throws EpeAppException {
+        // EwfPageBean pageBean = mapPageNameAndPageBean.get(pageName);
+        // EpeAppUtils.checkNull("pageBean", pageBean);
         // TODO
-        return this.server.getPageBeanNotNull(pageName);
-        // return this.getPageBeanNotNullFake(pageName);
+        return this.getPageBeanNotNullFake(pageName);
     }
 
     public EwfCompBean getCompBeanNotNull(String compName) throws EpeAppException {
@@ -81,6 +95,8 @@ public class EwfClient {
         return this.getElemBeanNotNullFake(elemName);
     }
 
+    ////////////////////////////////////////////////////////////
+    ///////////// FAKE - 1
     ////////////////////////////////////////////////////////////
 
     private EwfPageBean getPageBeanNotNullFake(String pageName) throws EpeAppException {
@@ -163,6 +179,8 @@ public class EwfClient {
         return elemBean;
     }
 
+    ////////////////////////////////////////////////////////////
+    ///////////// FAKE - 2
     ////////////////////////////////////////////////////////////
 
     private EwfContentBean getMenuFake() {
