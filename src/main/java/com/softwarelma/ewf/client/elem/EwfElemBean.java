@@ -3,59 +3,68 @@ package com.softwarelma.ewf.client.elem;
 import java.io.Serializable;
 import java.util.Map;
 
+import com.softwarelma.ewf.client.page.EwfPageBean;
+
 public class EwfElemBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// DEFAULT
+    // DEFAULT
 
-	private String componentClassName;// vaadin
-	private String text;
-	private String fileName;
+    private String componentClassName;// vaadin
+    private String text;
+    private String fileName;
 
-	// CUSTOM
+    // CUSTOM
 
-	private String elemCustomClassName;// ewf
-	public Map<String, String> mapPageAndDescription;
+    private String elemCustomClassName;// ewf
+    private Map<String, EwfPageBean> mapPageNameAndPageBean;
 
-	public String getComponentClassName() {
-		return componentClassName;
-	}
+    @Override
+    public String toString() {
+        return "EwfElemBean [componentClassName=" + componentClassName + ", text=" + text + ", fileName=" + fileName
+                + ", elemCustomClassName=" + elemCustomClassName + ", mapPageNameAndPageBean=" + mapPageNameAndPageBean
+                + "]";
+    }
 
-	public void setComponentClassName(String componentClassName) {
-		this.componentClassName = componentClassName;
-	}
+    public String getComponentClassName() {
+        return componentClassName;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public void setComponentClassName(String componentClassName) {
+        this.componentClassName = componentClassName;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public String getElemCustomClassName() {
-		return elemCustomClassName;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	public void setElemCustomClassName(String elemCustomClassName) {
-		this.elemCustomClassName = elemCustomClassName;
-	}
+    public String getElemCustomClassName() {
+        return elemCustomClassName;
+    }
 
-	public Map<String, String> getMapPageAndDescription() {
-		return mapPageAndDescription;
-	}
+    public void setElemCustomClassName(String elemCustomClassName) {
+        this.elemCustomClassName = elemCustomClassName;
+    }
 
-	public void setMapPageAndDescription(Map<String, String> mapPageAndDescription) {
-		this.mapPageAndDescription = mapPageAndDescription;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public Map<String, EwfPageBean> getMapPageNameAndPageBean() {
+        return mapPageNameAndPageBean;
+    }
+
+    public void setMapPageNameAndPageBean(Map<String, EwfPageBean> mapPageNameAndPageBean) {
+        this.mapPageNameAndPageBean = mapPageNameAndPageBean;
+    }
 
 }

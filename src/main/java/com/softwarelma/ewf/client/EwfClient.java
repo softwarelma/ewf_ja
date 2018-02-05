@@ -2,7 +2,6 @@ package com.softwarelma.ewf.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,7 @@ import com.vaadin.ui.UI;
 
 public class EwfClient {
 
-    private static Map<String, EwfPageBean> mapPageNameAndPageBean;
+    private Map<String, EwfPageBean> mapPageNameAndPageBean;
     private final EwfServer server;
 
     public EwfClient(EwfServer server) throws EpeAppException {
@@ -34,7 +33,6 @@ public class EwfClient {
 
     private void init() throws EpeAppException {
         this.mapPageNameAndPageBean = this.server.retrieveMapPageNameAndPageBean();
-        System.out.println("................");
     }
 
     public void setSessionAttributeNotNull(String name, Object value) throws EpeAppException {
@@ -100,7 +98,7 @@ public class EwfClient {
     ////////////////////////////////////////////////////////////
 
     private EwfPageBean getPageBeanNotNullFake(String pageName) throws EpeAppException {
-        if (EwfCommonConstants.mapPageAndDescription.containsKey(pageName)) {
+        if (mapPageNameAndPageBean.containsKey(pageName)) {
             EwfPageBean pageBean = new EwfPageBean();
             pageBean.setCompName(pageName + "Layout");
             return pageBean;
@@ -117,7 +115,7 @@ public class EwfClient {
         String lay3 = "com.vaadin.ui.HorizontalLayout";
 
         if (compName.endsWith("Layout")
-                && EwfCommonConstants.mapPageAndDescription.containsKey(compName.substring(0, compName.length() - 6))) {
+                && mapPageNameAndPageBean.containsKey(compName.substring(0, compName.length() - 6))) {
             compBean.setClassNameLayout(lay2);
         } else if ("saluteOlistica".equals(compName)) {
             compBean.setClassNameLayout(lay2);
@@ -153,7 +151,7 @@ public class EwfClient {
 
             if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
                 // TODO from dao
-                elemBean.setMapPageAndDescription(EwfCommonConstants.mapPageAndDescription);
+                elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
             } else if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomImage")) {
                 elemBean.setFileName("robot.jpeg");
             }

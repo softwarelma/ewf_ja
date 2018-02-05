@@ -6,6 +6,11 @@ public class EwfPageBean {
     private String description;
     private String compName;
 
+    @Override
+    public String toString() {
+        return "EwfPageBean [name=" + name + ", description=" + description + ", compName=" + compName + "]";
+    }
+
     public String getName() {
         return name;
     }

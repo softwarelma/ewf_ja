@@ -1,6 +1,6 @@
 package com.softwarelma.ewf.server;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +18,7 @@ public class EwfServerPage {
     }
 
     public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
-        Map<String, EwfPageBean> mapPageNameAndPageBean = new HashMap<>();
+        Map<String, EwfPageBean> mapPageNameAndPageBean = new LinkedHashMap<>();
         List<EpeDbEntity> listPage = this.backend.retrieveListPage();
 
         for (EpeDbEntity entity : listPage) {

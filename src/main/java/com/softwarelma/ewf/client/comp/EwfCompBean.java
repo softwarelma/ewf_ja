@@ -6,23 +6,28 @@ import com.softwarelma.ewf.client.cont.EwfContentBean;
 
 public class EwfCompBean {
 
-	private String classNameLayout;
-	private List<EwfContentBean> listContentBean;
+    private String classNameLayout;
+    private List<EwfContentBean> listContentBean;
 
-	public String getClassNameLayout() {
-		return classNameLayout;
-	}
+    @Override
+    public String toString() {
+        return "EwfCompBean [classNameLayout=" + classNameLayout + ", listContentBean=" + listContentBean + "]";
+    }
 
-	public void setClassNameLayout(String classNameLayout) {
-		this.classNameLayout = classNameLayout;
-	}
+    public String getClassNameLayout() {
+        return classNameLayout;
+    }
 
-	public List<EwfContentBean> getListContentBean() {
-		return listContentBean;
-	}
+    public void setClassNameLayout(String classNameLayout) {
+        this.classNameLayout = classNameLayout;
+    }
 
-	public void setListContentBean(List<EwfContentBean> listContentBean) {
-		this.listContentBean = listContentBean;
-	}
+    public List<EwfContentBean> getListContentBean() {
+        return listContentBean;
+    }
+
+    public void setListContentBean(List<EwfContentBean> listContentBean) {
+        this.listContentBean = listContentBean;
+    }
 
 }
