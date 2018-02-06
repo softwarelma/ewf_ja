@@ -99,6 +99,11 @@ public class EwfClient {
     public EwfElemBean getElemBeanNotNull(String elemName) throws EpeAppException {
         EwfElemBean elemBean = this.mapElemNameAndElemBean.get(elemName);
         EpeAppUtils.checkNull("elemBean", elemBean);
+
+        if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
+            elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
+        }
+
         return elemBean;
         // return this.getElemBeanNotNullFake(elemName);
     }
@@ -160,7 +165,6 @@ public class EwfClient {
             elemBean.setElemCustomClassName(elemName);
 
             if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
-                // TODO from dao
                 elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
             } else if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomImage")) {
                 elemBean.setFileName("robot.jpeg");

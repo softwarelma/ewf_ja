@@ -6,7 +6,7 @@ import java.util.List;
 public class EwfContentBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String name;
+    private String name;// child comp or elem
     private boolean comp;// or element
     private List<String> listStyleName;
 

@@ -14,42 +14,42 @@ import com.vaadin.ui.UI;
 
 public abstract class EwfPageAbstract extends EwfContainerAbstract implements EwfPageInterface {
 
-	private static final long serialVersionUID = 1L;
-	private final EwfCompInterface comp;
+    private static final long serialVersionUID = 1L;
+    private final EwfCompInterface comp;
 
-	protected EwfPageAbstract(EwfClient client, UI ui, String name) throws EpeAppException {
-		super(client, ui, name);
-		EwfPageBean pageBean = client.getPageBeanNotNull(name);
-		EpeAppUtils.checkNull("pageBean", pageBean);
-		String compName = pageBean.getCompName();
-		EpeAppUtils.checkNull("compName", compName);
-		EwfContentBean contentBean = new EwfContentBean();
-		contentBean.setComp(true);
-		contentBean.setName(compName);
-		List<String> listStyleName = new ArrayList<>();
-		listStyleName.add("backColorGrey");
-		contentBean.setListStyleName(listStyleName);
-		this.comp = new EwfCompDefault(client, ui, compName, contentBean);
-	}
+    protected EwfPageAbstract(EwfClient client, UI ui, String name) throws EpeAppException {
+        super(client, ui, name);
+        EwfPageBean pageBean = client.getPageBeanNotNull(name);
+        EpeAppUtils.checkNull("pageBean", pageBean);
+        String compName = pageBean.getCompName();
+        EpeAppUtils.checkNull("compName", compName);
+        EwfContentBean contentBean = new EwfContentBean();
+        contentBean.setComp(true);
+        contentBean.setName(compName);
+        List<String> listStyleName = new ArrayList<>();
+        listStyleName.add("backColorGrey");
+        contentBean.setListStyleName(listStyleName);
+        this.comp = new EwfCompDefault(client, ui, compName, contentBean);
+    }
 
-	@Override
-	public EwfCompInterface getComp() {
-		return comp;
-	}
+    @Override
+    public EwfCompInterface getComp() {
+        return comp;
+    }
 
-	@Override
-	public boolean isPage() {
-		return true;
-	}
+    @Override
+    public boolean isPage() {
+        return true;
+    }
 
-	@Override
-	public boolean isComp() {
-		return false;
-	}
+    @Override
+    public boolean isComp() {
+        return false;
+    }
 
-	@Override
-	public boolean isElem() {
-		return false;
-	}
+    @Override
+    public boolean isElem() {
+        return false;
+    }
 
 }
