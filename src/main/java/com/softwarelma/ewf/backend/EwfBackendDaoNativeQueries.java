@@ -14,14 +14,20 @@ public class EwfBackendDaoNativeQueries {
 
     private DataSource dataSource;
 
+    // TODO only pages
     private static final String selectAllPages = //
             "select ewf_page.id, ewf_page.name, ewf_page.description, ewf_comp.name as comp_name "
                     + "from ewf_page ewf_page, ewf_comp ewf_comp "//
                     + "where ewf_page.id_ewf_comp = ewf_comp.id";
 
     // TODO
-    private static final String selectContentsFromComp = //
-            "";
+    private static final String selectAllContents = "";
+
+    // TODO
+    private static final String selectAllComps = "";
+
+    // TODO
+    private static final String selectAllElems = "";
 
     private DataSource getDataSource() throws EpeAppException {
         if (this.dataSource == null) {
@@ -32,8 +38,16 @@ public class EwfBackendDaoNativeQueries {
         return this.dataSource;
     }
 
+    public List<EpeDbEntity> retrieveListElem() throws EpeAppException {
+        return this.retrieveListEntity(selectAllElems);
+    }
+
+    public List<EpeDbEntity> retrieveListComp() throws EpeAppException {
+        return this.retrieveListEntity(selectAllComps);
+    }
+
     public List<EpeDbEntity> retrieveListContent() throws EpeAppException {
-        return this.retrieveListEntity(selectContentsFromComp);
+        return this.retrieveListEntity(selectAllContents);
     }
 
     public List<EpeDbEntity> retrieveListPage() throws EpeAppException {

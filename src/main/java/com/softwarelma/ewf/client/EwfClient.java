@@ -24,6 +24,8 @@ import com.vaadin.ui.UI;
 public class EwfClient {
 
     private Map<String, EwfPageBean> mapPageNameAndPageBean;
+    private Map<String, EwfCompBean> mapCompNameAndCompBean;
+    private Map<String, EwfElemBean> mapElemNameAndElemBean;
     private final EwfServer server;
 
     public EwfClient(EwfServer server) throws EpeAppException {
@@ -32,6 +34,8 @@ public class EwfClient {
     }
 
     private void init() throws EpeAppException {
+        this.mapElemNameAndElemBean = this.server.retrieveMapElemNameAndElemBean();
+        this.mapCompNameAndCompBean = this.server.retrieveMapCompNameAndCompBean();
         this.mapPageNameAndPageBean = this.server.retrieveMapPageNameAndPageBean();
     }
 
@@ -79,18 +83,24 @@ public class EwfClient {
     ////////////////////////////////////////////////////////////
 
     public EwfPageBean getPageBeanNotNull(String pageName) throws EpeAppException {
-        // EwfPageBean pageBean = mapPageNameAndPageBean.get(pageName);
-        // EpeAppUtils.checkNull("pageBean", pageBean);
-        // TODO
-        return this.getPageBeanNotNullFake(pageName);
+        EwfPageBean pageBean = mapPageNameAndPageBean.get(pageName);
+        EpeAppUtils.checkNull("pageBean", pageBean);
+        return pageBean;
+        // return this.getPageBeanNotNullFake(pageName);
     }
 
     public EwfCompBean getCompBeanNotNull(String compName) throws EpeAppException {
-        return this.getCompBeanNotNullFake(compName);
+        EwfCompBean compBean = this.mapCompNameAndCompBean.get(compName);
+        EpeAppUtils.checkNull("compBean", compBean);
+        return compBean;
+        // return this.getCompBeanNotNullFake(compName);
     }
 
     public EwfElemBean getElemBeanNotNull(String elemName) throws EpeAppException {
-        return this.getElemBeanNotNullFake(elemName);
+        EwfElemBean elemBean = this.mapElemNameAndElemBean.get(elemName);
+        EpeAppUtils.checkNull("elemBean", elemBean);
+        return elemBean;
+        // return this.getElemBeanNotNullFake(elemName);
     }
 
     ////////////////////////////////////////////////////////////

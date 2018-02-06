@@ -6,6 +6,8 @@ import java.util.Map;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.ewf.backend.EwfBackend;
 import com.softwarelma.ewf.client.EwfClient;
+import com.softwarelma.ewf.client.comp.EwfCompBean;
+import com.softwarelma.ewf.client.elem.EwfElemBean;
 import com.softwarelma.ewf.client.page.EwfPageBean;
 import com.vaadin.ui.UI;
 
@@ -63,6 +65,14 @@ public class EwfServer implements Serializable {
 
     public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
         return this.serverPage.retrieveMapPageNameAndPageBean();
+    }
+
+    public Map<String, EwfCompBean> retrieveMapCompNameAndCompBean() throws EpeAppException {
+        return this.serverPage.retrieveMapCompNameAndCompBean();
+    }
+
+    public Map<String, EwfElemBean> retrieveMapElemNameAndElemBean() throws EpeAppException {
+        return this.serverPage.retrieveMapElemNameAndElemBean();
     }
 
 }
