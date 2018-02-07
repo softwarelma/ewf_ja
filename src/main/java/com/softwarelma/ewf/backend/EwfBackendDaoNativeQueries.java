@@ -30,7 +30,8 @@ public class EwfBackendDaoNativeQueries {
                     + "   left outer join ewf_comp ewf_comp__2 \n"//
                     + "     on ewf_comp_content.id_ewf_comp__2 = ewf_comp__2.id \n"//
                     + "   left outer join ewf_elem ewf_elem__2 \n"//
-                    + "     on ewf_comp_content.id_ewf_elem__2 = ewf_elem__2.id";
+                    + "     on ewf_comp_content.id_ewf_elem__2 = ewf_elem__2.id \n"//
+                    + " order by ewf_comp_content.id_ewf_comp, ewf_comp_content.ordinal";
 
     private static final String selectAllComps = "SELECT id, name, class_name_layout FROM ewf.ewf_comp";
 
@@ -67,7 +68,7 @@ public class EwfBackendDaoNativeQueries {
     private List<EpeDbEntity> retrieveListEntity(String select) throws EpeAppException {
         List<EpeDbEntity> listPage = new ArrayList<>();
         String table = "fake";
-        String limitStr = "limit=200";
+        String limitStr = "200";
         EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table, limitStr, listPage);
         return listPage;
     }

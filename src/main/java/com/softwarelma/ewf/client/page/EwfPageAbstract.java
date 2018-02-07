@@ -15,10 +15,13 @@ import com.vaadin.ui.UI;
 public abstract class EwfPageAbstract extends EwfContainerAbstract implements EwfPageInterface {
 
     private static final long serialVersionUID = 1L;
-    private final EwfCompInterface comp;
+    private EwfCompInterface comp;
 
-    protected EwfPageAbstract(EwfClient client, UI ui, String name) throws EpeAppException {
-        super(client, ui, name);
+    protected EwfPageAbstract() {
+    }
+
+    public void init(EwfClient client, UI ui, String name) throws EpeAppException {
+        super.init(client, ui, name);
         EwfPageBean pageBean = client.getPageBeanNotNull(name);
         EpeAppUtils.checkNull("pageBean", pageBean);
         String compName = pageBean.getCompName();

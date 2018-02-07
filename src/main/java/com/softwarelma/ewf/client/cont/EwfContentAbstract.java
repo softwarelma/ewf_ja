@@ -30,7 +30,7 @@ public abstract class EwfContentAbstract extends EwfContAbstract implements EwfC
 
     protected EwfContentAbstract(EwfClient client, UI ui, EwfElemBean elemBean, EwfContentBean contentBean)
             throws EpeAppException {
-        super(client, ui, contentBean == null ? null : contentBean.getName());
+        super.init(client, ui, contentBean == null ? null : contentBean.getName());
         EpeAppUtils.checkNull("contentBean", contentBean);
         this.mapPageNameAndPageBean = elemBean == null ? null : elemBean.getMapPageNameAndPageBean();
         this.fileName = elemBean == null ? null : elemBean.getFileName();

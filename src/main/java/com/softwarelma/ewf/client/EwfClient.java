@@ -2,11 +2,13 @@ package com.softwarelma.ewf.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppLogger;
+import com.softwarelma.epe.p1.app.EpeAppRuntimeException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.ewf.client.comp.EwfCompBean;
 import com.softwarelma.ewf.client.cont.EwfContentBean;
@@ -26,17 +28,49 @@ public class EwfClient {
     private Map<String, EwfPageBean> mapPageNameAndPageBean;
     private Map<String, EwfCompBean> mapCompNameAndCompBean;
     private Map<String, EwfElemBean> mapElemNameAndElemBean;
+    private Map<String, Map<String, EwfPageInterface>> mapSessionAndMapPageName = new HashMap<>();
     private final EwfServer server;
 
     public EwfClient(EwfServer server) throws EpeAppException {
         this.server = server;
         this.init();
+        this.launchThread();
     }
 
     private void init() throws EpeAppException {
         this.mapElemNameAndElemBean = this.server.retrieveMapElemNameAndElemBean();
         this.mapCompNameAndCompBean = this.server.retrieveMapCompNameAndCompBean();
         this.mapPageNameAndPageBean = this.server.retrieveMapPageNameAndPageBean();
+        EwfPageInterface page;
+
+        for (String session : this.mapSessionAndMapPageName.keySet()) {
+            Map<String, EwfPageInterface> mapPageName = this.mapSessionAndMapPageName.get(session);
+
+            for (String pageName : mapPageName.keySet()) {
+                page = mapPageName.get(pageName);
+                page.init(this, page.getUi(), pageName);
+            }
+        }
+
+    }
+
+    private void launchThread() {
+        new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        Thread.sleep(5000);
+                        System.out.println("on thread...");// TODO
+                        init();
+                    }
+                } catch (InterruptedException | EpeAppException e) {
+                    throw new EpeAppRuntimeException("EwfClient.launchThread()", e);
+                }
+            }
+
+        }.start();
     }
 
     public void setSessionAttributeNotNull(String name, Object value) throws EpeAppException {
@@ -73,7 +107,13 @@ public class EwfClient {
     public void loadPage(UI ui, String pageName) throws EpeAppException {
         EpeAppUtils.checkNull("ui", ui);
         EpeAppUtils.checkEmpty("pageName", pageName);
-        EwfPageInterface page = new EwfPageDefault(this, ui, pageName);
+        EwfPageInterface page = new EwfPageDefault();
+        page.init(this, ui, pageName);
+        String session = "";// TODO retrieve session id
+        Map<String, EwfPageInterface> mapPageName = this.mapSessionAndMapPageName.get(session);
+        if (mapPageName == null)
+            this.mapSessionAndMapPageName.put(session, mapPageName = new HashMap<>());
+        mapPageName.put(pageName, page);
         Component content = page.getComp().getLayout();
         ui.setContent(content);
     }
@@ -91,8 +131,9 @@ public class EwfClient {
 
     public EwfCompBean getCompBeanNotNull(String compName) throws EpeAppException {
         EwfCompBean compBean = this.mapCompNameAndCompBean.get(compName);
+        // TODO
         if (compBean == null) {
-            System.out.println("*****************");// TODO
+            System.out.println("*****************");
         }
         EpeAppUtils.checkNull("compBean", compBean);
         return compBean;
@@ -102,6 +143,10 @@ public class EwfClient {
     public EwfElemBean getElemBeanNotNull(String elemName) throws EpeAppException {
         EwfElemBean elemBean = this.mapElemNameAndElemBean.get(elemName);
         EpeAppUtils.checkNull("elemBean", elemBean);
+
+        if ("com.softwarelma.ewf.client.elem.EwfElemCustomMenu".startsWith(elemBean.getElemCustomClassName() + "")) {
+            elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
+        }
 
         if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
             elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);

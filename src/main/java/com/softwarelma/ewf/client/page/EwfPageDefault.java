@@ -6,10 +6,16 @@ import com.vaadin.ui.UI;
 
 public class EwfPageDefault extends EwfPageAbstract {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public EwfPageDefault(EwfClient client, UI ui, String name) throws EpeAppException {
-		super(client, ui, name);
-	}
+    public EwfPageDefault() {
+    }
+
+    /**
+     * must be launched
+     */
+    public void init(EwfClient client, UI ui, String name) throws EpeAppException {
+        super.init(client, ui, name);
+    }
 
 }

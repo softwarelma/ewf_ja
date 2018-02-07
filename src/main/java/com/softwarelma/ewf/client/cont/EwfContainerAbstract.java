@@ -6,20 +6,23 @@ import com.vaadin.ui.UI;
 
 public abstract class EwfContainerAbstract extends EwfContAbstract implements EwfContainerInterface {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected EwfContainerAbstract(EwfClient client, UI ui, String name) throws EpeAppException {
-		super(client, ui, name);
-	}
+    protected EwfContainerAbstract() {
+    }
 
-	@Override
-	public boolean isContainer() {
-		return true;
-	}
+    protected void init(EwfClient client, UI ui, String name) throws EpeAppException {
+        super.init(client, ui, name);
+    }
 
-	@Override
-	public boolean isContent() {
-		return false;
-	}
+    @Override
+    public boolean isContainer() {
+        return true;
+    }
+
+    @Override
+    public boolean isContent() {
+        return false;
+    }
 
 }
