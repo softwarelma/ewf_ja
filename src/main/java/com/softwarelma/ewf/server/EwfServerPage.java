@@ -44,7 +44,7 @@ public class EwfServerPage {
 
         for (EpeDbEntity entityComp : listComp) {
             EwfCompBean compBean = new EwfCompBean();
-            compBean.setClassNameLayout("class_name_layout");
+            compBean.setClassNameLayout(entityComp.getString("class_name_layout"));
             compBean.setListContentBean(this.retrieveListContentBean(entityComp, listContent));
             mapCompNameAndCompBean.put(entityComp.getString("name"), compBean);
         }
@@ -57,7 +57,7 @@ public class EwfServerPage {
         List<EwfContentBean> listContentBean = new ArrayList<>();
 
         for (EpeDbEntity entityContent : listContent) {
-            if (!entityContent.getString("id_ewf_comp").equals(entityComp.get("id"))) {
+            if (!entityContent.get("id_ewf_comp").equals(entityComp.get("id"))) {
                 continue;
             }
 

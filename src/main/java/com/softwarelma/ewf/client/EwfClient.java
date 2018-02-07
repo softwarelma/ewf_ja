@@ -91,6 +91,9 @@ public class EwfClient {
 
     public EwfCompBean getCompBeanNotNull(String compName) throws EpeAppException {
         EwfCompBean compBean = this.mapCompNameAndCompBean.get(compName);
+        if (compBean == null) {
+            System.out.println("*****************");// TODO
+        }
         EpeAppUtils.checkNull("compBean", compBean);
         return compBean;
         // return this.getCompBeanNotNullFake(compName);
