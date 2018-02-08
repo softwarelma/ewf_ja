@@ -17,6 +17,7 @@ import com.softwarelma.ewf.client.page.EwfPageBean;
 import com.softwarelma.ewf.client.page.EwfPageDefault;
 import com.softwarelma.ewf.client.page.EwfPageInterface;
 import com.softwarelma.ewf.common.EwfCommonConstants;
+import com.softwarelma.ewf.main.EwfMain;
 import com.softwarelma.ewf.server.EwfServer;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
@@ -28,7 +29,8 @@ public class EwfClient {
     private Map<String, EwfPageBean> mapPageNameAndPageBean;
     private Map<String, EwfCompBean> mapCompNameAndCompBean;
     private Map<String, EwfElemBean> mapElemNameAndElemBean;
-    private Map<String, Map<String, EwfPageInterface>> mapSessionAndMapPageName = new HashMap<>();
+    private final Map<String, Map<String, EwfPageInterface>> mapIdSessionAndMapPageName = new HashMap<>();
+    private final Map<String, String> mapIdSessionAndPageName = new HashMap<>();
     private final EwfServer server;
 
     public EwfClient(EwfServer server) throws EpeAppException {
@@ -41,17 +43,18 @@ public class EwfClient {
         this.mapElemNameAndElemBean = this.server.retrieveMapElemNameAndElemBean();
         this.mapCompNameAndCompBean = this.server.retrieveMapCompNameAndCompBean();
         this.mapPageNameAndPageBean = this.server.retrieveMapPageNameAndPageBean();
-        EwfPageInterface page;
+        String idSess = this.getIdSession();
+        String pageName = this.mapIdSessionAndPageName.get(idSess);
 
-        for (String session : this.mapSessionAndMapPageName.keySet()) {
-            Map<String, EwfPageInterface> mapPageName = this.mapSessionAndMapPageName.get(session);
-
-            for (String pageName : mapPageName.keySet()) {
-                page = mapPageName.get(pageName);
-                page.init(this, page.getUi(), pageName);
-            }
+        if (pageName == null) {
+            return;
         }
+        
+        EwfPageInterface page = this.mapIdSessionAndMapPageName.get(idSess).get(pageName);
 
+        EwfMain.loadPage(page.getUi(), pageName);
+
+//        this.loadPage(page.getUi(), pageName);
     }
 
     private void launchThread() {
@@ -100,8 +103,13 @@ public class EwfClient {
         this.getWrappedSession().removeAttribute(name);
     }
 
-    private WrappedSession getWrappedSession() {
+    private WrappedSession getWrappedSession() throws EpeAppException {
         return VaadinService.getCurrentRequest().getWrappedSession();
+    }
+
+    // TODO
+    private String getIdSession() throws EpeAppException {
+        return "";
     }
 
     public void loadPage(UI ui, String pageName) throws EpeAppException {
@@ -109,12 +117,14 @@ public class EwfClient {
         EpeAppUtils.checkEmpty("pageName", pageName);
         EwfPageInterface page = new EwfPageDefault();
         page.init(this, ui, pageName);
-        String session = "";// TODO retrieve session id
-        Map<String, EwfPageInterface> mapPageName = this.mapSessionAndMapPageName.get(session);
+        String idSession = this.getIdSession();
+        Map<String, EwfPageInterface> mapPageName = this.mapIdSessionAndMapPageName.get(idSession);
         if (mapPageName == null)
-            this.mapSessionAndMapPageName.put(session, mapPageName = new HashMap<>());
+            this.mapIdSessionAndMapPageName.put(idSession, mapPageName = new HashMap<>());
+        this.mapIdSessionAndPageName.put(idSession, pageName);
         mapPageName.put(pageName, page);
         Component content = page.getComp().getLayout();
+        System.out.println("loading page " + pageName + "\n");// TODO
         ui.setContent(content);
     }
 

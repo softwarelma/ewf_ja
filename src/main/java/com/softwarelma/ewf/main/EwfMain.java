@@ -49,21 +49,39 @@ public class EwfMain extends UI {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
+			
+			loadPage(ui,"home");
 
-			// Init done, update the UI after doing locking
-			access(new Runnable() {
-				@Override
-				public void run() {
-					// Here the UI is locked and can be updated
-					try {
-						EwfServer server = EwfServer.getInstance();
-						server.loadPage(ui, "home");
-						// setContent(new Label("aaaaa"));
-					} catch (EpeAppException e) {
-					}
-				}
-			});
+//			// Init done, update the UI after doing locking
+//			access(new Runnable() {
+//				@Override
+//				public void run() {
+//					// Here the UI is locked and can be updated
+//					try {
+//						EwfServer server = EwfServer.getInstance();
+//						server.loadPage(ui, "home");
+//						// setContent(new Label("aaaaa"));
+//					} catch (EpeAppException e) {
+//					}
+//				}
+//			});
 		}
+	}
+	
+	public static void loadPage(UI ui,String pageName){
+        // Init done, update the UI after doing locking
+  ui.      access(new Runnable() {
+            @Override
+            public void run() {
+                // Here the UI is locked and can be updated
+                try {
+                    EwfServer server = EwfServer.getInstance();
+                    server.loadPage(ui, pageName);
+                    // setContent(new Label("aaaaa"));
+                } catch (EpeAppException e) {
+                }
+            }
+        });
 	}
 
 	@WebServlet(urlPatterns = "/*", name = "EwfMainServlet", asyncSupported = true)
