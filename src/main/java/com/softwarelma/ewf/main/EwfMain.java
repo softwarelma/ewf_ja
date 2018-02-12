@@ -3,6 +3,7 @@ package com.softwarelma.ewf.main;
 import javax.servlet.annotation.WebServlet;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
+import com.softwarelma.epe.p1.app.EpeAppRuntimeException;
 import com.softwarelma.ewf.server.EwfServer;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
@@ -20,6 +21,7 @@ public class EwfMain extends UI {
 
 	private static final long serialVersionUID = 1L;
 	private UI ui;
+	private String idSession;
 
 	public EwfMain() {
 		System.out.println("----- main -> home");// FIXME remove
@@ -36,6 +38,13 @@ public class EwfMain extends UI {
 		Label loadingText = new Label("Loading UI, please wait...");
 		loadingText.setSizeUndefined();
 		mainLayout.addComponent(loadingText);
+
+		try {
+			EwfServer server = EwfServer.getInstance();
+			this.idSession = server.getIdSession();
+		} catch (EpeAppException e) {
+		}
+
 		this.ui = this;
 		new InitializerThread().start();
 	}
@@ -43,51 +52,30 @@ public class EwfMain extends UI {
 	class InitializerThread extends Thread {
 		@Override
 		public void run() {
-			// Do initialization which takes some time.
-			// Here represented by a 1s sleep
 			try {
+				// FIXME
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
-			
-			loadPage(ui,"home");
 
-//			// Init done, update the UI after doing locking
-//			access(new Runnable() {
-//				@Override
-//				public void run() {
-//					// Here the UI is locked and can be updated
-//					try {
-//						EwfServer server = EwfServer.getInstance();
-//						server.loadPage(ui, "home");
-//						// setContent(new Label("aaaaa"));
-//					} catch (EpeAppException e) {
-//					}
-//				}
-//			});
+			try {
+				EwfServer server = EwfServer.getInstance();
+				System.out.println("id session for loading: " + idSession);
+				server.loadPage(ui, idSession, "home");
+			} catch (EpeAppException e) {
+				throw new EpeAppRuntimeException(e.getMessage(), e);
+			}
 		}
-	}
-	
-	public static void loadPage(UI ui,String pageName){
-        // Init done, update the UI after doing locking
-  ui.      access(new Runnable() {
-            @Override
-            public void run() {
-                // Here the UI is locked and can be updated
-                try {
-                    EwfServer server = EwfServer.getInstance();
-                    server.loadPage(ui, pageName);
-                    // setContent(new Label("aaaaa"));
-                } catch (EpeAppException e) {
-                }
-            }
-        });
 	}
 
 	@WebServlet(urlPatterns = "/*", name = "EwfMainServlet", asyncSupported = true)
 	@VaadinServletConfiguration(ui = EwfMain.class, productionMode = false)
 	public static class EwfMainServlet extends VaadinServlet {
 		private static final long serialVersionUID = 1L;
+	}
+
+	public String getIdSession() {
+		return idSession;
 	}
 
 }

@@ -7,23 +7,26 @@ import com.softwarelma.epe.p3.db.EpeDbEntity;
 
 public class EwfBackend {
 
-    private final EwfBackendDaoNativeQueries daoNativeQueries = new EwfBackendDaoNativeQueries();
-    private final EwfBackendDaoNaturalJoin daoNaturalJoin = new EwfBackendDaoNaturalJoin();
+	// TODO global params
+	// TODO global param: seconds to reload
 
-    public List<EpeDbEntity> retrieveListElem() throws EpeAppException {
-        return this.daoNativeQueries.retrieveListElem();
-    }
+	private final EwfBackendDaoNativeQueries daoNativeQueries = new EwfBackendDaoNativeQueries();
+	private final EwfBackendDaoNaturalJoin daoNaturalJoin = new EwfBackendDaoNaturalJoin();
 
-    public List<EpeDbEntity> retrieveListContent() throws EpeAppException {
-        return this.daoNativeQueries.retrieveListContent();
-    }
+	public List<EpeDbEntity> retrieveListElem() throws EpeAppException {
+		return this.daoNativeQueries.retrieveListElem();
+	}
 
-    public List<EpeDbEntity> retrieveListComp() throws EpeAppException {
-        return this.daoNativeQueries.retrieveListComp();
-    }
+	public List<EpeDbEntity> retrieveListContent() throws EpeAppException {
+		return this.daoNativeQueries.retrieveListContent();
+	}
 
-    public List<EpeDbEntity> retrieveListPage() throws EpeAppException {
-        return this.daoNativeQueries.retrieveListPage();
-    }
+	public List<EpeDbEntity> retrieveListComp() throws EpeAppException {
+		return this.daoNativeQueries.retrieveListComp();
+	}
+
+	public List<EpeDbEntity> retrieveListPage() throws EpeAppException {
+		return this.daoNativeQueries.retrieveListPage();
+	}
 
 }

@@ -7,64 +7,107 @@ import com.softwarelma.ewf.client.page.EwfPageBean;
 
 public class EwfElemBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    // DEFAULT
+	// DEFAULT
 
-    private String componentClassName;// vaadin
-    private String text;
-    private String fileName;
+	private String componentClassName;// vaadin
+	private String text;
+	private String fileName;
 
-    // CUSTOM
+	// CUSTOM
 
-    private String elemCustomClassName;// ewf
-    private Map<String, EwfPageBean> mapPageNameAndPageBean;
+	private String elemCustomClassName;// ewf
+	private Map<String, EwfPageBean> mapPageNameAndPageBean;
 
-    @Override
-    public String toString() {
-        return "EwfElemBean [componentClassName=" + componentClassName + ", text=" + text + ", fileName=" + fileName
-                + ", elemCustomClassName=" + elemCustomClassName + ", mapPageNameAndPageBean=" + mapPageNameAndPageBean
-                + "]";
-    }
+	@Override
+	public String toString() {
+		return "EwfElemBean [componentClassName=" + componentClassName + ", text=" + text + ", fileName=" + fileName
+				+ ", elemCustomClassName=" + elemCustomClassName + ", mapPageNameAndPageBean=" + mapPageNameAndPageBean
+				+ "]";
+	}
 
-    public String getComponentClassName() {
-        return componentClassName;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((componentClassName == null) ? 0 : componentClassName.hashCode());
+		result = prime * result + ((elemCustomClassName == null) ? 0 : elemCustomClassName.hashCode());
+		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		return result;
+	}
 
-    public void setComponentClassName(String componentClassName) {
-        this.componentClassName = componentClassName;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EwfElemBean other = (EwfElemBean) obj;
+		if (componentClassName == null) {
+			if (other.componentClassName != null)
+				return false;
+		} else if (!componentClassName.equals(other.componentClassName))
+			return false;
+		if (elemCustomClassName == null) {
+			if (other.elemCustomClassName != null)
+				return false;
+		} else if (!elemCustomClassName.equals(other.elemCustomClassName))
+			return false;
+		if (fileName == null) {
+			if (other.fileName != null)
+				return false;
+		} else if (!fileName.equals(other.fileName))
+			return false;
+		if (text == null) {
+			if (other.text != null)
+				return false;
+		} else if (!text.equals(other.text))
+			return false;
+		return true;
+	}
 
-    public String getText() {
-        return text;
-    }
+	public String getComponentClassName() {
+		return componentClassName;
+	}
 
-    public void setText(String text) {
-        this.text = text;
-    }
+	public void setComponentClassName(String componentClassName) {
+		this.componentClassName = componentClassName;
+	}
 
-    public String getElemCustomClassName() {
-        return elemCustomClassName;
-    }
+	public String getText() {
+		return text;
+	}
 
-    public void setElemCustomClassName(String elemCustomClassName) {
-        this.elemCustomClassName = elemCustomClassName;
-    }
+	public void setText(String text) {
+		this.text = text;
+	}
 
-    public String getFileName() {
-        return fileName;
-    }
+	public String getElemCustomClassName() {
+		return elemCustomClassName;
+	}
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	public void setElemCustomClassName(String elemCustomClassName) {
+		this.elemCustomClassName = elemCustomClassName;
+	}
 
-    public Map<String, EwfPageBean> getMapPageNameAndPageBean() {
-        return mapPageNameAndPageBean;
-    }
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setMapPageNameAndPageBean(Map<String, EwfPageBean> mapPageNameAndPageBean) {
-        this.mapPageNameAndPageBean = mapPageNameAndPageBean;
-    }
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public Map<String, EwfPageBean> getMapPageNameAndPageBean() {
+		return mapPageNameAndPageBean;
+	}
+
+	public void setMapPageNameAndPageBean(Map<String, EwfPageBean> mapPageNameAndPageBean) {
+		this.mapPageNameAndPageBean = mapPageNameAndPageBean;
+	}
 
 }
