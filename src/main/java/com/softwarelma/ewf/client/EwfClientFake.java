@@ -10,16 +10,20 @@ public class EwfClientFake {
     public void addGridFake(Component content) {
         // TODO
         AbstractLayout layout = (AbstractLayout) content;
-        Grid<String> grid = new Grid<>("My data grid");
+        Grid<EwfClientBean> grid = new Grid<>("My data grid");
         layout.addComponent(grid);
         grid.setSizeFull();
 
         if (layout instanceof AbstractOrderedLayout) {
             ((AbstractOrderedLayout) layout).setExpandRatio(grid, 1);
         }
-        
-        grid.addRow("com.vaadin", "vaadin-server", "7.4.0");
-        grid.addRow("com.vaadin", "vaadin-client-compiled", "7.4.0");
+
+        grid.addColumn(EwfClientBean::getPkg).setCaption("PKG");
+        grid.addColumn(EwfClientBean::getArtifact).setCaption("ARTIFACT");
+        grid.addColumn(EwfClientBean::getVersion).setCaption("VERSION");
+
+        grid.setItems(new EwfClientBean("com.vaadin", "vaadin-server", "7.4.0"),
+                new EwfClientBean("com.vaadin", "vaadin-client-compiled", "7.4.0"));
     }
 
 }
