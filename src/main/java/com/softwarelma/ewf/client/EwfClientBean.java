@@ -1,19 +1,23 @@
 package com.softwarelma.ewf.client;
 
+import java.time.LocalDate;
+
 public class EwfClientBean {
 
     private String pkg;
     private String artifact;
     private String version;
+    private LocalDate date;
 
     public EwfClientBean() {
     }
 
-    public EwfClientBean(String pkg, String artifact, String version) {
+    public EwfClientBean(String pkg, String artifact, String version, LocalDate date) {
         super();
         this.pkg = pkg;
         this.artifact = artifact;
         this.version = version;
+        this.date = date;
     }
 
     public String getPkg() {
@@ -38,6 +42,14 @@ public class EwfClientBean {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
 }
