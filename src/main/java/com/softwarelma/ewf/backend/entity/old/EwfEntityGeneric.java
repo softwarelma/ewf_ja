@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
-import com.softwarelma.ewf.common.old.EwfCommonConstants;
+import com.softwarelma.ewf.common.old.EwfCommonOldConstants;
 
 public class EwfEntityGeneric implements Serializable {
 

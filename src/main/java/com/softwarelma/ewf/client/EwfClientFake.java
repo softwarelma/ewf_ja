@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
 
+import com.softwarelma.ewf.common.EwfCommonConstants;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
 import com.vaadin.ui.AbstractLayout;
@@ -20,6 +21,7 @@ import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
+import com.vaadin.ui.renderers.AbstractRenderer;
 
 public class EwfClientFake {
 
@@ -36,15 +38,30 @@ public class EwfClientFake {
 
         grid.addColumn(EwfClientBean::getPkg).setCaption("PKG").setEditorComponent(new TextField(),
                 EwfClientBean::setPkg);
-        grid.addColumn(EwfClientBean::getArtifact).setCaption("ARTIFACT").setEditorComponent(new TextField(),
-                EwfClientBean::setArtifact);
+        // grid.addColumn(EwfClientBean::getFileName).setCaption("IMAGE").setEditorComponent(new TextField(),
+        // EwfClientBean::setFileName);
+        grid.addColumn(EwfClientBean::getFileName, new AbstractRenderer<String, String>(null) {
+
+            private static final long serialVersionUID = 1L;
+
+        }).setCaption("IMAGE");
+        
+        
+        /*
+         * from https://vaadin.com/docs/framework/components/components-grid.html
+         * 
+         Column<Person, ThemeResource> imageColumn = grid.addColumn(
+    p -> new ThemeResource("img/"+p.getLastname()+".jpg"),
+    new ImageRenderer());
+         */
+        
         grid.addColumn(EwfClientBean::getVersion).setCaption("VERSION").setEditorComponent(new TextField(),
                 EwfClientBean::setVersion);
         grid.addColumn(EwfClientBean::getDate).setCaption("DATE").setEditorComponent(new DateField(),
                 EwfClientBean::setDate);
 
-        grid.setItems(new EwfClientBean("com.vaadin 1", "vaadin-server", "7.4.0-1", LocalDate.now()),
-                new EwfClientBean("com.vaadin 2", "vaadin-client-compiled", "7.4.0-2", LocalDate.now()));
+        grid.setItems(new EwfClientBean("com.vaadin 1", null, "7.4.0-1", LocalDate.now()), new EwfClientBean(
+                "com.vaadin 2", "tesla-nikola-map-to-multiplication.jpg", "7.4.0-2", LocalDate.now()));
 
         grid.getEditor().setEnabled(true);
 
@@ -57,17 +74,21 @@ public class EwfClientFake {
 
         // grid.listener
 
-        ////////////////////////////////////////////////
+        this.addUploader(layout);
+    }
 
+    private void addUploader(AbstractLayout layout) {
         // Show uploaded file in this placeholder
         final Embedded image = new Embedded("");// "Uploaded Image"
-//        image.setWidth("100px");
+        // image.setWidth("100px");//adaptive
         image.setHeight("100px");
         image.setVisible(false);
 
         // Implement both receiver that saves upload in a file and
         // listener for successful upload
         class ImageUploader implements Receiver, SucceededListener {
+
+            private static final long serialVersionUID = 1L;
             public File file;
 
             public OutputStream receiveUpload(String filename, String mimeType) {
@@ -75,7 +96,7 @@ public class EwfClientFake {
                 FileOutputStream fos = null; // Stream to write to
                 try {
                     // Open the file for writing.
-                    file = new File("/home/ellison/Downloads/ewf/" + filename);
+                    file = new File(EwfCommonConstants.IMAGES_FOLDER + filename);
                     fos = new FileOutputStream(file);
                 } catch (final java.io.FileNotFoundException e) {
                     new Notification("Could not open file<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE)
@@ -90,6 +111,7 @@ public class EwfClientFake {
                 image.setVisible(true);
                 image.setSource(new FileResource(file));
             }
+
         }
 
         ImageUploader receiver = new ImageUploader();

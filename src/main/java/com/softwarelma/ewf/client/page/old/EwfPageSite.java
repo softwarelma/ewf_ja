@@ -13,7 +13,7 @@ import com.softwarelma.ewf.backend.entity.old.EwfEntityUserSite;
 import com.softwarelma.ewf.client.comp.old.EwfCompSecondaryInsertBean;
 import com.softwarelma.ewf.client.comp.old.EwfCompTable;
 import com.softwarelma.ewf.client.old.EwfClientWeb;
-import com.softwarelma.ewf.common.old.EwfCommonConstants;
+import com.softwarelma.ewf.common.old.EwfCommonOldConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
@@ -65,7 +65,7 @@ public class EwfPageSite extends EwfPageAbstract {
         secondaryBean.setClazz(EwfEntityUserSite.class);
         secondaryBean.setAttributeForEntityNew("site");
         Map<String, Object> mapAttributeAndValue = new HashMap<>();
-        mapAttributeAndValue.put("name", EwfCommonConstants.ENTITY_NAME_UNUSED);
+        mapAttributeAndValue.put("name", EwfCommonOldConstants.ENTITY_NAME_UNUSED);
         mapAttributeAndValue.put("admin", this.getServer().getUser());
         secondaryBean.setMapAttributeAndValue(mapAttributeAndValue);
         listSecondaryBean.add(secondaryBean);

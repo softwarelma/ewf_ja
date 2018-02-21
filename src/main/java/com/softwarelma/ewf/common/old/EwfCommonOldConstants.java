@@ -2,7 +2,7 @@ package com.softwarelma.ewf.common.old;
 
 import java.io.Serializable;
 
-public abstract class EwfCommonConstants implements Serializable {
+public abstract class EwfCommonOldConstants implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -12,7 +12,7 @@ import com.softwarelma.ewf.backend.entity.old.EwfEntityUser;
 import com.softwarelma.ewf.backend.entity.old.EwfEntityUserSite;
 import com.softwarelma.ewf.client.comp.old.EwfCompTable;
 import com.softwarelma.ewf.client.old.EwfClientWeb;
-import com.softwarelma.ewf.common.old.EwfCommonConstants;
+import com.softwarelma.ewf.common.old.EwfCommonOldConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -115,7 +115,7 @@ public class EwfPageAdmin extends EwfPageAbstract {
                 }
 
                 EwfEntityUserSite adminSite = new EwfEntityUserSite();
-                adminSite.setName(EwfCommonConstants.ENTITY_NAME_UNUSED);
+                adminSite.setName(EwfCommonOldConstants.ENTITY_NAME_UNUSED);
                 adminSite.setUser(admin);
                 adminSite.setSite(site);
                 this.getServer().create(EwfDaoUserSite.class.getName(), adminSite);

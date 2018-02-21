@@ -5,17 +5,17 @@ import java.time.LocalDate;
 public class EwfClientBean {
 
     private String pkg;
-    private String artifact;
+    private String fileName;
     private String version;
     private LocalDate date;
 
     public EwfClientBean() {
     }
 
-    public EwfClientBean(String pkg, String artifact, String version, LocalDate date) {
+    public EwfClientBean(String pkg, String fileName, String version, LocalDate date) {
         super();
         this.pkg = pkg;
-        this.artifact = artifact;
+        this.fileName = fileName;
         this.version = version;
         this.date = date;
     }
@@ -28,12 +28,12 @@ public class EwfClientBean {
         this.pkg = pkg;
     }
 
-    public String getArtifact() {
-        return artifact;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setArtifact(String artifact) {
-        this.artifact = artifact;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getVersion() {

@@ -9,7 +9,7 @@ import com.softwarelma.ewf.backend.entity.old.EwfEntitySite;
 import com.softwarelma.ewf.backend.entity.old.EwfEntityUser;
 import com.softwarelma.ewf.backend.entity.old.EwfEntityUserSite;
 import com.softwarelma.ewf.backend.old.EwfBackend;
-import com.softwarelma.ewf.common.old.EwfCommonConstants;
+import com.softwarelma.ewf.common.old.EwfCommonOldConstants;
 
 public class EwfDaoUserSite extends EwfDaoAbstract<EwfEntityUserSite> {
 
@@ -21,15 +21,15 @@ public class EwfDaoUserSite extends EwfDaoAbstract<EwfEntityUserSite> {
 
     public void initFake() throws EpeAppException {
         EwfEntityUserSite adminSite = new EwfEntityUserSite();
-        adminSite.setName(EwfCommonConstants.ENTITY_NAME_UNUSED);
+        adminSite.setName(EwfCommonOldConstants.ENTITY_NAME_UNUSED);
         EwfEntityUser user = new EwfEntityUser();
         user.setId(1L);
         user.setAdmin(true);
-        user.setName(EwfCommonConstants.ENTITY_NAME_UNUSED);
+        user.setName(EwfCommonOldConstants.ENTITY_NAME_UNUSED);
         adminSite.setUser(user);
         EwfEntitySite site = new EwfEntitySite();
         site.setId(1L);
-        site.setName(EwfCommonConstants.ENTITY_NAME_UNUSED);
+        site.setName(EwfCommonOldConstants.ENTITY_NAME_UNUSED);
         adminSite.setSite(site);
         this.create(adminSite);
     }
