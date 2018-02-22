@@ -19,63 +19,63 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("mytheme")
 public class EwfMain extends UI {
 
-	private static final long serialVersionUID = 1L;
-	private UI ui;
-	private String idSession;
+    private static final long serialVersionUID = 1L;
+    private UI ui;
+    private String idSession;
 
-	public EwfMain() {
-		System.out.println("----- main -> home");// FIXME remove
-	}
+    public EwfMain() {
+        System.out.println("----- main -> home");// FIXME remove
+    }
 
-	@Override
-	protected void init(VaadinRequest vaadinRequest) {
-		VerticalLayout mainLayout = new VerticalLayout();
-		mainLayout.setSizeFull();
-		mainLayout.setMargin(true);
-		setContent(mainLayout);
+    @Override
+    protected void init(VaadinRequest vaadinRequest) {
+        VerticalLayout mainLayout = new VerticalLayout();
+        mainLayout.setSizeFull();
+        mainLayout.setMargin(true);
+        setContent(mainLayout);
 
-		mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-		Label loadingText = new Label("Loading UI, please wait...");
-		loadingText.setSizeUndefined();
-		mainLayout.addComponent(loadingText);
+        mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        Label loadingText = new Label("Loading UI, please wait...");
+        loadingText.setSizeUndefined();
+        mainLayout.addComponent(loadingText);
 
-		try {
-			EwfServer server = EwfServer.getInstance();
-			this.idSession = server.getIdSession();
-		} catch (EpeAppException e) {
-		}
+        try {
+            EwfServer server = EwfServer.getInstance();
+            this.idSession = server.getIdSession();
+        } catch (EpeAppException e) {
+        }
 
-		this.ui = this;
-		new InitializerThread().start();
-	}
+        this.ui = this;
+        new InitializerThread().start();
+    }
 
-	class InitializerThread extends Thread {
-		@Override
-		public void run() {
-			try {
-				// FIXME
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
+    class InitializerThread extends Thread {
+        @Override
+        public void run() {
+            try {
+                // FIXME
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
 
-			try {
-				EwfServer server = EwfServer.getInstance();
-				System.out.println("id session for loading: " + idSession);
-				server.loadPage(ui, idSession, "home");
-			} catch (EpeAppException e) {
-				throw new EpeAppRuntimeException(e.getMessage(), e);
-			}
-		}
-	}
+            try {
+                EwfServer server = EwfServer.getInstance();
+                System.out.println("id session for loading: " + idSession);
+                server.loadPage(ui, idSession, "chisono");// FIXME home
+            } catch (EpeAppException e) {
+                throw new EpeAppRuntimeException(e.getMessage(), e);
+            }
+        }
+    }
 
-	@WebServlet(urlPatterns = "/*", name = "EwfMainServlet", asyncSupported = true)
-	@VaadinServletConfiguration(ui = EwfMain.class, productionMode = false)
-	public static class EwfMainServlet extends VaadinServlet {
-		private static final long serialVersionUID = 1L;
-	}
+    @WebServlet(urlPatterns = "/*", name = "EwfMainServlet", asyncSupported = true)
+    @VaadinServletConfiguration(ui = EwfMain.class, productionMode = false)
+    public static class EwfMainServlet extends VaadinServlet {
+        private static final long serialVersionUID = 1L;
+    }
 
-	public String getIdSession() {
-		return idSession;
-	}
+    public String getIdSession() {
+        return idSession;
+    }
 
 }

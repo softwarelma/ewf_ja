@@ -3,17 +3,21 @@ package com.softwarelma.ewf.client;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 
 import com.softwarelma.ewf.common.EwfCommonConstants;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
@@ -22,6 +26,8 @@ import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.renderers.AbstractRenderer;
+import com.vaadin.ui.renderers.ImageRenderer;
+import com.vaadin.ui.renderers.TextRenderer;
 
 public class EwfClientFake {
 
@@ -38,30 +44,48 @@ public class EwfClientFake {
 
         grid.addColumn(EwfClientBean::getPkg).setCaption("PKG").setEditorComponent(new TextField(),
                 EwfClientBean::setPkg);
+
+        // op 1
         // grid.addColumn(EwfClientBean::getFileName).setCaption("IMAGE").setEditorComponent(new TextField(),
         // EwfClientBean::setFileName);
-        grid.addColumn(EwfClientBean::getFileName, new AbstractRenderer<String, String>(null) {
 
-            private static final long serialVersionUID = 1L;
+        // op 2
+        // grid.addColumn(EwfClientBean::getFileName, new AbstractRenderer<EwfClientBean, String>(null) {
+        // private static final long serialVersionUID = 1L;
+        // }).setCaption("IMAGE");
 
-        }).setCaption("IMAGE");
-        
-        
+        // op 3
+        Column<EwfClientBean, ExternalResource> imageColumn = grid
+                .addColumn(p -> new ExternalResource("file:" + EwfCommonConstants.IMAGES_FOLDER + p.getFileName()),
+                        new ImageRenderer())
+                .setCaption("IMAGE");
+        try {
+            File f = new File(EwfCommonConstants.IMAGES_FOLDER + "tesla-nikola-map-to-multiplication.jpg");
+            f.toURI().toURL().toString();
+        } catch (MalformedURLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        // op 4
+        // grid.addColumn(EwfClientBean::getFileName).setCaption("IMAGE").setRenderer(EwfClientBean::getFileName,
+        // new TextRenderer());
+
         /*
          * from https://vaadin.com/docs/framework/components/components-grid.html
          * 
-         Column<Person, ThemeResource> imageColumn = grid.addColumn(
-    p -> new ThemeResource("img/"+p.getLastname()+".jpg"),
-    new ImageRenderer());
+         * Column<Person, ThemeResource> imageColumn = grid.addColumn( p -> new
+         * ThemeResource("img/"+p.getLastname()+".jpg"), new ImageRenderer());
          */
-        
+
         grid.addColumn(EwfClientBean::getVersion).setCaption("VERSION").setEditorComponent(new TextField(),
                 EwfClientBean::setVersion);
         grid.addColumn(EwfClientBean::getDate).setCaption("DATE").setEditorComponent(new DateField(),
                 EwfClientBean::setDate);
 
-        grid.setItems(new EwfClientBean("com.vaadin 1", null, "7.4.0-1", LocalDate.now()), new EwfClientBean(
-                "com.vaadin 2", "tesla-nikola-map-to-multiplication.jpg", "7.4.0-2", LocalDate.now()));
+        grid.setItems(new EwfClientBean("com.vaadin 1", "Screenshot-parametri.png", "7.4.0-1", LocalDate.now()),
+                new EwfClientBean("com.vaadin 2", "tesla-nikola-map-to-multiplication.jpg", "7.4.0-2",
+                        LocalDate.now()));
 
         grid.getEditor().setEnabled(true);
 
