@@ -1,12 +1,16 @@
 package com.softwarelma.ewf.client;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import com.softwarelma.ewf.common.EwfCommonConstants;
@@ -61,16 +65,6 @@ public class EwfClientFake {
                 EwfClientBean::setPkg);
         listColumn.add(column);
 
-        // column = grid.addColumn(e -> e.getFileName(), new
-        // ButtonRenderer(clickEvent -> {
-        // EwfClientBean bean = (EwfClientBean) clickEvent.getItem();
-        // System.out.println("bean img: " + bean.getFileName());
-        // System.out.println("\tsource: " +
-        // clickEvent.getSource().getClass().getName());
-        // System.out.println("\titem: " +
-        // clickEvent.getItem().getClass().getName());
-        // // .setIcon(new ThemeResource("img/robot.jpeg"));
-        // })).setCaption("IMAGE");
         // column = grid.addColumn(e -> {
         // Button button = new Button("Click me!");
         // button.addClickListener(click -> Notification.show("Clicked: " +
@@ -80,9 +74,7 @@ public class EwfClientFake {
         // }).setCaption("IMAGE");
         // grid.setHeightByRows(60);
 
-        column = grid.addColumn(e -> getResource(), new ImageRenderer(getClick()));
-        // column = grid.addColumn(e -> new ThemeResource(e.getFileName()), new
-        // ImageRenderer());
+        column = grid.addColumn(e -> getResource(e.getFileName()), new ImageRenderer(getClick())).setCaption("IMAGE");
         listColumn.add(column);
 
         column = grid.addColumn(EwfClientBean::getVersion).setCaption("VERSION").setEditorComponent(new TextField(),
@@ -94,9 +86,8 @@ public class EwfClientFake {
         listColumn.add(column);
 
         List<EwfClientBean> listBean = new ArrayList<>(Arrays.asList(
-                new EwfClientBean[] { new EwfClientBean("com.vaadin 1", "img/robot.jpeg", "7.4.0-1", LocalDate.now()),
-                        new EwfClientBean("com.vaadin 2", "tesla-nikola-map-to-multiplication.jpg", "7.4.0-2",
-                                LocalDate.now()) }));
+                new EwfClientBean[] { new EwfClientBean("com.vaadin 1", "robot.jpeg", "7.4.0-1", LocalDate.now()),
+                        new EwfClientBean("com.vaadin 2", "04-icona-guille-madrid.png", "7.4.0-2", LocalDate.now()) }));
 
         this.addFilters(grid, listColumn);
 
@@ -141,9 +132,49 @@ public class EwfClientFake {
      * from
      * https://stackoverflow.com/questions/35949232/insert-image-to-vaadin-grid
      */
-    private Resource getResource() {
-        return new ExternalResource(
-                "data:image/png;base64,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");
+    private Resource getResource(String fileName) {
+        String base64 = this.encodeFileToBase64Binary(EwfCommonConstants.IMAGES_FOLDER + fileName);
+        String[] arrayExtension = fileName.split("\\.");
+        String extension = arrayExtension[arrayExtension.length - 1];
+        base64 = "data:image/" + extension + ";base64," + base64;
+        return new ExternalResource(base64);
+        // "data:image/png;base64,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"
+    }
+
+    private String encodeFileToBase64Binary(String fileName) {
+        try {
+            File file = new File(fileName);
+            byte[] bytes = loadFile(file);
+            byte[] encoded = Base64.getEncoder().encode(bytes);
+            String encodedString = new String(encoded);
+            return encodedString;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static byte[] loadFile(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+
+        long length = file.length();
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+        byte[] bytes = new byte[(int) length];
+
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+            offset += numRead;
+        }
+
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file " + file.getName());
+        }
+
+        is.close();
+        return bytes;
     }
 
     private void addFilters(Grid grid, List<Column> listColumn) {
@@ -151,15 +182,25 @@ public class EwfClientFake {
 
         for (Column column : listColumn) {
             HeaderCell cell = headerRow.getCell(column);
-            TextField textField = new TextField();
-            textField.addValueChangeListener(new ValueChangeListener<String>() {
-                @Override
-                public void valueChange(ValueChangeEvent<String> event) {
-                    System.out.println("filtering col " + column.getCaption() + " by: " + event.getValue());
-                }
-            });
-            cell.setComponent(textField);
+            Component component;
+            if (column.getCaption().equals("IMAGE")) {
+                component = this.getUpload();
+            } else {
+                TextField textField = new TextField();
+                textField.addValueChangeListener(new ValueChangeListener<String>() {
+                    @Override
+                    public void valueChange(ValueChangeEvent<String> event) {
+                        System.out.println("filtering col " + column.getCaption() + " by: " + event.getValue());
+                    }
+                });
+                component = textField;
+            }
+            cell.setComponent(component);
         }
+    }
+
+    private Upload getUpload() {
+        return null;
     }
 
     private void addUploader(AbstractLayout layout) {
