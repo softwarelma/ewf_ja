@@ -14,6 +14,8 @@ public class EwfElemBean implements Serializable {
 	private String componentClassName;// vaadin
 	private String text;
 	private String fileName;
+	private String querySelect;
+	private String queryTable;
 
 	// CUSTOM
 
@@ -23,8 +25,8 @@ public class EwfElemBean implements Serializable {
 	@Override
 	public String toString() {
 		return "EwfElemBean [componentClassName=" + componentClassName + ", text=" + text + ", fileName=" + fileName
-				+ ", elemCustomClassName=" + elemCustomClassName + ", mapPageNameAndPageBean=" + mapPageNameAndPageBean
-				+ "]";
+				+ ", querySelect=" + querySelect + ", queryTable=" + queryTable + ", elemCustomClassName="
+				+ elemCustomClassName + ", mapPageNameAndPageBean=" + mapPageNameAndPageBean + "]";
 	}
 
 	@Override
@@ -108,6 +110,22 @@ public class EwfElemBean implements Serializable {
 
 	public void setMapPageNameAndPageBean(Map<String, EwfPageBean> mapPageNameAndPageBean) {
 		this.mapPageNameAndPageBean = mapPageNameAndPageBean;
+	}
+
+	public String getQuerySelect() {
+		return querySelect;
+	}
+
+	public void setQuerySelect(String querySelect) {
+		this.querySelect = querySelect;
+	}
+
+	public String getQueryTable() {
+		return queryTable;
+	}
+
+	public void setQueryTable(String queryTable) {
+		this.queryTable = queryTable;
 	}
 
 }

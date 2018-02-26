@@ -16,81 +16,87 @@ import com.softwarelma.ewf.client.page.EwfPageBean;
 
 public class EwfServerPage {
 
-    private final EwfBackend backend;
+	private final EwfBackend backend;
 
-    protected EwfServerPage(EwfBackend backend) {
-        this.backend = backend;
-    }
+	protected EwfServerPage(EwfBackend backend) {
+		this.backend = backend;
+	}
 
-    public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
-        Map<String, EwfPageBean> mapPageNameAndPageBean = new LinkedHashMap<>();
-        List<EpeDbEntity> listPage = this.backend.retrieveListPage();
+	public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
+		return this.backend.retrieveListEntity(select, table);
+	}
 
-        for (EpeDbEntity entity : listPage) {
-            EwfPageBean pageBean = new EwfPageBean();
-            pageBean.setName(entity.getString("name"));
-            pageBean.setDescription(entity.getString("description"));
-            pageBean.setCompName(entity.getString("comp_name"));
-            mapPageNameAndPageBean.put(pageBean.getName(), pageBean);
-        }
+	public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
+		Map<String, EwfPageBean> mapPageNameAndPageBean = new LinkedHashMap<>();
+		List<EpeDbEntity> listPage = this.backend.retrieveSelectAllPages();
 
-        return mapPageNameAndPageBean;
-    }
+		for (EpeDbEntity entity : listPage) {
+			EwfPageBean pageBean = new EwfPageBean();
+			pageBean.setName(entity.getString("name"));
+			pageBean.setDescription(entity.getString("description"));
+			pageBean.setCompName(entity.getString("comp_name"));
+			mapPageNameAndPageBean.put(pageBean.getName(), pageBean);
+		}
 
-    public Map<String, EwfCompBean> retrieveMapCompNameAndCompBean() throws EpeAppException {
-        Map<String, EwfCompBean> mapCompNameAndCompBean = new LinkedHashMap<>();
-        List<EpeDbEntity> listComp = this.backend.retrieveListComp();
-        List<EpeDbEntity> listContent = this.backend.retrieveListContent();
+		return mapPageNameAndPageBean;
+	}
 
-        for (EpeDbEntity entityComp : listComp) {
-            EwfCompBean compBean = new EwfCompBean();
-            compBean.setClassNameLayout(entityComp.getString("class_name_layout"));
-            compBean.setListContentBean(this.retrieveListContentBean(entityComp, listContent));
-            mapCompNameAndCompBean.put(entityComp.getString("name"), compBean);
-        }
+	public Map<String, EwfCompBean> retrieveMapCompNameAndCompBean() throws EpeAppException {
+		Map<String, EwfCompBean> mapCompNameAndCompBean = new LinkedHashMap<>();
+		List<EpeDbEntity> listComp = this.backend.retrieveSelectAllComps();
+		List<EpeDbEntity> listContent = this.backend.retrieveSelectAllContents();
 
-        return mapCompNameAndCompBean;
-    }
+		for (EpeDbEntity entityComp : listComp) {
+			EwfCompBean compBean = new EwfCompBean();
+			compBean.setClassNameLayout(entityComp.getString("class_name_layout"));
+			compBean.setListContentBean(this.retrieveListContentBean(entityComp, listContent));
+			mapCompNameAndCompBean.put(entityComp.getString("name"), compBean);
+		}
 
-    private List<EwfContentBean> retrieveListContentBean(EpeDbEntity entityComp, List<EpeDbEntity> listContent)
-            throws EpeAppException {
-        List<EwfContentBean> listContentBean = new ArrayList<>();
+		return mapCompNameAndCompBean;
+	}
 
-        for (EpeDbEntity entityContent : listContent) {
-            if (!entityContent.get("id_ewf_comp").equals(entityComp.get("id"))) {
-                continue;
-            }
+	private List<EwfContentBean> retrieveListContentBean(EpeDbEntity entityComp, List<EpeDbEntity> listContent)
+			throws EpeAppException {
+		List<EwfContentBean> listContentBean = new ArrayList<>();
 
-            EwfContentBean contentBean = new EwfContentBean();
-            contentBean.setName(entityContent.getString("name_comp_or_elem"));
-            contentBean.setComp(entityContent.get("id_ewf_comp__2") != null);
-            Object obj = entityContent.get("style_names");
-            if (obj != null)
-                contentBean.setListStyleName(Arrays.asList(((String) obj).split("\\,")));
-            listContentBean.add(contentBean);
-        }
+		for (EpeDbEntity entityContent : listContent) {
+			if (!entityContent.get("id_ewf_comp").equals(entityComp.get("id"))) {
+				continue;
+			}
 
-        return listContentBean;
-    }
+			EwfContentBean contentBean = new EwfContentBean();
+			contentBean.setName(entityContent.getString("name_comp_or_elem"));
+			contentBean.setComp(entityContent.get("id_ewf_comp__2") != null);
+			Object obj = entityContent.get("style_names");
+			if (obj != null)
+				contentBean.setListStyleName(Arrays.asList(((String) obj).split("\\,")));
+			listContentBean.add(contentBean);
+		}
 
-    public Map<String, EwfElemBean> retrieveMapElemNameAndElemBean() throws EpeAppException {
-        Map<String, EwfElemBean> mapElemNameAndElemBean = new LinkedHashMap<>();
-        List<EpeDbEntity> listElem = this.backend.retrieveListElem();
+		return listContentBean;
+	}
 
-        for (EpeDbEntity entityElem : listElem) {
-            EwfElemBean elemBean = new EwfElemBean();
-            elemBean.setComponentClassName(entityElem.getString("component_class_name"));
-            elemBean.setText(entityElem.getString("text"));
-            elemBean.setFileName(entityElem.getString("file_name"));
-            elemBean.setElemCustomClassName(entityElem.getString("elem_custom_class_name"));
+	public Map<String, EwfElemBean> retrieveMapElemNameAndElemBean() throws EpeAppException {
+		Map<String, EwfElemBean> mapElemNameAndElemBean = new LinkedHashMap<>();
+		List<EpeDbEntity> listElem = this.backend.retrieveSelectAllElems();
 
-            // on EwfClient
-            // elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
+		for (EpeDbEntity entityElem : listElem) {
+			EwfElemBean elemBean = new EwfElemBean();
+			elemBean.setComponentClassName(entityElem.getString("component_class_name"));
+			elemBean.setText(entityElem.getString("text"));
+			elemBean.setFileName(entityElem.getString("file_name"));
+			elemBean.setElemCustomClassName(entityElem.getString("elem_custom_class_name"));
+			elemBean.setQuerySelect(entityElem.getString("query_select"));
+			elemBean.setQueryTable(entityElem.getString("query_table"));
 
-            mapElemNameAndElemBean.put(entityElem.getString("name"), elemBean);
-        }
+			// on EwfClient
+			// elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
 
-        return mapElemNameAndElemBean;
-    }
+			mapElemNameAndElemBean.put(entityElem.getString("name"), elemBean);
+		}
+
+		return mapElemNameAndElemBean;
+	}
 
 }

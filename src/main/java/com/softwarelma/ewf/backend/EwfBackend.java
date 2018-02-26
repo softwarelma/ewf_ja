@@ -13,20 +13,24 @@ public class EwfBackend {
 	private final EwfBackendDaoNativeQueries daoNativeQueries = new EwfBackendDaoNativeQueries();
 	private final EwfBackendDaoNaturalJoin daoNaturalJoin = new EwfBackendDaoNaturalJoin();
 
-	public List<EpeDbEntity> retrieveListElem() throws EpeAppException {
-		return this.daoNativeQueries.retrieveListElem();
+	public List<EpeDbEntity> retrieveSelectAllElems() throws EpeAppException {
+		return this.daoNativeQueries.retrieveSelectAllElems();
 	}
 
-	public List<EpeDbEntity> retrieveListContent() throws EpeAppException {
-		return this.daoNativeQueries.retrieveListContent();
+	public List<EpeDbEntity> retrieveSelectAllContents() throws EpeAppException {
+		return this.daoNativeQueries.retrieveSelectAllContents();
 	}
 
-	public List<EpeDbEntity> retrieveListComp() throws EpeAppException {
-		return this.daoNativeQueries.retrieveListComp();
+	public List<EpeDbEntity> retrieveSelectAllComps() throws EpeAppException {
+		return this.daoNativeQueries.retrieveSelectAllComps();
 	}
 
-	public List<EpeDbEntity> retrieveListPage() throws EpeAppException {
-		return this.daoNativeQueries.retrieveListPage();
+	public List<EpeDbEntity> retrieveSelectAllPages() throws EpeAppException {
+		return this.daoNativeQueries.retrieveSelectAllPages();
+	}
+
+	public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
+		return this.daoNativeQueries.retrieveListEntity(select, table);
 	}
 
 }
