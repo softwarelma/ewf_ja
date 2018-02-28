@@ -16,87 +16,99 @@ import com.softwarelma.ewf.client.page.EwfPageBean;
 
 public class EwfServerPage {
 
-	private final EwfBackend backend;
+    private final EwfBackend backend;
 
-	protected EwfServerPage(EwfBackend backend) {
-		this.backend = backend;
-	}
+    protected EwfServerPage(EwfBackend backend) {
+        this.backend = backend;
+    }
 
-	public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
-		return this.backend.retrieveListEntity(select, table);
-	}
+    public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
+        return this.backend.retrieveListEntity(select, table);
+    }
 
-	public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
-		Map<String, EwfPageBean> mapPageNameAndPageBean = new LinkedHashMap<>();
-		List<EpeDbEntity> listPage = this.backend.retrieveSelectAllPages();
+    public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
+        Map<String, EwfPageBean> mapPageNameAndPageBean = new LinkedHashMap<>();
+        List<EpeDbEntity> listPage = this.backend.retrieveSelectAllPages();
 
-		for (EpeDbEntity entity : listPage) {
-			EwfPageBean pageBean = new EwfPageBean();
-			pageBean.setName(entity.getString("name"));
-			pageBean.setDescription(entity.getString("description"));
-			pageBean.setCompName(entity.getString("comp_name"));
-			mapPageNameAndPageBean.put(pageBean.getName(), pageBean);
-		}
+        for (EpeDbEntity entity : listPage) {
+            EwfPageBean pageBean = new EwfPageBean();
+            pageBean.setName(entity.getString("name"));
+            pageBean.setDescription(entity.getString("description"));
+            pageBean.setCompName(entity.getString("comp_name"));
+            mapPageNameAndPageBean.put(pageBean.getName(), pageBean);
+        }
 
-		return mapPageNameAndPageBean;
-	}
+        return mapPageNameAndPageBean;
+    }
 
-	public Map<String, EwfCompBean> retrieveMapCompNameAndCompBean() throws EpeAppException {
-		Map<String, EwfCompBean> mapCompNameAndCompBean = new LinkedHashMap<>();
-		List<EpeDbEntity> listComp = this.backend.retrieveSelectAllComps();
-		List<EpeDbEntity> listContent = this.backend.retrieveSelectAllContents();
+    public Map<String, EwfCompBean> retrieveMapCompNameAndCompBean() throws EpeAppException {
+        Map<String, EwfCompBean> mapCompNameAndCompBean = new LinkedHashMap<>();
+        List<EpeDbEntity> listComp = this.backend.retrieveSelectAllComps();
+        List<EpeDbEntity> listContent = this.backend.retrieveSelectAllContents();
 
-		for (EpeDbEntity entityComp : listComp) {
-			EwfCompBean compBean = new EwfCompBean();
-			compBean.setClassNameLayout(entityComp.getString("class_name_layout"));
-			compBean.setListContentBean(this.retrieveListContentBean(entityComp, listContent));
-			mapCompNameAndCompBean.put(entityComp.getString("name"), compBean);
-		}
+        for (EpeDbEntity entityComp : listComp) {
+            EwfCompBean compBean = new EwfCompBean();
+            compBean.setClassNameLayout(entityComp.getString("class_name_layout"));
+            compBean.setListContentBean(this.retrieveListContentBean(entityComp, listContent));
+            mapCompNameAndCompBean.put(entityComp.getString("name"), compBean);
+        }
 
-		return mapCompNameAndCompBean;
-	}
+        return mapCompNameAndCompBean;
+    }
 
-	private List<EwfContentBean> retrieveListContentBean(EpeDbEntity entityComp, List<EpeDbEntity> listContent)
-			throws EpeAppException {
-		List<EwfContentBean> listContentBean = new ArrayList<>();
+    private List<EwfContentBean> retrieveListContentBean(EpeDbEntity entityComp, List<EpeDbEntity> listContent)
+            throws EpeAppException {
+        List<EwfContentBean> listContentBean = new ArrayList<>();
 
-		for (EpeDbEntity entityContent : listContent) {
-			if (!entityContent.get("id_ewf_comp").equals(entityComp.get("id"))) {
-				continue;
-			}
+        for (EpeDbEntity entityContent : listContent) {
+            if (!entityContent.get("id_ewf_comp").equals(entityComp.get("id"))) {
+                continue;
+            }
 
-			EwfContentBean contentBean = new EwfContentBean();
-			contentBean.setName(entityContent.getString("name_comp_or_elem"));
-			contentBean.setComp(entityContent.get("id_ewf_comp__2") != null);
-			Object obj = entityContent.get("style_names");
-			if (obj != null)
-				contentBean.setListStyleName(Arrays.asList(((String) obj).split("\\,")));
-			listContentBean.add(contentBean);
-		}
+            EwfContentBean contentBean = new EwfContentBean();
+            contentBean.setName(entityContent.getString("name_comp_or_elem"));
+            contentBean.setComp(entityContent.get("id_ewf_comp__2") != null);
+            Object obj = entityContent.get("style_names");
+            if (obj != null)
+                contentBean.setListStyleName(Arrays.asList(((String) obj).split("\\,")));
+            listContentBean.add(contentBean);
+        }
 
-		return listContentBean;
-	}
+        return listContentBean;
+    }
 
-	public Map<String, EwfElemBean> retrieveMapElemNameAndElemBean() throws EpeAppException {
-		Map<String, EwfElemBean> mapElemNameAndElemBean = new LinkedHashMap<>();
-		List<EpeDbEntity> listElem = this.backend.retrieveSelectAllElems();
+    public Map<String, EwfElemBean> retrieveMapElemNameAndElemBean() throws EpeAppException {
+        Map<String, EwfElemBean> mapElemNameAndElemBean = new LinkedHashMap<>();
+        List<EpeDbEntity> listElem = this.backend.retrieveSelectAllElems();
 
-		for (EpeDbEntity entityElem : listElem) {
-			EwfElemBean elemBean = new EwfElemBean();
-			elemBean.setComponentClassName(entityElem.getString("component_class_name"));
-			elemBean.setText(entityElem.getString("text"));
-			elemBean.setFileName(entityElem.getString("file_name"));
-			elemBean.setElemCustomClassName(entityElem.getString("elem_custom_class_name"));
-			elemBean.setQuerySelect(entityElem.getString("query_select"));
-			elemBean.setQueryTable(entityElem.getString("query_table"));
+        for (EpeDbEntity entityElem : listElem) {
+            EwfElemBean elemBean = new EwfElemBean();
+            elemBean.setComponentClassName(entityElem.getString("component_class_name"));
+            elemBean.setText(entityElem.getString("text"));
+            elemBean.setFileName(entityElem.getString("file_name"));
+            elemBean.setElemCustomClassName(entityElem.getString("elem_custom_class_name"));
+            elemBean.setQuerySelect(entityElem.getString("query_select"));
+            elemBean.setQueryTable(entityElem.getString("query_table"));
 
-			// on EwfClient
-			// elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
+            // on EwfClient
+            // elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
 
-			mapElemNameAndElemBean.put(entityElem.getString("name"), elemBean);
-		}
+            mapElemNameAndElemBean.put(entityElem.getString("name"), elemBean);
+        }
 
-		return mapElemNameAndElemBean;
-	}
+        return mapElemNameAndElemBean;
+    }
+
+    public void insertBlank(String table) throws EpeAppException {
+        this.backend.insertBlank(table);
+    }
+
+    public void update(EpeDbEntity entity) throws EpeAppException {
+        this.backend.update(entity);
+    }
+
+    public void delete(EpeDbEntity entity) throws EpeAppException {
+        this.backend.delete(entity);
+    }
 
 }

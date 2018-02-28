@@ -61,7 +61,7 @@ public class EwfMain extends UI {
             try {
                 EwfServer server = EwfServer.getInstance();
                 System.out.println("id session for loading: " + idSession);
-                server.loadPage(ui, idSession, "chisono");// FIXME home
+                server.loadPage(ui, idSession, "home");// FIXME home
             } catch (EpeAppException e) {
                 throw new EpeAppRuntimeException(e.getMessage(), e);
             }
