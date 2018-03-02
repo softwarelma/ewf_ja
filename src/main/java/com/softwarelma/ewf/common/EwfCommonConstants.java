@@ -5,6 +5,7 @@ public class EwfCommonConstants {
     public static final String APPLICATION_NAME = "ewf";
 
     public static boolean SHOW_SQL = true;
+    public static boolean LOG_DB = true;
 
     public static final String IMAGES_FOLDER = "/home/ellison/Downloads/ewf/";
 

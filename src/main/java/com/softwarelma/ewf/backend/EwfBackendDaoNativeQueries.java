@@ -16,6 +16,10 @@ import com.softwarelma.ewf.common.EwfCommonConstants;
 
 public class EwfBackendDaoNativeQueries {
 
+    enum QUERY_TYPE {
+        SELECT, INSERT, UPDATE, DELETE
+    }
+
     private DataSource dataSource;
 
     private static final String selectAllPages = //
@@ -87,36 +91,57 @@ public class EwfBackendDaoNativeQueries {
     }
 
     public void insertBlank(String table) throws EpeAppException {
-        String query = EpeDbEntity.retrieveInsertBlank(table);
-
-        if (EwfCommonConstants.SHOW_SQL) {
-            EpeAppLogger.log("Executing blank insert");
-            EpeAppLogger.log(query);
-        }
-
-        EpeDbFinalDb_update.executeUpdate(this.getDataSource(), query);
+        this.execute(null, QUERY_TYPE.DELETE, table);
     }
 
     public void update(EpeDbEntity entity) throws EpeAppException {
-        String query = entity.retrieveUpdate();
-
-        if (EwfCommonConstants.SHOW_SQL) {
-            EpeAppLogger.log("Executing update");
-            EpeAppLogger.log(query);
-        }
-
-        EpeDbFinalDb_update.executeUpdate(this.getDataSource(), query);
+        this.execute(entity, QUERY_TYPE.DELETE, null);
     }
 
     public void delete(EpeDbEntity entity) throws EpeAppException {
-        String query = entity.retrieveDelete();
+        this.execute(entity, QUERY_TYPE.DELETE, null);
+    }
 
-        if (EwfCommonConstants.SHOW_SQL) {
-            EpeAppLogger.log("Executing delete");
-            EpeAppLogger.log(query);
+    private void execute(EpeDbEntity entity, QUERY_TYPE queryType, String table) throws EpeAppException {
+        EpeAppUtils.checkNull("queryType", queryType);
+        String query;
+
+        if (queryType.equals(QUERY_TYPE.INSERT)) {
+            EpeAppUtils.checkEmpty("table", table);
+            query = EpeDbEntity.retrieveInsertBlank(table);
+        } else if (queryType.equals(QUERY_TYPE.UPDATE)) {
+            EpeAppUtils.checkNull("entity", entity);
+            query = entity.retrieveUpdate();
+        } else if (queryType.equals(QUERY_TYPE.DELETE)) {
+            EpeAppUtils.checkNull("entity", entity);
+            query = entity.retrieveDelete();
+        } else {
+            throw new EpeAppException("Unknown query type: " + queryType);
         }
 
+        this.logDb(query, queryType);
+        this.log(query, queryType);
         EpeDbFinalDb_update.executeUpdate(this.getDataSource(), query);
+    }
+
+    private void log(String query, QUERY_TYPE queryType) throws EpeAppException {
+        if (!EwfCommonConstants.SHOW_SQL)
+            return;
+        EpeAppUtils.checkEmpty("query", query);
+        EpeAppUtils.checkNull("queryType", queryType);
+        EpeAppLogger.log("Executing " + queryType);
+        EpeAppLogger.log(query);
+    }
+
+    private void logDb(String query, QUERY_TYPE queryType) throws EpeAppException {
+        if (!EwfCommonConstants.LOG_DB)
+            return;
+        EpeAppUtils.checkEmpty("query", query);
+        EpeAppUtils.checkNull("queryType", queryType);
+        query = query.replace("'", "''");
+        String insert = "INSERT INTO ewf_log (name, query_type, query_text) VALUES ('" + System.currentTimeMillis()
+                + "-" + System.nanoTime() + "', '" + queryType + "', '" + query + "')";
+        EpeDbFinalDb_update.executeUpdate(this.getDataSource(), insert);
     }
 
 }
