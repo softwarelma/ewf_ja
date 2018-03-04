@@ -71,6 +71,7 @@ public class EwfServerPage {
             Object obj = entityContent.get("style_names");
             if (obj != null)
                 contentBean.setListStyleName(Arrays.asList(((String) obj).split("\\,")));
+            contentBean.setElemCustomClassName(entityContent.getString("elem_custom_class_name"));
             listContentBean.add(contentBean);
         }
 

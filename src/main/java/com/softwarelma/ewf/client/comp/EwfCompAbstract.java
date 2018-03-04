@@ -19,63 +19,65 @@ import com.vaadin.ui.UI;
 
 public abstract class EwfCompAbstract extends EwfContentAbstract implements EwfCompInterface {
 
-	private static final long serialVersionUID = 1L;
-	private final List<EwfContentInterface> listContent;
+    private static final long serialVersionUID = 1L;
+    private final List<EwfContentInterface> listContent;
 
-	protected EwfCompAbstract(EwfClient client, UI ui, String name, EwfContentBean contentBean) throws EpeAppException {
-		super(client, ui, null, contentBean);
-		this.listContent = new ArrayList<>();
-		this.init();
-	}
+    protected EwfCompAbstract(EwfClient client, UI ui, String name, EwfContentBean contentBean) throws EpeAppException {
+        super(client, ui, null, contentBean);
+        this.listContent = new ArrayList<>();
+        this.init();
+    }
 
-	private void init() throws EpeAppException {
-		for (EwfContentBean contentBean : this.getListContentBean()) {
-			EpeAppUtils.checkNull("contentBean", contentBean);
-			EwfContentInterface content;
+    private void init() throws EpeAppException {
+        for (EwfContentBean contentBean : this.getListContentBean()) {
+            EpeAppUtils.checkNull("contentBean", contentBean);
+            EwfContentInterface content;
 
-			if (contentBean.isComp()) {
-				content = new EwfCompDefault(this.getClient(), this.getUi(), contentBean.getName(), contentBean);
-			} else {
-				if (contentBean.getName().startsWith("com.softwarelma.ewf.client.elem.EwfElemCustom")) {
-					try {
-						Constructor<?> constructor = Class.forName(contentBean.getName())
-								.getConstructor(EwfClient.class, UI.class, EwfElemBean.class, EwfContentBean.class);
-						content = (EwfElemAbstract) constructor.newInstance(this.getClient(), this.getUi(),
-								this.getClient().getElemBeanNotNull(contentBean.getName()), contentBean);
-					} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
-							| NoSuchMethodException | SecurityException | IllegalArgumentException
-							| InvocationTargetException e) {
-						throw new EpeAppException("Invalid content name: " + contentBean.getName(), e);
-					}
-				} else {
-					content = new EwfElemDefault(this.getClient(), this.getUi(),
-							this.getClient().getElemBeanNotNull(contentBean.getName()), contentBean);
-				}
-			}
+            if (contentBean.isComp()) {
+                content = new EwfCompDefault(this.getClient(), this.getUi(), contentBean.getName(), contentBean);
+            } else {
+                if (contentBean.getElemCustomClassName() != null && contentBean.getElemCustomClassName()
+                        .startsWith("com.softwarelma.ewf.client.elem.EwfElemCustom")) {
+                    try {
+                        Constructor<?> constructor = Class.forName(contentBean.getElemCustomClassName())
+                                .getConstructor(EwfClient.class, UI.class, EwfElemBean.class, EwfContentBean.class);
+                        content = (EwfElemAbstract) constructor.newInstance(this.getClient(), this.getUi(),
+                                this.getClient().getElemBeanNotNull(contentBean.getName()), contentBean);
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+                            | NoSuchMethodException | SecurityException | IllegalArgumentException
+                            | InvocationTargetException e) {
+                        throw new EpeAppException("Invalid content name \"" + contentBean.getName()
+                                + "\" or elem custom class name \"" + contentBean.getElemCustomClassName() + "\"", e);
+                    }
+                } else {
+                    content = new EwfElemDefault(this.getClient(), this.getUi(),
+                            this.getClient().getElemBeanNotNull(contentBean.getName()), contentBean);
+                }
+            }
 
-			this.listContent.add(content);
-			this.getLayout().addComponent(content.getComponent());
-		}
-	}
+            this.listContent.add(content);
+            this.getLayout().addComponent(content.getComponent());
+        }
+    }
 
-	@Override
-	public AbstractLayout getLayout() throws EpeAppException {
-		return (AbstractLayout) this.getComponent();
-	}
+    @Override
+    public AbstractLayout getLayout() throws EpeAppException {
+        return (AbstractLayout) this.getComponent();
+    }
 
-	@Override
-	public boolean isPage() {
-		return false;
-	}
+    @Override
+    public boolean isPage() {
+        return false;
+    }
 
-	@Override
-	public boolean isComp() {
-		return true;
-	}
+    @Override
+    public boolean isComp() {
+        return true;
+    }
 
-	@Override
-	public boolean isElem() {
-		return false;
-	}
+    @Override
+    public boolean isElem() {
+        return false;
+    }
 
 }

@@ -30,8 +30,9 @@ public abstract class EwfPageAbstract extends EwfContainerAbstract implements Ew
         contentBean.setComp(true);
         contentBean.setName(compName);
         List<String> listStyleName = new ArrayList<>();
-        listStyleName.add("backColorGrey");
+        listStyleName.add("backColorGrey");// FIXME
         contentBean.setListStyleName(listStyleName);
+        contentBean.setElemCustomClassName(null);// only for elems
         this.comp = new EwfCompDefault(client, ui, compName, contentBean);
     }
 

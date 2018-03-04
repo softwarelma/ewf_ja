@@ -31,7 +31,8 @@ public class EwfBackendDaoNativeQueries {
             "select ewf_comp_content.id, ewf_comp_content.id_ewf_comp, \n"//
                     + "   ifnull(ewf_comp__2.name, ewf_elem__2.name) as name_comp_or_elem, \n"//
                     + "   ewf_comp_content.id_ewf_comp__2, \n"//
-                    + "   ifnull(ewf_comp__2.style_names, ewf_elem__2.style_names) as style_names \n"//
+                    + "   ifnull(ewf_comp__2.style_names, ewf_elem__2.style_names) as style_names, \n"//
+                    + "   ewf_elem__2.elem_custom_class_name \n"//
                     + " from ewf_comp_content ewf_comp_content \n"//
                     + "   join ewf_comp ewf_comp \n"//
                     + "     on ewf_comp_content.id_ewf_comp = ewf_comp.id \n"//

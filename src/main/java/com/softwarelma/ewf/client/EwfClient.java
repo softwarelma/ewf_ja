@@ -227,13 +227,16 @@ public class EwfClient {
         EwfElemBean elemBean = this.mapElemNameAndElemBean.get(elemName);
         EpeAppUtils.checkNull("elemBean", elemBean);
 
-        if ("com.softwarelma.ewf.client.elem.EwfElemCustomMenu".startsWith(elemBean.getElemCustomClassName() + "")) {
+        if (elemBean.getElemCustomClassName() != null
+                && elemBean.getElemCustomClassName().startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
             elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
         }
 
-        if (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu")) {
-            elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
-        }
+//         if
+//         (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu"))
+//         {
+//         elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
+//         }
 
         return elemBean;
         // return this.getElemBeanNotNullFake(elemName);
