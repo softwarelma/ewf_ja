@@ -31,6 +31,7 @@ public class EwfElemAbstractGrid {
     public void initGrid(EwfClient client, Grid<EpeDbEntity> grid, String select, String table) throws EpeAppException {
         grid.setSizeFull();
         // grid.setHeight("500px");
+        grid.setHeightByRows(12);
         List<EpeDbEntity> listEntity = this.load(client, grid, select, table);
         grid.getEditor().setEnabled(true);
         grid.getEditor().addSaveListener(event -> {
