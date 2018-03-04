@@ -179,7 +179,10 @@ public class EwfElemAbstractGrid {
             @Override
             public void accept(EpeDbEntity bean, String fieldvalue) {
                 try {
-                    bean.setFromString(colName, fieldvalue);
+                    Object obj = bean.getOrNull(colName);
+                    String val = obj == null ? "" : obj + "";
+                    if (!val.equals(fieldvalue))
+                        bean.setFromString(colName, fieldvalue);
                 } catch (EpeAppException e1) {
                     Notification.show("Error", e1.getMessage(), Type.ERROR_MESSAGE);
                 }

@@ -91,11 +91,11 @@ public class EwfBackendDaoNativeQueries {
     }
 
     public void insertBlank(String table) throws EpeAppException {
-        this.execute(null, QUERY_TYPE.DELETE, table);
+        this.execute(null, QUERY_TYPE.INSERT, table);
     }
 
     public void update(EpeDbEntity entity) throws EpeAppException {
-        this.execute(entity, QUERY_TYPE.DELETE, null);
+        this.execute(entity, QUERY_TYPE.UPDATE, null);
     }
 
     public void delete(EpeDbEntity entity) throws EpeAppException {
