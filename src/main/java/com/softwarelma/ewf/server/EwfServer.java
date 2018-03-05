@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p3.db.EpeDbEntity;
+import com.softwarelma.epe.p3.db.EpeDbMetaDataEntity;
 import com.softwarelma.ewf.backend.EwfBackend;
 import com.softwarelma.ewf.client.EwfClient;
 import com.softwarelma.ewf.client.comp.EwfCompBean;
@@ -69,8 +70,9 @@ public class EwfServer implements Serializable {
         this.client.loadPage(ui, idSession, pageName);
     }
 
-    public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
-        return this.serverPage.retrieveListEntity(select, table);
+    public EpeDbMetaDataEntity retrieveListEntity(String select, String table, List<EpeDbEntity> listEntity)
+            throws EpeAppException {
+        return this.serverPage.retrieveListEntity(select, table, listEntity);
     }
 
     public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {

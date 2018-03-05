@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p3.db.EpeDbEntity;
+import com.softwarelma.epe.p3.db.EpeDbMetaDataEntity;
 import com.softwarelma.ewf.backend.EwfBackend;
 import com.softwarelma.ewf.client.comp.EwfCompBean;
 import com.softwarelma.ewf.client.cont.EwfContentBean;
@@ -22,13 +23,16 @@ public class EwfServerPage {
         this.backend = backend;
     }
 
-    public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
-        return this.backend.retrieveListEntity(select, table);
+    public EpeDbMetaDataEntity retrieveListEntity(String select, String table, List<EpeDbEntity> listEntity)
+            throws EpeAppException {
+        return this.backend.retrieveListEntity(select, table, listEntity);
     }
 
     public Map<String, EwfPageBean> retrieveMapPageNameAndPageBean() throws EpeAppException {
         Map<String, EwfPageBean> mapPageNameAndPageBean = new LinkedHashMap<>();
-        List<EpeDbEntity> listPage = this.backend.retrieveSelectAllPages();
+        List<EpeDbEntity> listPage = new ArrayList<>();
+        // EpeDbMetaDataEntity metadata =
+        this.backend.retrieveSelectAllPages(listPage);
 
         for (EpeDbEntity entity : listPage) {
             EwfPageBean pageBean = new EwfPageBean();
@@ -43,8 +47,12 @@ public class EwfServerPage {
 
     public Map<String, EwfCompBean> retrieveMapCompNameAndCompBean() throws EpeAppException {
         Map<String, EwfCompBean> mapCompNameAndCompBean = new LinkedHashMap<>();
-        List<EpeDbEntity> listComp = this.backend.retrieveSelectAllComps();
-        List<EpeDbEntity> listContent = this.backend.retrieveSelectAllContents();
+        List<EpeDbEntity> listComp = new ArrayList<>();
+        // EpeDbMetaDataEntity metadataComps =
+        this.backend.retrieveSelectAllComps(listComp);
+        List<EpeDbEntity> listContent = new ArrayList<>();
+        // EpeDbMetaDataEntity metadataContents =
+        this.backend.retrieveSelectAllContents(listContent);
 
         for (EpeDbEntity entityComp : listComp) {
             EwfCompBean compBean = new EwfCompBean();
@@ -80,7 +88,9 @@ public class EwfServerPage {
 
     public Map<String, EwfElemBean> retrieveMapElemNameAndElemBean() throws EpeAppException {
         Map<String, EwfElemBean> mapElemNameAndElemBean = new LinkedHashMap<>();
-        List<EpeDbEntity> listElem = this.backend.retrieveSelectAllElems();
+        List<EpeDbEntity> listElem = new ArrayList<>();
+        // EpeDbMetaDataEntity metadata =
+        this.backend.retrieveSelectAllElems(listElem);
 
         for (EpeDbEntity entityElem : listElem) {
             EwfElemBean elemBean = new EwfElemBean();

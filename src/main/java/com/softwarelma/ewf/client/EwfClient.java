@@ -11,6 +11,7 @@ import com.softwarelma.epe.p1.app.EpeAppLogger;
 import com.softwarelma.epe.p1.app.EpeAppRuntimeException;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
 import com.softwarelma.epe.p3.db.EpeDbEntity;
+import com.softwarelma.epe.p3.db.EpeDbMetaDataEntity;
 import com.softwarelma.ewf.client.comp.EwfCompBean;
 import com.softwarelma.ewf.client.cont.EwfContentBean;
 import com.softwarelma.ewf.client.elem.EwfElemBean;
@@ -107,8 +108,9 @@ public class EwfClient {
         }.start();
     }
 
-    public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
-        return this.server.retrieveListEntity(select, table);
+    public EpeDbMetaDataEntity retrieveListEntity(String select, String table, List<EpeDbEntity> listEntity)
+            throws EpeAppException {
+        return this.server.retrieveListEntity(select, table, listEntity);
     }
 
     public void setSessionAttributeNotNull(String name, Object value) throws EpeAppException {
@@ -232,11 +234,11 @@ public class EwfClient {
             elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
         }
 
-//         if
-//         (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu"))
-//         {
-//         elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
-//         }
+        // if
+        // (elemName.startsWith("com.softwarelma.ewf.client.elem.EwfElemCustomMenu"))
+        // {
+        // elemBean.setMapPageNameAndPageBean(mapPageNameAndPageBean);
+        // }
 
         return elemBean;
         // return this.getElemBeanNotNullFake(elemName);

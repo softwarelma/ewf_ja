@@ -1,6 +1,5 @@
 package com.softwarelma.ewf.backend;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -12,6 +11,7 @@ import com.softwarelma.epe.p3.db.EpeDbEntity;
 import com.softwarelma.epe.p3.db.EpeDbFinalDb_datasource;
 import com.softwarelma.epe.p3.db.EpeDbFinalDb_select;
 import com.softwarelma.epe.p3.db.EpeDbFinalDb_update;
+import com.softwarelma.epe.p3.db.EpeDbMetaDataEntity;
 import com.softwarelma.ewf.common.EwfCommonConstants;
 
 public class EwfBackendDaoNativeQueries {
@@ -58,37 +58,38 @@ public class EwfBackendDaoNativeQueries {
         return this.dataSource;
     }
 
-    public List<EpeDbEntity> retrieveSelectAllElems() throws EpeAppException {
-        return this.retrieveListEntity(selectAllElems);
+    public EpeDbMetaDataEntity retrieveSelectAllElems(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.retrieveListEntity(selectAllElems, listEntity);
     }
 
-    public List<EpeDbEntity> retrieveSelectAllComps() throws EpeAppException {
-        return this.retrieveListEntity(selectAllComps);
+    public EpeDbMetaDataEntity retrieveSelectAllComps(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.retrieveListEntity(selectAllComps, listEntity);
     }
 
-    public List<EpeDbEntity> retrieveSelectAllContents() throws EpeAppException {
-        return this.retrieveListEntity(selectAllContents);
+    public EpeDbMetaDataEntity retrieveSelectAllContents(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.retrieveListEntity(selectAllContents, listEntity);
     }
 
-    public List<EpeDbEntity> retrieveSelectAllPages() throws EpeAppException {
-        return this.retrieveListEntity(selectAllPages);
+    public EpeDbMetaDataEntity retrieveSelectAllPages(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.retrieveListEntity(selectAllPages, listEntity);
     }
 
-    public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
+    public EpeDbMetaDataEntity retrieveListEntity(String select, String table, List<EpeDbEntity> listEntity)
+            throws EpeAppException {
         EpeAppUtils.checkEmpty("select", select);
         EpeAppUtils.checkEmpty("table", table);
-        List<EpeDbEntity> listPage = new ArrayList<>();
         String limitStr = EwfCommonConstants.QUERY_SELECT_LIMIT + "";
-        EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table, limitStr, listPage);
-        return listPage;
+        EpeDbMetaDataEntity metaData = EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table,
+                limitStr, listEntity);
+        return metaData;
     }
 
-    private List<EpeDbEntity> retrieveListEntity(String select) throws EpeAppException {
-        List<EpeDbEntity> listPage = new ArrayList<>();
+    private EpeDbMetaDataEntity retrieveListEntity(String select, List<EpeDbEntity> listEntity) throws EpeAppException {
         String table = "fake";
         String limitStr = EwfCommonConstants.QUERY_SELECT_LIMIT + "";
-        EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table, limitStr, listPage);
-        return listPage;
+        EpeDbMetaDataEntity metaData = EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table,
+                limitStr, listEntity);
+        return metaData;
     }
 
     public void insertBlank(String table) throws EpeAppException {

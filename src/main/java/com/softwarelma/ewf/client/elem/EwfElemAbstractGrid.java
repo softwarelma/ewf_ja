@@ -32,7 +32,8 @@ public class EwfElemAbstractGrid {
         grid.setSizeFull();
         // grid.setHeight("500px");
         grid.setHeightByRows(12);
-        List<EpeDbEntity> listEntity = this.load(client, grid, select, table);
+        List<EpeDbEntity> listEntity = new ArrayList<>();
+        EpeDbMetaDataEntity metadata = this.load(client, grid, select, table, listEntity);
         grid.getEditor().setEnabled(true);
         grid.getEditor().addSaveListener(event -> {
             try {
@@ -44,11 +45,9 @@ public class EwfElemAbstractGrid {
         grid.setSelectionMode(SelectionMode.MULTI);
         List<Column<EpeDbEntity, String>> listColumn = new ArrayList<>();
         Column<EpeDbEntity, String> column;
-        EpeDbMetaDataEntity meta = listEntity.get(0).getMetaData();// TODO if no
-                                                                   // rows?
 
-        for (int i = 0; i < meta.getCols(); i++) {
-            column = this.initGridColumn(grid, meta.getAttribute(i));
+        for (int i = 0; i < metadata.getCols(); i++) {
+            column = this.initGridColumn(grid, metadata.getAttribute(i));
             listColumn.add(column);
         }
 
@@ -66,11 +65,16 @@ public class EwfElemAbstractGrid {
         this.addFilters(client, grid, select, table, listColumn, listEntity);
     }
 
-    private List<EpeDbEntity> load(EwfClient client, Grid<EpeDbEntity> grid, String select, String table)
+    private EpeDbMetaDataEntity load(EwfClient client, Grid<EpeDbEntity> grid, String select, String table)
             throws EpeAppException {
-        List<EpeDbEntity> listEntity = client.retrieveListEntity(select, table);
+        return this.load(client, grid, select, table, new ArrayList<>());
+    }
+
+    private EpeDbMetaDataEntity load(EwfClient client, Grid<EpeDbEntity> grid, String select, String table,
+            List<EpeDbEntity> listEntity) throws EpeAppException {
+        EpeDbMetaDataEntity metatdata = client.retrieveListEntity(select, table, listEntity);
         grid.setItems(listEntity);
-        return listEntity;
+        return metatdata;
     }
 
     private void addFilters(EwfClient client, Grid<EpeDbEntity> grid, String select, String table,
@@ -95,11 +99,6 @@ public class EwfElemAbstractGrid {
                         try {
                             client.insertBlank(table);
                             load(client, grid, select, table);
-                            // TODO metadata with 0 entities
-                            // EpeDbEntity beanToInsert = new
-                            // EpeDbEntity(listEntity.get(0).getMetaData());
-                            // listEntity.add(beanToInsert);
-                            // grid.setItems(listEntity);
                         } catch (EpeAppException e) {
                             Notification.show("Error", e.getMessage(), Type.ERROR_MESSAGE);
                         }

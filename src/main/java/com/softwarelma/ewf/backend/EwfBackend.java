@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p3.db.EpeDbEntity;
+import com.softwarelma.epe.p3.db.EpeDbMetaDataEntity;
 
 public class EwfBackend {
 
@@ -13,24 +14,25 @@ public class EwfBackend {
     private final EwfBackendDaoNativeQueries daoNativeQueries = new EwfBackendDaoNativeQueries();
     private final EwfBackendDaoNaturalJoin daoNaturalJoin = new EwfBackendDaoNaturalJoin();
 
-    public List<EpeDbEntity> retrieveSelectAllElems() throws EpeAppException {
-        return this.daoNativeQueries.retrieveSelectAllElems();
+    public EpeDbMetaDataEntity retrieveSelectAllElems(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.daoNativeQueries.retrieveSelectAllElems(listEntity);
     }
 
-    public List<EpeDbEntity> retrieveSelectAllContents() throws EpeAppException {
-        return this.daoNativeQueries.retrieveSelectAllContents();
+    public EpeDbMetaDataEntity retrieveSelectAllContents(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.daoNativeQueries.retrieveSelectAllContents(listEntity);
     }
 
-    public List<EpeDbEntity> retrieveSelectAllComps() throws EpeAppException {
-        return this.daoNativeQueries.retrieveSelectAllComps();
+    public EpeDbMetaDataEntity retrieveSelectAllComps(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.daoNativeQueries.retrieveSelectAllComps(listEntity);
     }
 
-    public List<EpeDbEntity> retrieveSelectAllPages() throws EpeAppException {
-        return this.daoNativeQueries.retrieveSelectAllPages();
+    public EpeDbMetaDataEntity retrieveSelectAllPages(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.daoNativeQueries.retrieveSelectAllPages(listEntity);
     }
 
-    public List<EpeDbEntity> retrieveListEntity(String select, String table) throws EpeAppException {
-        return this.daoNativeQueries.retrieveListEntity(select, table);
+    public EpeDbMetaDataEntity retrieveListEntity(String select, String table, List<EpeDbEntity> listEntity)
+            throws EpeAppException {
+        return this.daoNativeQueries.retrieveListEntity(select, table, listEntity);
     }
 
     public void insertBlank(String table) throws EpeAppException {
