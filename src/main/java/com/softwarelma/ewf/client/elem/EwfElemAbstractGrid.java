@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
+import com.softwarelma.epe.p1.app.EpeAppLogger;
+import com.softwarelma.epe.p1.app.EpeAppLogger.LEVEL;
 import com.softwarelma.epe.p3.db.EpeDbEntity;
 import com.softwarelma.epe.p3.db.EpeDbMetaDataEntity;
 import com.softwarelma.ewf.client.EwfClient;
@@ -170,21 +172,24 @@ public class EwfElemAbstractGrid {
                 String val = obj == null ? "" : obj + "";
                 return val;
             } catch (EpeAppException e1) {
-                e1.printStackTrace();
+                EpeAppLogger.log(e1.getMessage(), e1, LEVEL.ERROR);
                 return null;
             }
         }).setCaption(colName).setEditorComponent(new TextField(), new Setter<EpeDbEntity, String>() {
             private static final long serialVersionUID = 1L;
+            private final String colName2 = colName;
 
             @Override
             public void accept(EpeDbEntity bean, String fieldvalue) {
                 try {
-                    Object obj = bean.getOrNull(colName);
+                    Object obj = bean.getOrNull(this.colName2);
                     String val = obj == null ? "" : obj + "";
                     if (!val.equals(fieldvalue))
-                        bean.setFromString(colName, fieldvalue);
+                        bean.setFromString(this.colName2, fieldvalue);
                 } catch (EpeAppException e1) {
                     Notification.show("Error", e1.getMessage(), Type.ERROR_MESSAGE);
+                } catch (Exception e) {
+                    EpeAppLogger.log("Trying to set " + this.colName2 + "=" + fieldvalue, e, LEVEL.ERROR);
                 }
             }
         });
