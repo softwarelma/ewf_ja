@@ -59,33 +59,25 @@ public class EwfBackendDaoNativeQueries {
     }
 
     public EpeDbMetaDataEntity retrieveSelectAllElems(List<EpeDbEntity> listEntity) throws EpeAppException {
-        return this.retrieveListEntity(selectAllElems, listEntity);
+        return this.retrieveListEntity(selectAllElems, "fake", listEntity);
     }
 
     public EpeDbMetaDataEntity retrieveSelectAllComps(List<EpeDbEntity> listEntity) throws EpeAppException {
-        return this.retrieveListEntity(selectAllComps, listEntity);
+        return this.retrieveListEntity(selectAllComps, "fake", listEntity);
     }
 
     public EpeDbMetaDataEntity retrieveSelectAllContents(List<EpeDbEntity> listEntity) throws EpeAppException {
-        return this.retrieveListEntity(selectAllContents, listEntity);
+        return this.retrieveListEntity(selectAllContents, "fake", listEntity);
     }
 
     public EpeDbMetaDataEntity retrieveSelectAllPages(List<EpeDbEntity> listEntity) throws EpeAppException {
-        return this.retrieveListEntity(selectAllPages, listEntity);
+        return this.retrieveListEntity(selectAllPages, "fake", listEntity);
     }
 
     public EpeDbMetaDataEntity retrieveListEntity(String select, String table, List<EpeDbEntity> listEntity)
             throws EpeAppException {
         EpeAppUtils.checkEmpty("select", select);
         EpeAppUtils.checkEmpty("table", table);
-        String limitStr = EwfCommonConstants.QUERY_SELECT_LIMIT + "";
-        EpeDbMetaDataEntity metaData = EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table,
-                limitStr, listEntity);
-        return metaData;
-    }
-
-    private EpeDbMetaDataEntity retrieveListEntity(String select, List<EpeDbEntity> listEntity) throws EpeAppException {
-        String table = "fake";
         String limitStr = EwfCommonConstants.QUERY_SELECT_LIMIT + "";
         EpeDbMetaDataEntity metaData = EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table,
                 limitStr, listEntity);

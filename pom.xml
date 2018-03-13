@@ -4,7 +4,7 @@
 
 	<!-- PROPERTIES -->
 	<properties>
-		<com.softwarelma.ewf.version>1.0.1</com.softwarelma.ewf.version>
+		<com.softwarelma.ewf.version>1.0.2-SNAPSHOT</com.softwarelma.ewf.version>
 		<vaadin.version>8.0.5</vaadin.version>
 		<vaadin.plugin.version>8.0.5</vaadin.plugin.version>
 		<!-- <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version> -->
@@ -98,7 +98,7 @@
 		<dependency>
 			<groupId>com.softwarelma</groupId>
 			<artifactId>epe</artifactId>
-			<version>1.2.0</version>
+			<version>1.2.1-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
