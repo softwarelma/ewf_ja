@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppRuntimeException;
+import com.softwarelma.ewf.common.EwfCommonConstants;
 import com.softwarelma.ewf.server.EwfServer;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
@@ -61,7 +62,7 @@ public class EwfMain extends UI {
             try {
                 EwfServer server = EwfServer.getInstance();
                 System.out.println("id session for loading: " + idSession);
-                server.loadPage(ui, idSession, "page");// FIXME home
+                server.loadPage(ui, idSession, EwfCommonConstants.PAGE_HOME);
             } catch (EpeAppException e) {
                 throw new EpeAppRuntimeException(e.getMessage(), e);
             }

@@ -18,4 +18,11 @@ public class EwfCommonConstants {
     // "com.softwarelma.ewf.client.elem.EwfElemCustomMenu";
     public static String MENU_CLASS_NAME = "com.softwarelma.ewf.client.elem.EwfElemCustomMenuResponsive";
 
+    public static String PAGE_HOME = "home";
+
+    public static String SESSION_SELECTED_PAGE = "ewfSelectedPage";
+
+    public static String STYLE_BACK_COLOR_GREEN = "ewfBackColorGreen";
+    public static String STYLE_BACK_GREEN = "ewfBackGreen";
+
 }

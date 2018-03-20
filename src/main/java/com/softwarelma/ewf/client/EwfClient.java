@@ -176,6 +176,9 @@ public class EwfClient {
         EpeAppUtils.checkNull("idSession", idSession);
         EpeAppUtils.checkEmpty("pageName", pageName);
 
+        if (VaadinService.getCurrentRequest() != null)
+            setSessionAttributeNotNull(EwfCommonConstants.SESSION_SELECTED_PAGE, pageName);
+
         // LOADING
         EwfPageInterface page = new EwfPageDefault();
         page.init(this, ui, pageName);
