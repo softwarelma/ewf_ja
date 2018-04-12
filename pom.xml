@@ -5,6 +5,7 @@
     <!-- PROPERTIES -->
     <properties>
         <com.softwarelma.ewf.version>1.0.2-SNAPSHOT</com.softwarelma.ewf.version>
+        <com.softwarelma.epe.version>1.2.6-SNAPSHOT</com.softwarelma.epe.version>
         <vaadin.version>8.0.5</vaadin.version>
         <vaadin.plugin.version>8.0.5</vaadin.plugin.version>
         <!-- <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version> -->
@@ -54,7 +55,7 @@
         <dependency>
             <groupId>com.softwarelma</groupId>
             <artifactId>epe</artifactId>
-            <version>1.2.5</version>
+            <version>${com.softwarelma.epe.version}</version>
         </dependency>
 
         <!-- SERVLET -->
