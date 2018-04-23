@@ -4,10 +4,10 @@
 
     <!-- PROPERTIES -->
     <properties>
-        <com.softwarelma.ewf.version>1.0.2-SNAPSHOT</com.softwarelma.ewf.version>
-        <com.softwarelma.epe.version>1.2.6</com.softwarelma.epe.version>
-        <vaadin.version>8.0.5</vaadin.version>
-        <vaadin.plugin.version>8.0.5</vaadin.plugin.version>
+        <com.softwarelma.ewf.version>1.0.2</com.softwarelma.ewf.version>
+        <com.softwarelma.epe.version>1.2.9</com.softwarelma.epe.version>
+        <vaadin.version>8.3.3</vaadin.version>
+        <vaadin.plugin.version>8.3.3</vaadin.plugin.version>
         <!-- <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version> -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.8</jdk.version>
