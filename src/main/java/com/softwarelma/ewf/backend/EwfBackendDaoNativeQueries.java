@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.softwarelma.epe.p1.app.EpeAppConstants;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppLogger;
 import com.softwarelma.epe.p1.app.EpeAppUtils;
+import com.softwarelma.epe.p2.encodings.EpeEncodings;
 import com.softwarelma.epe.p3.db.EpeDbEntity;
 import com.softwarelma.epe.p3.db.EpeDbFinalDb_datasource;
 import com.softwarelma.epe.p3.db.EpeDbFinalDb_select;
@@ -22,6 +24,7 @@ public class EwfBackendDaoNativeQueries {
     }
 
     private DataSource dataSource;
+    private boolean backupWritten;
 
     private static final String selectAllPages = //
             "select ewf_page.id, ewf_page.name, ewf_page.description, ewf_comp.name as comp_name \n"
@@ -50,18 +53,71 @@ public class EwfBackendDaoNativeQueries {
                     + "elem_custom_class_name, query_select, query_table \n"//
                     + "FROM ewf.ewf_elem";
 
+    // ewf_log
+
+    private static final String selectAllLogsForBackup = //
+            "SELECT * FROM ewf.ewf_log order by id";
+
+    private static final String deleteAllLogs = //
+            "DELETE FROM ewf.ewf_log";
+
+    // ewf_appl
+
+    private static final String selectAllApplsForBackup = //
+            "SELECT * FROM ewf.ewf_appl order by id";
+
+    private static final String deleteAllAppls = //
+            "DELETE FROM ewf.ewf_appl";
+
+    // ewf_comp
+
+    private static final String selectAllCompsForBackup = //
+            "SELECT * FROM ewf.ewf_comp order by id";
+
+    private static final String deleteAllComps = //
+            "DELETE FROM ewf.ewf_comp";
+
+    // ewf_page
+
+    private static final String selectAllPagesForBackup = //
+            "SELECT * FROM ewf.ewf_page order by id";
+
+    private static final String deleteAllPages = //
+            "DELETE FROM ewf.ewf_page";
+
+    // ewf_elem
+
     private static final String selectAllElemsForBackup = //
             "SELECT * FROM ewf.ewf_elem order by id";
 
     private static final String deleteAllElems = //
             "DELETE FROM ewf.ewf_elem";
 
+    // ewf_comp_content
+
+    private static final String selectAllCompContentsForBackup = //
+            "SELECT * FROM ewf.ewf_comp_content order by id";
+
+    private static final String deleteAllCompContents = //
+            "DELETE FROM ewf.ewf_comp_content";
+
+    public EwfBackendDaoNativeQueries() throws EpeAppException {
+        this.init();
+    }
+
+    private void init() throws EpeAppException {
+        if (backupWritten)
+            return;
+        backupWritten = true;
+        String insertAll = this.retrieveInsertAll();
+        EpeEncodings enc = new EpeEncodings();
+        enc.write(insertAll, "/org/company/repositories/ewf/backup/DML.SQL", EpeAppConstants.ENCODING_UTF_8, false);
+    }
+
     private DataSource getDataSource() throws EpeAppException {
-        if (this.dataSource == null) {
+        if (this.dataSource == null)
             this.dataSource = EpeDbFinalDb_datasource.retrieveOrCreateDataSource("jdbc:mysql://localhost:3306/ewf",
                     "ewf_usr", "#~[}à1e%|B");
-        }
-
         return this.dataSource;
     }
 
@@ -69,30 +125,39 @@ public class EwfBackendDaoNativeQueries {
         return this.retrieveListEntity(selectAllElems, "fake", listEntity);
     }
 
-    public EpeDbMetaDataEntity retrieveSelectAllElemsForBackup(List<EpeDbEntity> listEntity) throws EpeAppException {
-        return this.retrieveListEntity(selectAllElemsForBackup, "ewf_elem", listEntity);
-    }
-
-    public String retrieveInsertAllElems(boolean includeDelete) throws EpeAppException {
+    public void retrieveInsert(String select, String tableName, StringBuilder sbInsertAll, boolean includeDelete,
+            String delete, StringBuilder sbDeleteAll) throws EpeAppException {
+        EpeAppUtils.checkEmpty("select", select);
+        EpeAppUtils.checkEmpty("tableName", tableName);
+        EpeAppUtils.checkNull("sbInsertAll", sbInsertAll);
         List<EpeDbEntity> listEntity = new ArrayList<>();
-        this.retrieveSelectAllElemsForBackup(listEntity);
-        StringBuilder sb = new StringBuilder();
+        this.retrieveListEntity(select, tableName, listEntity);
 
         if (includeDelete) {
-            sb.append(deleteAllElems);
-            sb.append(";");
+            EpeAppUtils.checkEmpty("delete", delete);
+            EpeAppUtils.checkNull("sbDeleteAll", sbDeleteAll);
+            sbDeleteAll.insert(0, delete + ";\n");
         }
 
         for (EpeDbEntity entity : listEntity) {
-            sb.append(entity.retrieveInsert());
-            sb.append(";");
+            sbInsertAll.append(entity.retrieveInsert());
+            sbInsertAll.append(";\n");
         }
 
-        return sb.toString();
+        sbInsertAll.append("COMMIT;\n\n");
     }
 
-    public String retrieveInsertAllElems() throws EpeAppException {
-        return this.retrieveInsertAllElems(true);
+    public String retrieveInsertAll() throws EpeAppException {
+        StringBuilder sbInsertAll = new StringBuilder();
+        StringBuilder sbDeleteAll = new StringBuilder();
+        this.retrieveInsert(selectAllLogsForBackup, "ewf_log", sbInsertAll, true, deleteAllLogs, sbDeleteAll);
+        this.retrieveInsert(selectAllApplsForBackup, "ewf_appl", sbInsertAll, true, deleteAllAppls, sbDeleteAll);
+        this.retrieveInsert(selectAllCompsForBackup, "ewf_comp", sbInsertAll, true, deleteAllComps, sbDeleteAll);
+        this.retrieveInsert(selectAllPagesForBackup, "ewf_page", sbInsertAll, true, deleteAllPages, sbDeleteAll);
+        this.retrieveInsert(selectAllElemsForBackup, "ewf_elem", sbInsertAll, true, deleteAllElems, sbDeleteAll);
+        this.retrieveInsert(selectAllCompContentsForBackup, "ewf_comp_content", sbInsertAll, true,
+                deleteAllCompContents, sbDeleteAll);
+        return sbDeleteAll.append("COMMIT;\n\n").append(sbInsertAll).toString();
     }
 
     public EpeDbMetaDataEntity retrieveSelectAllComps(List<EpeDbEntity> listEntity) throws EpeAppException {

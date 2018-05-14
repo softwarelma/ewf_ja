@@ -14,6 +14,9 @@ public class EwfBackend {
     private final EwfBackendDaoNativeQueries daoNativeQueries = new EwfBackendDaoNativeQueries();
     private final EwfBackendDaoNaturalJoin daoNaturalJoin = new EwfBackendDaoNaturalJoin();
 
+    public EwfBackend() throws EpeAppException {
+    }
+
     public EpeDbMetaDataEntity retrieveSelectAllElems(List<EpeDbEntity> listEntity) throws EpeAppException {
         return this.daoNativeQueries.retrieveSelectAllElems(listEntity);
     }
