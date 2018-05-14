@@ -25,7 +25,7 @@ public class EwfMain extends UI {
     private String idSession;
 
     public EwfMain() {
-        System.out.println("----- main -> home");// FIXME remove
+        System.out.println("----- main -> new instance");// FIXME remove
     }
 
     @Override
@@ -36,7 +36,9 @@ public class EwfMain extends UI {
         setContent(mainLayout);
 
         mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        Label loadingText = new Label("Loading UI, please wait...");
+        String loading = "Loading UI, please wait...";
+        System.out.println(loading);// FIXME remove
+        Label loadingText = new Label(loading);
         loadingText.setSizeUndefined();
         mainLayout.addComponent(loadingText);
 

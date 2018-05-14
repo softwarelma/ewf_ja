@@ -1,5 +1,6 @@
 package com.softwarelma.ewf.backend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -49,6 +50,12 @@ public class EwfBackendDaoNativeQueries {
                     + "elem_custom_class_name, query_select, query_table \n"//
                     + "FROM ewf.ewf_elem";
 
+    private static final String selectAllElemsForBackup = //
+            "SELECT * FROM ewf.ewf_elem order by id";
+
+    private static final String deleteAllElems = //
+            "DELETE FROM ewf.ewf_elem";
+
     private DataSource getDataSource() throws EpeAppException {
         if (this.dataSource == null) {
             this.dataSource = EpeDbFinalDb_datasource.retrieveOrCreateDataSource("jdbc:mysql://localhost:3306/ewf",
@@ -60,6 +67,32 @@ public class EwfBackendDaoNativeQueries {
 
     public EpeDbMetaDataEntity retrieveSelectAllElems(List<EpeDbEntity> listEntity) throws EpeAppException {
         return this.retrieveListEntity(selectAllElems, "fake", listEntity);
+    }
+
+    public EpeDbMetaDataEntity retrieveSelectAllElemsForBackup(List<EpeDbEntity> listEntity) throws EpeAppException {
+        return this.retrieveListEntity(selectAllElemsForBackup, "ewf_elem", listEntity);
+    }
+
+    public String retrieveInsertAllElems(boolean includeDelete) throws EpeAppException {
+        List<EpeDbEntity> listEntity = new ArrayList<>();
+        this.retrieveSelectAllElemsForBackup(listEntity);
+        StringBuilder sb = new StringBuilder();
+
+        if (includeDelete) {
+            sb.append(deleteAllElems);
+            sb.append(";");
+        }
+
+        for (EpeDbEntity entity : listEntity) {
+            sb.append(entity.retrieveInsert());
+            sb.append(";");
+        }
+
+        return sb.toString();
+    }
+
+    public String retrieveInsertAllElems() throws EpeAppException {
+        return this.retrieveInsertAllElems(true);
     }
 
     public EpeDbMetaDataEntity retrieveSelectAllComps(List<EpeDbEntity> listEntity) throws EpeAppException {
@@ -83,8 +116,8 @@ public class EwfBackendDaoNativeQueries {
                 limitStr, listEntity);
 
         // FIXME
-        if (!listEntity.isEmpty())
-            System.out.println("::::::: " + listEntity.get(0).retrieveInsert());
+        // if (!listEntity.isEmpty())
+        // System.out.println("::::::: " + listEntity.get(0).retrieveInsert());
 
         return metaData;
     }
