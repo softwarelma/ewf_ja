@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-
 import com.softwarelma.epe.p1.app.EpeAppConstants;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppLogger;
@@ -36,6 +34,7 @@ public class EwfClient {
     private Map<String, EwfCompBean> mapCompNameAndCompBean;
     private Map<String, EwfElemBean> mapElemNameAndElemBean;
     private final Map<Long, WrappedSession> mapIdThreadAndSession = new HashMap<>();
+    private final Map<String, WrappedSession> mapIdSessionAndSession = new HashMap<>();
     private final Map<String, Map<String, EwfPageInterface>> mapIdSessionAndMapPageName = new HashMap<>();
     private final Map<String, String> mapIdSessionAndPageName = new HashMap<>();
     private final EwfServer server;
@@ -142,6 +141,12 @@ public class EwfClient {
         return this.getWrappedSession().getAttribute(name);
     }
 
+    // TODO
+    public void getSessionAttributeNotNull22222(long idThread) throws EpeAppException {
+        WrappedSession session = this.mapIdThreadAndSession.get(idThread);
+        System.out.println("idSession found: " + (session == null ? null : session.getId()));
+    }
+
     public void removeSessionAttribute(String name) throws EpeAppException {
         EpeAppUtils.checkEmpty("name", name);
         this.getWrappedSession().removeAttribute(name);
@@ -159,9 +164,11 @@ public class EwfClient {
         return this.getWrappedSession().getId();
     }
 
+    // TODO
     public void saveSession() throws EpeAppException {
         WrappedSession session = this.getWrappedSession();
         this.mapIdThreadAndSession.put(Thread.currentThread().getId(), session);
+        this.mapIdSessionAndSession.put(session.getId(), session);
     }
 
     ////////////////////////////////////////////////////////////

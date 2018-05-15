@@ -82,6 +82,9 @@ public class EwfElemCustomMenuResponsive extends EwfElemAbstract {
     private void addButtons(AbstractLayout layout) throws EpeAppException {
         String selectedPageName = EwfCommonConstants.PAGE_HOME;
 
+        // TODO
+    *    System.out.println("menu getIdSession(): " + ((EwfMain) getUi()).getIdSession());
+
         if (VaadinService.getCurrentRequest() != null) {
             selectedPageName = getClient().getSessionAttributeNotNull(EwfCommonConstants.SESSION_SELECTED_PAGE)
                     .toString();
