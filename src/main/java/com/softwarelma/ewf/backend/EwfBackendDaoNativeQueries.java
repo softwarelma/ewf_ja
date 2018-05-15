@@ -29,8 +29,11 @@ public class EwfBackendDaoNativeQueries {
     private static final String selectAllPages = //
             "select ewf_page.id, ewf_page.name, ewf_page.description, ewf_comp.name as comp_name \n"
                     + "from ewf_page ewf_page, ewf_comp ewf_comp \n"//
-                    + "where ewf_page.id_ewf_comp = ewf_comp.id";
+                    + "where ewf_page.id_ewf_comp = ewf_comp.id \n"//
+                    + "  and ewf_page.id_ewf_appl = (SELECT id FROM ewf_appl ewf_appl where ewf_appl.name = '"
+                    + EwfCommonConstants.APPLICATION_NAME + "')";
 
+    // TODO optimize, only my appl
     private static final String selectAllContents = //
             "select ewf_comp_content.id, ewf_comp_content.id_ewf_comp, \n"//
                     + "   ifnull(ewf_comp__2.name, ewf_elem__2.name) as name_comp_or_elem, \n"//
@@ -46,8 +49,10 @@ public class EwfBackendDaoNativeQueries {
                     + "     on ewf_comp_content.id_ewf_elem__2 = ewf_elem__2.id \n"//
                     + " order by ewf_comp_content.id_ewf_comp, ewf_comp_content.ordinal";
 
+    // TODO optimize, only my appl
     private static final String selectAllComps = "SELECT id, name, class_name_layout FROM ewf.ewf_comp";
 
+    // TODO optimize, only my appl
     private static final String selectAllElems = //
             "SELECT id, name, component_class_name, text, file_name, \n"//
                     + "elem_custom_class_name, query_select, query_table \n"//

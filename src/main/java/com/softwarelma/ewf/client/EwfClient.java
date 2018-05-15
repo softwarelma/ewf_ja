@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+
+import com.softwarelma.epe.p1.app.EpeAppConstants;
 import com.softwarelma.epe.p1.app.EpeAppException;
 import com.softwarelma.epe.p1.app.EpeAppLogger;
 import com.softwarelma.epe.p1.app.EpeAppRuntimeException;
@@ -19,6 +22,7 @@ import com.softwarelma.ewf.client.page.EwfPageBean;
 import com.softwarelma.ewf.client.page.EwfPageDefault;
 import com.softwarelma.ewf.client.page.EwfPageInterface;
 import com.softwarelma.ewf.common.EwfCommonConstants;
+import com.softwarelma.ewf.main.EwfMain;
 import com.softwarelma.ewf.server.EwfServer;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
@@ -31,6 +35,7 @@ public class EwfClient {
     private Map<String, EwfPageBean> mapPageNameAndPageBean;
     private Map<String, EwfCompBean> mapCompNameAndCompBean;
     private Map<String, EwfElemBean> mapElemNameAndElemBean;
+    private final Map<Long, WrappedSession> mapIdThreadAndSession = new HashMap<>();
     private final Map<String, Map<String, EwfPageInterface>> mapIdSessionAndMapPageName = new HashMap<>();
     private final Map<String, String> mapIdSessionAndPageName = new HashMap<>();
     private final EwfServer server;
@@ -118,6 +123,7 @@ public class EwfClient {
         this.setSessionAttributeOrNull(name, value);
     }
 
+    // FIXME
     public void setSessionAttributeOrNull(String name, Object value) throws EpeAppException {
         EpeAppUtils.checkEmpty("name", name);
         EpeAppLogger.log("Setting session attribute with name: " + name + ", and value: " + value);
@@ -130,6 +136,7 @@ public class EwfClient {
         return value;
     }
 
+    // FIXME
     public Object getSessionAttributeOrNull(String name) throws EpeAppException {
         EpeAppUtils.checkEmpty("name", name);
         return this.getWrappedSession().getAttribute(name);
@@ -150,6 +157,11 @@ public class EwfClient {
 
     public String getIdSession() throws EpeAppException {
         return this.getWrappedSession().getId();
+    }
+
+    public void saveSession() throws EpeAppException {
+        WrappedSession session = this.getWrappedSession();
+        this.mapIdThreadAndSession.put(Thread.currentThread().getId(), session);
     }
 
     ////////////////////////////////////////////////////////////
@@ -181,8 +193,20 @@ public class EwfClient {
 
         // LOADING
         EwfPageInterface page = new EwfPageDefault();
-        page.init(this, ui, pageName);
-        Component content = page.getComp().getLayout();
+        Component content;
+
+        boolean showExceptions = EpeAppConstants.SHOW_EXCEPTIONS;
+        EpeAppConstants.SHOW_EXCEPTIONS = false;
+
+        try {
+            page.init(this, ui, pageName);
+            content = page.getComp().getLayout();
+        } catch (EpeAppException e) {
+            content = EwfMain.getDefaultContent("Site under construction");
+        }
+
+        EpeAppConstants.SHOW_EXCEPTIONS = showExceptions;
+
         // new EwfClientFake().addGridFake(content); // TODO
         System.out.println("\tloading page " + pageName + ", id session " + idSession);// TODO
         ui.setContent(content);

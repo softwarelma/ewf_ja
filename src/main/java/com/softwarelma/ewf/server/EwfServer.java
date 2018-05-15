@@ -66,6 +66,10 @@ public class EwfServer implements Serializable {
         return this.client.getIdSession();
     }
 
+    public void saveSession() throws EpeAppException {
+        this.client.saveSession();
+    }
+
     public void loadPage(UI ui, String idSession, String pageName) throws EpeAppException {
         this.client.loadPage(ui, idSession, pageName);
     }

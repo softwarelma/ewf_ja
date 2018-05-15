@@ -2,7 +2,10 @@ package com.softwarelma.ewf.common;
 
 public class EwfCommonConstants {
 
-    public static final String APPLICATION_NAME = "ewf";
+    public static final String APPLICATION_NAME_CMS = "cms";
+    public static final String APPLICATION_NAME_MASSAGGI = "massaggi";
+    public static final String APPLICATION_NAME_RAMONA = "ramona";
+    public static final String APPLICATION_NAME = APPLICATION_NAME_CMS;
 
     public static boolean SHOW_SQL = true;
     public static boolean LOG_DB = true;

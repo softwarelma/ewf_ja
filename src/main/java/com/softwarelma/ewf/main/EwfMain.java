@@ -12,6 +12,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -30,26 +31,28 @@ public class EwfMain extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        VerticalLayout mainLayout = new VerticalLayout();
-        mainLayout.setSizeFull();
-        mainLayout.setMargin(true);
-        setContent(mainLayout);
-
-        mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        String loading = "Loading UI, please wait...";
-        System.out.println(loading);// FIXME remove
-        Label loadingText = new Label(loading);
-        loadingText.setSizeUndefined();
-        mainLayout.addComponent(loadingText);
+        this.setContent(getDefaultContent("Loading UI, please wait..."));
 
         try {
             EwfServer server = EwfServer.getInstance();
+            server.saveSession();
             this.idSession = server.getIdSession();
         } catch (EpeAppException e) {
         }
 
         this.ui = this;
         new InitializerThread().start();
+    }
+
+    public static Component getDefaultContent(String text) {
+        VerticalLayout mainLayout = new VerticalLayout();
+        mainLayout.setSizeFull();
+        mainLayout.setMargin(true);
+        mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        Label loadingText = new Label(text);
+        loadingText.setSizeUndefined();
+        mainLayout.addComponent(loadingText);
+        return mainLayout;
     }
 
     class InitializerThread extends Thread {
