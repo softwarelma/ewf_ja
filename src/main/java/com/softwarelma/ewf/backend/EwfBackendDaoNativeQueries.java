@@ -31,7 +31,8 @@ public class EwfBackendDaoNativeQueries {
                     + "from ewf_page ewf_page, ewf_comp ewf_comp \n"//
                     + "where ewf_page.id_ewf_comp = ewf_comp.id \n"//
                     + "  and ewf_page.id_ewf_appl = (SELECT id FROM ewf_appl ewf_appl where ewf_appl.name = '"
-                    + EwfCommonConstants.APPLICATION_NAME + "')";
+                    + EwfCommonConstants.APPLICATION_NAME + "') \n"//
+                    + "order by ewf_page.ordinal";
 
     // TODO optimize, only my appl
     private static final String selectAllContents = //

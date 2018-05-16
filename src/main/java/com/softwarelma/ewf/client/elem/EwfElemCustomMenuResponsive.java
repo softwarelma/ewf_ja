@@ -84,8 +84,8 @@ public class EwfElemCustomMenuResponsive extends EwfElemAbstract {
         String idSessionNullable = ((EwfMain) getUi()).getIdSession();
 
         if (VaadinService.getCurrentRequest() != null) {
-            selectedPageName = getClient().getSessionAttributeNotNull(EwfCommonConstants.SESSION_SELECTED_PAGE)
-                    .toString();
+            selectedPageName = (String) getClient()
+                    .getSessionAttributeNotNull(EwfCommonConstants.SESSION_SELECTED_PAGE);
         } else if (idSessionNullable != null) {
             selectedPageName = (String) getClient().getSessionAttributeOrNull(idSessionNullable,
                     EwfCommonConstants.SESSION_SELECTED_PAGE);

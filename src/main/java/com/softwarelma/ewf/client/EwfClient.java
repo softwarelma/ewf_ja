@@ -121,6 +121,24 @@ public class EwfClient {
         this.setSessionAttributeOrNull(name, value);
     }
 
+    /**
+     * if the session exists
+     */
+    public void setSessionAttributeNotNull(String idSession, String name, Object value) throws EpeAppException {
+        EpeAppUtils.checkEmpty("idSession", idSession);
+        EpeAppUtils.checkNull("value", value);
+        this.setSessionAttributeOrNull(idSession, name, value);
+    }
+
+    public void setSessionAttributeOrNull(String idSession, String name, Object value) throws EpeAppException {
+        if (idSession == null)
+            return;
+        EpeAppUtils.checkEmpty("name", name);
+        WrappedSession session = this.mapIdSessionAndSession.get(idSession);
+        if (session != null)
+            session.setAttribute(name, value);
+    }
+
     // FIXME
     public void setSessionAttributeOrNull(String name, Object value) throws EpeAppException {
         EpeAppUtils.checkEmpty("name", name);
@@ -192,9 +210,13 @@ public class EwfClient {
         EpeAppUtils.checkNull("ui", ui);
         EpeAppUtils.checkNull("idSession", idSession);
         EpeAppUtils.checkEmpty("pageName", pageName);
+        String idSessionNullable = ((EwfMain) ui).getIdSession();
 
-        if (VaadinService.getCurrentRequest() != null)
+        if (VaadinService.getCurrentRequest() != null) {
             setSessionAttributeNotNull(EwfCommonConstants.SESSION_SELECTED_PAGE, pageName);
+        } else if (idSessionNullable != null) {
+            setSessionAttributeOrNull(idSessionNullable, EwfCommonConstants.SESSION_SELECTED_PAGE, pageName);
+        }
 
         // LOADING
         EwfPageInterface page = new EwfPageDefault();
