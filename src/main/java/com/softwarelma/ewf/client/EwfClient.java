@@ -33,7 +33,6 @@ public class EwfClient {
     private Map<String, EwfPageBean> mapPageNameAndPageBean;
     private Map<String, EwfCompBean> mapCompNameAndCompBean;
     private Map<String, EwfElemBean> mapElemNameAndElemBean;
-    private final Map<Long, WrappedSession> mapIdThreadAndSession = new HashMap<>();
     private final Map<String, WrappedSession> mapIdSessionAndSession = new HashMap<>();
     private final Map<String, Map<String, EwfPageInterface>> mapIdSessionAndMapPageName = new HashMap<>();
     private final Map<String, String> mapIdSessionAndPageName = new HashMap<>();
@@ -100,7 +99,7 @@ public class EwfClient {
                 try {
                     while (true) {
                         Thread.sleep(5000);// TODO from param
-                        System.out.println("on thread...");// FIXME remove
+                        // System.out.println("on thread...");// FIXME remove
                         init();
                         System.out.println();
                     }
@@ -141,10 +140,11 @@ public class EwfClient {
         return this.getWrappedSession().getAttribute(name);
     }
 
-    // TODO
-    public void getSessionAttributeNotNull22222(long idThread) throws EpeAppException {
-        WrappedSession session = this.mapIdThreadAndSession.get(idThread);
-        System.out.println("idSession found: " + (session == null ? null : session.getId()));
+    public Object getSessionAttributeOrNull(String idSession, String name) throws EpeAppException {
+        EpeAppUtils.checkEmpty("idSession", idSession);
+        EpeAppUtils.checkEmpty("name", name);
+        WrappedSession session = this.mapIdSessionAndSession.get(idSession);
+        return session == null ? null : session.getAttribute(name);
     }
 
     public void removeSessionAttribute(String name) throws EpeAppException {
@@ -164,10 +164,8 @@ public class EwfClient {
         return this.getWrappedSession().getId();
     }
 
-    // TODO
     public void saveSession() throws EpeAppException {
         WrappedSession session = this.getWrappedSession();
-        this.mapIdThreadAndSession.put(Thread.currentThread().getId(), session);
         this.mapIdSessionAndSession.put(session.getId(), session);
     }
 
