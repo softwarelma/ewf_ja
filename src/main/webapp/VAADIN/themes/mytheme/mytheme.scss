@@ -183,14 +183,23 @@
 	    }
 	
 	    .ewfItembox.v-label {padding: 5px}
+	
+	    .ewfItembox300px {
+	        white-space: normal;
+	        vertical-align: top;
+	    }
+	
+	    .ewfItembox300px.v-label {padding: 5px}
 	}
 	
 	.ewfFlexWrap[width-range~="0-499px"] {
 	    .ewfItembox {width: 100%}
+	    .ewfItembox300px {width: 300px}
 	}
 	
 	.ewfFlexWrap[width-range~="500px-"] {
 	    .ewfItembox {width: 50%}
+	    .ewfItembox300px {width: 300px}
 	}	
 
 	//// EWF FLEX WRAP - END

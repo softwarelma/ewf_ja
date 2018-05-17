@@ -3,9 +3,8 @@ package com.softwarelma.ewf.common;
 public class EwfCommonConstants {
 
     public static final String APPLICATION_NAME_CMS = "cms";
-    public static final String APPLICATION_NAME_MASSAGGI = "massaggi";
-    public static final String APPLICATION_NAME_RAMONA = "ramona";
-    public static final String APPLICATION_NAME = APPLICATION_NAME_CMS;
+    public static final String APPLICATION_NAME_BOOKING = "booking";
+    public static String APPLICATION_NAME = APPLICATION_NAME_CMS;// TODO runtime setting from db
 
     public static boolean SHOW_SQL = true;
     public static boolean LOG_DB = true;
@@ -22,6 +21,7 @@ public class EwfCommonConstants {
     public static String MENU_CLASS_NAME = "com.softwarelma.ewf.client.elem.EwfElemCustomMenuResponsive";
 
     public static String PAGE_HOME = "home";
+    public static String PAGE_APPL = "appl";
 
     public static String SESSION_SELECTED_PAGE = "ewfSelectedPage";
 
