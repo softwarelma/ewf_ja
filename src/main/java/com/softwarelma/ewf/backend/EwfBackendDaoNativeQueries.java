@@ -27,14 +27,13 @@ public class EwfBackendDaoNativeQueries {
     private boolean backupWritten;
 
     private static final String selectAllPages = //
-            "select ewf_page.id, ewf_page.name, ewf_page.description, ewf_comp.name as comp_name \n"
+            "select ewf_page.id, ewf_page.name, ewf_page.description, ewf_comp.name as comp_name \n"//
                     + "from ewf_page ewf_page, ewf_comp ewf_comp \n"//
                     + "where ewf_page.id_ewf_comp = ewf_comp.id \n"//
-                    + "  and ewf_page.id_ewf_appl = (SELECT id FROM ewf_appl ewf_appl where ewf_appl.name = '"
+                    + "  and ewf_page.id_ewf_appl = (SELECT id FROM ewf_appl ewf_appl where ewf_appl.name = '"//
                     + EwfCommonConstants.APPLICATION_NAME + "') \n"//
                     + "order by ewf_page.ordinal";
-*//where clause appl for all TODO
-    // TODO optimize, only my appl
+
     private static final String selectAllContents = //
             "select ewf_comp_content.id, ewf_comp_content.id_ewf_comp, \n"//
                     + "   ifnull(ewf_comp__2.name, ewf_elem__2.name) as name_comp_or_elem, \n"//
@@ -48,24 +47,22 @@ public class EwfBackendDaoNativeQueries {
                     + "     on ewf_comp_content.id_ewf_comp__2 = ewf_comp__2.id \n"//
                     + "   left outer join ewf_elem ewf_elem__2 \n"//
                     + "     on ewf_comp_content.id_ewf_elem__2 = ewf_elem__2.id \n"//
+                    + " where ewf_comp_content.id_ewf_appl = (SELECT id FROM ewf_appl ewf_appl where ewf_appl.name = '"//
+                    + EwfCommonConstants.APPLICATION_NAME + "') \n"//
                     + " order by ewf_comp_content.id_ewf_comp, ewf_comp_content.ordinal";
 
-    // TODO optimize, only my appl
-    private static final String selectAllComps = "SELECT id, name, class_name_layout FROM ewf.ewf_comp";
+    private static final String selectAllComps = //
+            "select ewf_comp.id, ewf_comp.name, ewf_comp.class_name_layout \n"//
+                    + " from ewf_comp ewf_comp \n"//
+                    + " where ewf_comp.id_ewf_appl = (SELECT id FROM ewf_appl ewf_appl where ewf_appl.name = '"//
+                    + EwfCommonConstants.APPLICATION_NAME + "')";
 
-    // TODO optimize, only my appl
     private static final String selectAllElems = //
-            "SELECT id, name, component_class_name, text, file_name, \n"//
-                    + "elem_custom_class_name, query_select, query_table \n"//
-                    + "FROM ewf.ewf_elem";
-
-    // ewf_log
-
-    private static final String selectAllLogsForBackup = //
-            "SELECT * FROM ewf.ewf_log order by id";
-
-    private static final String deleteAllLogs = //
-            "DELETE FROM ewf.ewf_log";
+            "select ewf_elem.id, ewf_elem.name, ewf_elem.component_class_name, ewf_elem.text, ewf_elem.file_name, \n"//
+                    + "ewf_elem.elem_custom_class_name, ewf_elem.query_select, ewf_elem.query_table \n"//
+                    + " from ewf_elem ewf_elem \n"//
+                    + " where ewf_elem.id_ewf_appl = (SELECT id FROM ewf_appl ewf_appl where ewf_appl.name = '"//
+                    + EwfCommonConstants.APPLICATION_NAME + "')";
 
     // ewf_appl
 
@@ -74,6 +71,14 @@ public class EwfBackendDaoNativeQueries {
 
     private static final String deleteAllAppls = //
             "DELETE FROM ewf.ewf_appl";
+
+    // ewf_log
+
+    private static final String selectAllLogsForBackup = //
+            "SELECT * FROM ewf.ewf_log order by id";
+
+    private static final String deleteAllLogs = //
+            "DELETE FROM ewf.ewf_log";
 
     // ewf_comp
 
@@ -122,8 +127,8 @@ public class EwfBackendDaoNativeQueries {
 
     private DataSource getDataSource() throws EpeAppException {
         if (this.dataSource == null)
-            this.dataSource = EpeDbFinalDb_datasource.retrieveOrCreateDataSource("jdbc:mysql://localhost:3306/ewf",
-                    "ewf_usr", "#~[}à1e%|B");
+            this.dataSource = EpeDbFinalDb_datasource.retrieveOrCreateDataSource(EwfCommonConstants.DB_URL,
+                    EwfCommonConstants.DB_USERNAME, EwfCommonConstants.DB_PASSWORD);
         return this.dataSource;
     }
 
@@ -156,8 +161,8 @@ public class EwfBackendDaoNativeQueries {
     public String retrieveInsertAll() throws EpeAppException {
         StringBuilder sbInsertAll = new StringBuilder();
         StringBuilder sbDeleteAll = new StringBuilder();
-        this.retrieveInsert(selectAllLogsForBackup, "ewf_log", sbInsertAll, true, deleteAllLogs, sbDeleteAll);
         this.retrieveInsert(selectAllApplsForBackup, "ewf_appl", sbInsertAll, true, deleteAllAppls, sbDeleteAll);
+        this.retrieveInsert(selectAllLogsForBackup, "ewf_log", sbInsertAll, true, deleteAllLogs, sbDeleteAll);
         this.retrieveInsert(selectAllCompsForBackup, "ewf_comp", sbInsertAll, true, deleteAllComps, sbDeleteAll);
         this.retrieveInsert(selectAllPagesForBackup, "ewf_page", sbInsertAll, true, deleteAllPages, sbDeleteAll);
         this.retrieveInsert(selectAllElemsForBackup, "ewf_elem", sbInsertAll, true, deleteAllElems, sbDeleteAll);
@@ -228,7 +233,7 @@ public class EwfBackendDaoNativeQueries {
     }
 
     private void log(String query, QUERY_TYPE queryType) throws EpeAppException {
-        if (!EwfCommonConstants.SHOW_SQL)
+        if (!EwfCommonConstants.DB_SHOW_SQL)
             return;
         EpeAppUtils.checkEmpty("query", query);
         EpeAppUtils.checkNull("queryType", queryType);
@@ -237,7 +242,7 @@ public class EwfBackendDaoNativeQueries {
     }
 
     private void logDb(String query, QUERY_TYPE queryType) throws EpeAppException {
-        if (!EwfCommonConstants.LOG_DB)
+        if (!EwfCommonConstants.DB_LOG_DB)
             return;
         EpeAppUtils.checkEmpty("query", query);
         EpeAppUtils.checkNull("queryType", queryType);

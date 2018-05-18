@@ -4,10 +4,14 @@ public class EwfCommonConstants {
 
     public static final String APPLICATION_NAME_CMS = "cms";
     public static final String APPLICATION_NAME_BOOKING = "booking";
-    public static String APPLICATION_NAME = APPLICATION_NAME_CMS;// TODO runtime setting from db
+    // TODO runtime setting from db
+    public static String APPLICATION_NAME = APPLICATION_NAME_CMS;
 
-    public static boolean SHOW_SQL = true;
-    public static boolean LOG_DB = true;
+    public static boolean DB_SHOW_SQL = true;
+    public static boolean DB_LOG_DB = true;
+    public static String DB_URL = "jdbc:mysql://localhost:3306/ewf";
+    public static String DB_USERNAME = "ewf_usr";
+    public static String DB_PASSWORD = "ncqgà1ePáB";
 
     public static final String IMAGES_FOLDER = "/home/ellison/Downloads/ewf/";
 
