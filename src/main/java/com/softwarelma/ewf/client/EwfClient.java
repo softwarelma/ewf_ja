@@ -60,9 +60,18 @@ public class EwfClient {
             EpeAppUtils.checkEmpty("idSession", idSession);
             String pageName = this.mapIdSessionAndPageName.get(idSession);
             EpeAppUtils.checkEmpty("pageName", pageName);
-            EwfPageInterface page = this.mapIdSessionAndMapPageName.get(idSession).get(pageName);
-            loadPage(page.getUi(), idSession, pageName);
+
+            if (this.isActive(idSession)) {
+                EwfPageInterface page = this.mapIdSessionAndMapPageName.get(idSession).get(pageName);
+                loadPage(page.getUi(), idSession, pageName);
+            }
         }
+    }
+
+    public boolean isActive(String idSession) throws EpeAppException {
+        WrappedSession session = this.mapIdSessionAndSession.get(idSession);
+        System.out.println("AttributeNames: " + session.getAttributeNames());
+        return true;
     }
 
     private boolean equals(Map<String, EwfPageBean> mapPageNameAndPageBean,

@@ -18,7 +18,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @Push
-@Theme("mytheme")
+@Theme("ewftheme")
 public class EwfMain extends UI {
 
     private static final long serialVersionUID = 1L;
