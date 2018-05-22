@@ -168,9 +168,7 @@ public class EwfElemAbstractGrid {
     private Column<EpeDbEntity, String> initGridColumn(Grid<EpeDbEntity> grid, String colName) throws EpeAppException {
         Column<EpeDbEntity, String> column = grid.addColumn(e -> {
             try {
-                Object obj = e.getOrNull(colName);
-                String val = obj == null ? "" : obj + "";
-                return val;
+                return e.getToString(colName);
             } catch (EpeAppException e1) {
                 EpeAppLogger.log(e1.getMessage(), e1, LEVEL.ERROR);
                 return null;
@@ -182,8 +180,7 @@ public class EwfElemAbstractGrid {
             @Override
             public void accept(EpeDbEntity bean, String fieldvalue) {
                 try {
-                    Object obj = bean.getOrNull(this.colName2);
-                    String val = obj == null ? "" : obj + "";
+                    String val = bean.getToString(this.colName2);
                     if (!val.equals(fieldvalue))
                         bean.setFromString(this.colName2, fieldvalue);
                 } catch (EpeAppException e1) {
