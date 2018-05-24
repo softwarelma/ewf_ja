@@ -190,11 +190,7 @@ public class EwfBackendDaoNativeQueries {
         String limitStr = EwfCommonConstants.QUERY_SELECT_LIMIT + "";
         EpeDbMetaDataEntity metaData = EpeDbFinalDb_select.readQueryAsEntity(this.getDataSource(), select, table,
                 limitStr, listEntity);
-
-        // FIXME
-        // if (!listEntity.isEmpty())
-        // System.out.println("::::::: " + listEntity.get(0).retrieveInsert());
-
+        // TODO oracle and others
         return metaData;
     }
 
