@@ -11,10 +11,6 @@
         <!-- <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version> -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.8</jdk.version>
-        <maven.compiler.source>${jdk.version}</maven.compiler.source>
-        <maven.compiler.target>${jdk.version}</maven.compiler.target>
-        <!-- If there are no local customisations, this can also be "fetch" 
-            or "cdn" -->
         <vaadin.widgetset.mode>local</vaadin.widgetset.mode>
     </properties>
 
@@ -98,8 +94,8 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
                     </configuration>
                 </plugin>
                 <plugin>
